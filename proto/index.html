@@ -163,6 +163,20 @@
   .arc .cnt{margin-left:auto;color:var(--ink3);font-size:12px;white-space:nowrap}
   .testbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;background:var(--red-soft);border:1px solid var(--red);border-radius:10px;padding:6px 10px;margin-top:8px;font-size:12.5px}
   .grid-unread{position:absolute;right:6px;top:6px;background:var(--red);color:#fff;font-size:10px;font-weight:700;padding:2px 7px;border-radius:999px}
+  .guide{display:flex;gap:6px;align-items:center;flex-wrap:wrap;font-size:12.5px;color:var(--ink3);margin:0 0 6px}
+  .guide a{color:var(--gold-deep);font-weight:700;text-decoration:none;border-bottom:1px dashed var(--gold-deep)}
+  .banner{background:var(--gold-soft);border-left:4px solid var(--gold);border-radius:10px;padding:8px 12px;font-size:13px;color:var(--ink);margin-top:12px}
+  .first{position:absolute;right:6px;top:6px;background:var(--gold);color:#0E2A5B;font-size:10.5px;font-weight:900;padding:2px 8px;border-radius:999px}
+  .tour{position:fixed;inset:0;background:rgba(7,21,47,.62);z-index:70;display:none;align-items:flex-end;justify-content:center;padding:18px}
+  .tour.on{display:flex}
+  .tour .p{background:var(--paper);color:var(--ink);border-radius:16px;max-width:560px;width:100%;padding:18px 20px;box-shadow:0 20px 60px rgba(0,0,0,.4)}
+  .tour .k{font-family:var(--latin);font-size:10.5px;letter-spacing:.24em;color:var(--gold-deep);font-weight:700}
+  .tour h3{font-size:17px;margin:4px 0 6px;padding:0;border:0;color:var(--ink)}
+  .tour ol{margin:0;padding-left:1.3em;font-size:13.5px;color:var(--ink2)}
+  .tour li{margin:4px 0}
+  .tour li b{color:var(--ink)}
+  .tour .row{justify-content:flex-end}
+  .seat .demo{display:block;font-size:9.5px;color:var(--gold-deep);font-weight:700;margin-top:2px}
   @media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
 </style>
 
@@ -192,6 +206,7 @@
   <div class="row" style="margin-top:8px"><button class="btn ghost sm" onclick="findTemplates()">似た型を探す（精算まで終わった案件の型を最初から埋める）</button></div>
   <div id="tplbox"></div>
   <div class="think" id="think"></div>
+  <div class="banner" id="listnote" hidden>ここに並ぶのは完成品ではなく、<b>実現途中の「もし」</b>です。開くと、誰が助かり、誰が払うか、どの席が空いているかが見えます。</div>
   <div class="toolbar"><span class="cnt" id="cnt"></span><span class="sm">段階は人の確定でだけ上がります。赤い角は成約済。参加者の選択は名札で、認証ではありません。機密情報・個人情報・実際の送金情報は入力しないでください。</span><select class="f" id="sort" onchange="renderGrid()"><option value="new">新しい順</option><option value="like">共感が多い順</option><option value="cf">支援が集まっている順</option><option value="open">席が空いている順</option></select></div>
   <div class="pgrid" id="grid"><p class="sm">読み込み中…</p></div>
 </div></section>
@@ -214,6 +229,7 @@
           <p class="sm" style="margin-top:8px" id="c-first"></p>
         </div>
         <div class="card" style="margin-top:12px">
+          <p class="guide">読む順番：<a href="#" onclick="tab('props');return false">① 誰が助かり、誰が払うか</a> → <a href="#" onclick="document.getElementById('c-seats').scrollIntoView({block:'center'});return false">② 席</a> → <a href="#" onclick="tab('accept');return false">③ 納品・検収</a> → <a href="#" onclick="tab('compare');return false">④ 型・比較</a>。段階は人の確定でだけ上がります。</p>
           <div class="tabs"><button class="on" data-p="props" onclick="tab('props')">提案 <span id="n-props"></span></button><button data-p="msgs" onclick="tab('msgs')">メッセージ <span id="n-msgs"></span></button><button data-p="cf" onclick="tab('cf')">先に買う</button><button data-p="fund" onclick="tab('fund')">資金を出す</button><button data-p="accept" onclick="tab('accept')">納品・検収</button><button data-p="ledger" onclick="tab('ledger')">台帳</button><button data-p="compare" onclick="tab('compare')">型・比較</button><button data-p="log" onclick="tab('log')">記録</button></div>
           <div class="pane on" id="p-props">
             <p class="sm">席に対して提案します。AIが最低ラインを先に置いている席では、それを上回れば採用されます。採用は発案者が決めます。</p>
@@ -233,7 +249,7 @@
           <div class="pane" id="p-fund"><div id="c-fund"></div></div>
           <div class="pane" id="p-accept"><div id="c-accept"></div></div>
           <div class="pane" id="p-ledger"><div id="c-ledger"></div></div>
-          <div class="pane" id="p-compare"><div id="c-tplmake"></div><div id="c-second"></div><div id="c-compare"></div></div>
+          <div class="pane" id="p-compare"><div class="grid2" style="margin-bottom:12px"><div class="box info" style="margin:0"><b>初回：</b>条件から相談する。誰が助かり、誰が払い、何ができたら合格か、を人が決めて公開する。</div><div class="box gold" style="margin:0"><b>二度目：</b>型との差分だけ相談する。席の行動・検収基準・配分条件が最初から埋まっている。速く安くなったかは実測で比べる。</div></div><div id="c-tplmake"></div><div id="c-second"></div><div id="c-compare"></div></div>
           <div class="pane" id="p-log"><ul class="arc" id="c-log"></ul></div>
         </div>
       </div>
@@ -300,6 +316,14 @@
   </div>
 </div></section>
 
+<div class="tour" id="tour" onclick="if(event.target===this)closeTour()"><div class="p"><span class="k">FIRST 60 SECONDS</span><h3>デモの歩き方（5ステップ）</h3><ol>
+  <li><b>一覧</b>｜サンプル20件から、気になる「もし」を一つ選びます。「まずはこの例」から始めるのが早いです。</li>
+  <li><b>案件を開く</b>｜誰が助かり、誰が払うか。着手前に決める線を見ます。</li>
+  <li><b>席をクリック</b>｜役割を確認。AIは作る・売るの仮席で、人が来たら交代します。</li>
+  <li><b>納品・検収</b>｜納品と合格の条件を確認。段階を進めるのは人の確定です。</li>
+  <li><b>型・比較</b>｜精算後に残す型を見ます。二度目に省ける手間を探しましょう。</li></ol>
+  <p class="sm" style="margin-top:8px">デモは保存されません。AI席は例文のみ。</p>
+  <div class="row"><button class="btn ghost sm" onclick="closeTour(true)">もう表示しない</button><button class="btn" onclick="closeTour();openCase('s09')">「まずはこの例」を開く</button></div></div></div>
 <div class="ov" id="ov" onclick="if(event.target===this)closeMd()"><div class="md" id="md" role="dialog"></div></div>
 
 <script src="seed.js"></script>
@@ -377,6 +401,10 @@ const fundTotal=c=>(c.fund?.pledges||[]).reduce((s,p)=>s+(+p.amount||0),0);
 const humanSeats=c=>SEATS.filter(([k])=>k!=='OWN'&&c.seats?.[k]?.t==='hu').length;
 const openSeats=c=>SEATS.filter(([k])=>c.seats?.[k]?.t!=='hu').map(([k,n])=>n);
 
+/* ===================== 初回ガイド ===================== */
+function openTour(){ $('tour').classList.add('on'); }
+function closeTour(never){ $('tour').classList.remove('on'); if(never){ try{ localStorage.setItem('ifbox.tour','done'); }catch(e){} } }
+document.addEventListener('DOMContentLoaded',()=>{ if(window.DEMO_MODE){ $('listnote').hidden=false; let seen=false; try{ seen=localStorage.getItem('ifbox.tour')==='done'; }catch(e){} if(!seen) setTimeout(openTour,600); } });
 /* ===================== 接続 ===================== */
 (async()=>{
   db=await claude.use('db'); sample=await claude.use('sample');
@@ -400,6 +428,11 @@ async function post(){
   const btn=$('postbtn'); btn.disabled=true; const th=$('think'); th.classList.add('on'); th.innerHTML='<b>AI席</b>が考えています…（初回はAI利用の確認が出ます）';
   let ai=null;
   if(sample){ try{ ai=await sample.json(fill(P_FIRST,{title,benefit,demo:demo||'なし'}),{modelTier:'default'}); }catch(e){ th.innerHTML='AIの一手は省きました（'+esc(e.code||e.message)+'）。案件は作ります。'; } }
+  else if(window.DEMO_MODE){ const b=benefit||'この願いで助かる人'; const pats=[
+      `便益を受けるのは${b}。払うのは、その本人が候補です。これは例です。「${title}」を最小の試作品にするなら何を残すか、まず一人に確かめましょう。`,
+      `便益を受けるのは${b}。払うのは、その人を支える組織が候補です。これは例です。「${title}」で減らせる手間を一つ選び、担当者に予算と導入条件を聞きましょう。`,
+      `便益を受けるのは${b}。払うのは、先に試したい買い手が候補です。これは例です。「${title}」の納品物・価格・合格条件を仮置きし、購入意思を確かめましょう。`];
+    ai={first_move:pats[title.length%3],reframed:title.length>40?title.slice(0,39)+'…':title,payers:['本人','その人を支える組織','先に試したい買い手'],lines:['これは例です。実際の線は案件ごとに専門家に確認します'],next_actions:[{seat:'OWN',text:'誰が払うかを一人に確かめる',due_days:7},{seat:'SELL',text:'買い手候補3つに一行で打診する',due_days:7},{seat:'BUILD',text:'最小の試作を決める',due_days:14}],domain:''}; }
   const doc={ title, benefit, demo, owner:me(), createdAt:now(), stage: demo?1:0, domain:ai?.domain||'',
     reframed:ai?.reframed||title, firstMove:ai?.first_move||'', payers:ai?.payers||[], lines:ai?.lines||[],
     seats:newSeats(me()), actions:(ai?.next_actions||[]).slice(0,5).map((a,i)=>({id:'a'+i+'_'+now(),seat:a.seat,text:a.text,due:now()+(a.due_days||7)*DAY,state:'open',by:'AI'})),
@@ -433,6 +466,7 @@ function renderGrid(){
   if(chip==='fund') list=list.filter(c=>c.fund?.open);
   if(chip==='sold') list=list.filter(c=>c.stage>=2);
   if(chip.startsWith('d:')) list=list.filter(c=>c.domain===chip.slice(2));
+  if(!q&&chip!=='real'&&list.some(c=>c.id==='s09')) list.sort((a,b)=>(a.id==='s09'?-1:0)-(b.id==='s09'?-1:0));
   if(sort==='like') list.sort((a,b)=>(b.likes||[]).length-(a.likes||[]).length);
   if(sort==='cf') list.sort((a,b)=>cfTotal(b)-cfTotal(a));
   if(sort==='open') list.sort((a,b)=>openSeats(b).length-openSeats(a).length);
@@ -442,7 +476,7 @@ function renderGrid(){
     const h=hue(c.domain||c.title); const total=cfTotal(c); const goal=c.cf?.goal||0; const pct=goal?Math.min(100,Math.round(total/goal*100)):0;
     const price = c.cf?.open ? `目標 ${yen(goal)}` : (c.dist?.price?yen(c.dist.price):'価格未定');
     return `<div class="pc" tabindex="0" onclick="openCase('${c.id}')" onkeydown="if(event.key==='Enter')openCase('${c.id}')">
-      <div class="th" style="background:linear-gradient(160deg,hsl(${h} 45% 30%),hsl(${h} 55% 48%))">${unreadNotices(c).length?`<span class="grid-unread">未読 ${unreadNotices(c).length}</span>`:''}${c.stage>=2?'<div class="sold"><span>成約済</span></div>':''}<span>${esc(c.reframed)}</span><span class="price">${price}</span></div>
+      <div class="th" style="background:linear-gradient(160deg,hsl(${h} 45% 30%),hsl(${h} 55% 48%))">${c.id==='s09'?'<span class="first">まずはこの例</span>':''}${unreadNotices(c).length?`<span class="grid-unread">未読 ${unreadNotices(c).length}</span>`:''}${c.stage>=2?'<div class="sold"><span>成約済</span></div>':''}<span>${esc(c.reframed)}</span><span class="price">${price}</span></div>
       <div class="bd"><div class="nm">${esc(c.title)}</div>
         <div class="mt">${isSample(c)?'<span class="tag em">サンプル</span>':''}${c.domain?`<span class="tag bl">${esc(c.domain)}</span>`:''}<span>${esc(c.owner)}</span><span>・</span><span>共感 ${(c.likes||[]).length}</span><span>・</span><span>提案 ${(c.bids||[]).filter(b=>b.by!=='AI').length}</span></div>
         ${c.cf?.open?`<div class="cf"><div class="bar"><i style="width:${pct}%"></i></div><div class="lb">${pct}% 達成 ・ ${(c.cf.pledges||[]).length}人 ・ あと${Math.max(0,Math.ceil((c.cf.deadline-now())/DAY))}日</div></div>`:''}
@@ -504,6 +538,11 @@ function seatClick(k){
       <div class="row" style="justify-content:flex-end"><button class="btn ghost" onclick="closeMd()">閉じる</button>${s.n===me()?`<button class="btn ghost" onclick="leave('${k}')">席を降りる</button>`:''}${canRevert?`<button class="btn" onclick="revert('${k}')">AIに戻す</button>`:''}</div>`);
     return;
   }
+  if(s.t==='ai'&&window.DEMO_MODE){
+    md(`<h3>${n}の席 <span class="tag ai">デモ：例文のみ</span></h3><p class="sm">本番ではAIがこの席で準備し、人が来たら引き継ぎパケットを渡して交代します。デモでは案件の値を埋めた例文を表示します。AIの実行結果ではありません。</p>
+      <div class="box info" style="font-size:13px"><b>この席でAIが用意するもの（例）</b><ul style="margin:4px 0 0;padding-left:1.2em">${k==='BUILD'?`<li>「${esc(c.reframed)}」を満たす最小の試作の計画</li><li>検収基準 ${(c.criteria||[]).length} 件に対応する確認項目</li><li>構成素材と権利の一覧</li>`:`<li>払う人の候補：${esc((c.payers||[]).join('／')||'未定')}</li><li>買い手候補への提案文の下書き</li><li>価格の比較根拠（例と明記）</li>`}</ul></div>
+      <div class="box gold" style="font-size:13px"><b>引き継ぎパケット（例）</b><ul style="margin:4px 0 0;padding-left:1.2em"><li>目的：${esc(c.reframed)}</li><li>完了：上の準備</li><li>次の一手：${esc(((c.actions||[]).find(a=>a.seat===k)||{}).text||'席の目的に沿った最初の行動')}</li><li>未決：払う人の確定</li><li>秘密の範囲：この案件の限定公開情報のみ</li></ul></div>
+      <div class="row" style="justify-content:flex-end"><button class="btn ghost" onclick="closeMd()">閉じる</button><button class="btn" onclick="sit('${k}')">この席に座る（デモ）</button></div>`); return; }
   if(s.t==='ai'){
     md(`<h3>${n}の席に座る（AIから引き継ぐ）</h3><p class="sm">AIが引き継ぎパケットを作ります。これを読めば続きから始められます。</p><div id="pk"><p class="sm">作成中…</p></div><div class="row" style="justify-content:flex-end"><button class="btn ghost" onclick="closeMd()">やめる</button><button class="btn" onclick="sit('${k}')">この席に座る</button></div>`);
     handover(k); return;
