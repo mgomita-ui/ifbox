@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>IFBOX 試作 利用マニュアル</title>
+<style>
+  @page{size:A4;margin:0}
+  :root{--navy:#0E2A5B;--deep:#07152F;--gold:#F6A623;--gold-deep:#8F5A08;--gold-soft:#FDF1DC;--ink:#16203A;--ink2:#3A465F;--ink3:#6B7690;--line:#DCE3EC;--soft:#EEF2F8;--red:#B3382B;--red-soft:#FBEAE7;--green:#1E7A5A;--green-soft:#E6F3EE;--blue:#2E5A9E;--blue-soft:#EAF1FB}
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{font-family:"Yu Gothic UI","Yu Gothic","Meiryo","Noto Sans JP",sans-serif;color:var(--ink);font-size:12.3px;line-height:1.62;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .pg{width:210mm;height:297mm;padding:12mm 14mm 12mm;page-break-after:always;position:relative;overflow:hidden;background:#fff}
+  .pg:last-child{page-break-after:auto}
+  h1,h2,h3,h4,p{margin:0}
+  .foot{position:absolute;left:14mm;right:14mm;bottom:6mm;font-size:10px;color:var(--ink3);display:flex;justify-content:space-between;border-top:1px solid var(--line);padding-top:5px}
+  .cover{background:var(--navy);color:#fff;padding:22mm 18mm}
+  .brand{display:flex;align-items:center;gap:12px;margin-bottom:26mm}
+  .brand svg{width:44px;height:44px}
+  .brand b{font-size:26px;letter-spacing:.02em;font-family:"Segoe UI",sans-serif}
+  .brand small{display:block;font-size:10px;letter-spacing:.18em;color:#9FC0EE}
+  .cover .eb{font-size:12px;letter-spacing:.3em;color:var(--gold);font-weight:700}
+  .cover h1{font-size:34px;font-weight:900;line-height:1.45;margin-top:10px}
+  .cover .sub{font-size:15px;color:rgba(255,255,255,.85);margin-top:16px;line-height:2}
+  .cover .toc{margin-top:16mm;border-top:1px solid rgba(159,192,238,.35);padding-top:12px;columns:2;column-gap:24px}
+  .cover .toc div{display:flex;gap:10px;align-items:baseline;padding:4px 0;font-size:13px;break-inside:avoid}
+  .cover .toc b{color:var(--gold);font-family:"Segoe UI",sans-serif;font-size:11px;letter-spacing:.1em;width:28px;flex:none}
+  .cover .meta{position:absolute;left:18mm;right:18mm;bottom:16mm;font-size:11px;color:rgba(255,255,255,.65);line-height:1.9}
+  .no{font-size:11px;font-weight:700;letter-spacing:.18em;color:var(--gold-deep);font-family:"Segoe UI",sans-serif}
+  h2{font-size:21px;font-weight:900;color:var(--navy);margin:2px 0 4px;padding-bottom:7px;border-bottom:2px solid var(--navy)}
+  .lead{font-size:12.5px;color:var(--ink2);margin:8px 0 0}
+  h3{font-size:13.5px;font-weight:900;color:var(--navy);margin:11px 0 4px;padding-left:10px;border-left:4px solid var(--gold)}
+  p+p{margin-top:5px}
+  ul,ol{margin:4px 0 0;padding-left:1.3em}
+  li{margin:2px 0;color:var(--ink2)}
+  b{color:var(--ink)}
+  .sm{font-size:11px;color:var(--ink3);line-height:1.6}
+  table{width:100%;border-collapse:collapse;margin-top:6px;font-size:11.5px}
+  th,td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top;line-height:1.5}
+  th{background:var(--soft);color:var(--navy);font-weight:700;font-size:11px}
+  td.own{background:var(--gold-soft);font-weight:700}
+  .box{border-radius:8px;padding:8px 12px;margin-top:8px}
+  .box h4{font-size:12.5px;margin:0 0 3px}
+  .box p,.box li{font-size:11.5px}
+  .box.gold{background:var(--gold-soft);border-left:4px solid var(--gold)}
+  .box.gold h4{color:var(--gold-deep)}
+  .box.warn{background:var(--red-soft);border-left:4px solid var(--red)}
+  .box.warn h4{color:var(--red)}
+  .box.info{background:var(--blue-soft);border-left:4px solid var(--blue)}
+  .box.info h4{color:var(--blue)}
+  .box.ok{background:var(--green-soft);border-left:4px solid var(--green)}
+  .box.ok h4{color:var(--green)}
+  .tag{display:inline-block;font-size:10px;font-weight:700;padding:1px 7px;border-radius:999px;vertical-align:middle;white-space:nowrap}
+  .tag.ai{background:var(--gold-soft);color:var(--gold-deep)}.tag.hu{background:var(--navy);color:#fff}.tag.em{border:1px dashed #98A6C0;color:var(--ink3)}.tag.ok{background:var(--green-soft);color:var(--green)}.tag.wn{background:var(--red-soft);color:var(--red)}.tag.bl{background:var(--blue-soft);color:var(--blue)}
+  .seats{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin-top:8px}
+  .seat{border:1.5px solid var(--line);border-radius:8px;padding:7px 4px;text-align:center}
+  .seat .ic{width:28px;height:28px;border-radius:50%;margin:0 auto 4px;display:grid;place-items:center;font-size:10px;font-weight:700}
+  .seat.hu .ic{background:var(--navy);color:#fff}.seat.ai .ic{background:var(--gold);color:var(--navy)}.seat.em .ic{border:2px dashed #B8C2D3;color:#B8C2D3}
+  .seat .nm{font-size:11px;font-weight:900;color:var(--navy)}
+  .seat .wh{font-size:9.5px;color:var(--ink3);line-height:1.3}
+  .stages{display:flex;gap:4px;margin-top:8px}
+  .stg{flex:1;border-radius:6px;padding:5px 4px;background:var(--soft);text-align:center;font-size:10.5px;font-weight:700;color:var(--ink3)}
+  .stg b{display:block;font-size:10px;color:var(--gold-deep);font-family:"Segoe UI",sans-serif}
+  .stg.on{background:var(--navy)}.stg.on span{color:#fff}.stg.on b{color:var(--gold)}
+  .steps{margin-top:6px;border-left:2px solid var(--line);padding-left:14px}
+  .step{position:relative;padding-bottom:5px}
+  .step:before{content:"";position:absolute;left:-20px;top:6px;width:9px;height:9px;border-radius:50%;background:var(--gold);border:2px solid #fff;box-shadow:0 0 0 1.5px var(--gold)}
+  .step .t{font-size:10px;font-weight:700;letter-spacing:.1em;color:var(--gold-deep);font-family:"Segoe UI",sans-serif}
+  .step h4{font-size:12.5px;color:var(--navy);margin:0 0 1px}
+  .step p{font-size:11.5px;color:var(--ink2)}
+  .nav{display:flex;gap:4px;margin-top:6px;background:var(--deep);border-radius:8px;padding:6px 8px}
+  .nav span{color:rgba(255,255,255,.75);font-size:11px;padding:3px 8px;border-radius:6px}
+  .nav span.on{background:rgba(246,166,35,.2);color:var(--gold);font-weight:700}
+  .kv{display:grid;grid-template-columns:110px 1fr;gap:3px 10px;font-size:11.5px;margin-top:6px}
+  .kv dt{color:var(--ink3)}.kv dd{margin:0}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+</style>
+</head>
+<body>
+
+<!-- 表紙 -->
+<div class="pg cover">
+  <div class="brand"><svg viewBox="0 0 40 40"><rect x="2.5" y="2.5" width="35" height="35" rx="9.5" fill="#F6A623"/><circle cx="8.6" cy="8.6" r="2.1" fill="#0E2A5B"/><circle cx="31.4" cy="8.6" r="2.1" fill="#0E2A5B"/><circle cx="8.6" cy="31.4" r="2.1" fill="#0E2A5B"/><circle cx="31.4" cy="31.4" r="2.1" fill="#0E2A5B"/><rect x="12.1" y="11" width="5.3" height="18" rx="2.3" fill="#fff"/><rect x="20.5" y="11" width="5.3" height="18" rx="2.3" fill="#fff"/><rect x="20.5" y="11" width="8.8" height="5.3" rx="2.3" fill="#fff"/><rect x="20.5" y="18.7" width="6.7" height="4.9" rx="2.2" fill="#fff"/></svg><span><b>IFBOX</b><small>IDEAS FLOW TO A BETTER SOCIETY</small></span></div>
+  <p class="eb">USER MANUAL</p>
+  <h1>IFBOX 試作<br>利用マニュアル</h1>
+  <p class="sub">「もし、こんなのがあれば」を一行で置く。空いた席にはAIが座り、人が来たら交代する。提案・納品・検収・配分・精算まで一周し、精算まで終わった案件を型にして二度目を速く回す。<br>仲間内テスト用（第8版）。実際の決済・出資はありません。</p>
+  <div class="toc">
+    <div><b>01</b>はじめに：3つの決まりごと</div>
+    <div><b>02</b>始め方：URL・名札・デモと本番</div>
+    <div><b>03</b>画面の案内</div>
+    <div><b>04</b>席と段階</div>
+    <div><b>05</b>一周の手順（発案者）</div>
+    <div><b>06</b>提案する・席に座る（参加者）</div>
+    <div><b>07</b>納品と検収</div>
+    <div><b>08</b>配分・異議・模擬精算</div>
+    <div><b>09</b>先に買う・資金を出す</div>
+    <div><b>10</b>型にする・二度目を回す</div>
+    <div><b>11</b>手番・台帳・記録・保管</div>
+    <div><b>12</b>困ったとき・注意</div>
+  </div>
+  <p class="meta">第8版 ｜ 2026年9月11日 ｜ 仲間内テスト・実決済なし ｜ 本番URLは仲間内で共有。公開デモ：mgomita-ui.github.io/ifbox/</p>
+</div>
+
+<!-- 01 -->
+<div class="pg">
+  <p class="no">01</p><h2>はじめに：3つの決まりごと</h2>
+  <p class="lead">操作の前に、これだけ知っていれば迷いません。</p>
+  <div class="box gold"><h4>1. 段階は、人の確定でしか上がらない</h4><p>AIが試作を作っても、提案を並べても、段階は動きません。採用・買い手・納品・検収・精算は、すべて人がボタンを押して確定します。</p></div>
+  <div class="box info"><h4>2. AIは準備と提示だけ</h4><p>空いている「作る」「売る」の席にAIが座って準備し、人が来たら引き継ぎパケットを渡して交代します。AIは審判をしません。採用を決めるのは発案者、検収を確定するのは検収席、配分案は提示で、確定は7日の異議期間のあと。</p></div>
+  <div class="box warn"><h4>3. すべて模擬。お金は動かない</h4><p>受領・精算は「模擬」の記録です。先に買う・資金を出すも「約束」と「意向」の記録で、決済と払込は外部で行う前提です。機密情報・個人情報・実際の送金情報は入力しないでください。</p></div>
+  <h3>何ができるか（一周）</h3>
+  <div class="stages"><div class="stg"><b>0</b><span>投稿</span></div><div class="stg"><b>1</b><span>形あり</span></div><div class="stg on"><b>2</b><span>買い手あり</span></div><div class="stg"><b>3</b><span>納品</span></div><div class="stg"><b>4</b><span>検収</span></div><div class="stg"><b>5</b><span>精算</span></div></div>
+  <p class="sm" style="margin-top:6px">いちばん大事なのは段階2「買い手あり」に上がるかどうか。買い手席に人が座るか、先に買う支援が目標に届いて発案者が確定すると上がります。</p>
+  <h3>この試作で確かめたいこと</h3>
+  <p>二度目が速く安く回るか。精算まで終わった案件を「型」にし、次の案件で最初から席が埋まった状態から始め、条件を揃えて時間と原価を比べます。だから、1件を最後まで回すことが最初の目標です。</p>
+  <div class="foot"><span>IFBOX 試作 利用マニュアル</span><span>01 はじめに</span></div>
+</div>
+
+<!-- 02 -->
+<div class="pg">
+  <p class="no">02</p><h2>始め方：URL・名札・デモと本番</h2>
+  <h3>1. URLを開く</h3>
+  <table><tr><th style="width:22%">種類</th><th>URL</th><th>できること</th></tr>
+    <tr><td class="own">本番（仲間内）</td><td class="own">仲間内で共有しているURL（claude.ai のアーティファクト）</td><td class="own">共有DBに保存され、全員に見える。AI席が動く。</td></tr>
+    <tr><td>公開デモ</td><td>https://mgomita-ui.github.io/ifbox/</td><td>サンプル20件で全画面を触れる。保存されない。AI席は例文のみ。</td></tr></table>
+  <p class="sm" style="margin-top:6px">本番はclaude.aiにログインした状態で開きます。初めてAI席が動くとき（投稿、引き継ぎ、提案を募る）に「AIを使ってよいか」の確認が一度出ます。承認すると以後は出ません。</p>
+  <h3>2. 名札（参加者）を登録する</h3>
+  <p>右上の「あなた」で「＋ 新しく登録」を選び、表示名を入れます。これは<b>名札であって認証ではありません</b>。同じ名前の人がいると「けん #ab12」のように番号が付いて区別されます。選んだ名札は端末に保存され、次に開いたときもそのままです。</p>
+  <div class="box warn"><h4>名札の限界</h4><p>他の人があなたの名札を選ぶことは防げません。仲間内テストの前提です。取り込み担当や席の名前は、誤操作の防止に使うだけで、本人確認ではありません。</p></div>
+  <h3>3. 画面の並び</h3>
+  <div class="nav"><span class="on">探す</span><span>案件</span><span>手番</span><span>配分</span><span>保管庫</span></div>
+  <dl class="kv"><dt>探す</dt><dd>案件の一覧（メルカリ風）。投稿もここから。</dd><dt>案件</dt><dd>開いた案件の詳細（ランサーズ風）。提案・やり取り・納品・検収・型。</dd><dt>手番</dt><dd>案件をまたいで、自分が次に動くものだけ。</dd><dt>配分</dt><dd>三層の配分、異議、模擬受領と模擬精算。</dd><dt>保管庫</dt><dd>保管へ移した案件、反応のない案件、需要の地図。</dd></dl>
+  <h3>4. サンプルと実案件</h3>
+  <p>一覧の先頭のチップで「実案件」「サンプル」「すべて」を切り替えます。サンプルは20件（各段階に散らしてあります）で、比較の対象にはなりません。サンプルを開いて「サンプルから実案件を始める」を押すと、投稿内容と検収基準だけを引き継いだ実案件を作れます。</p>
+  <div class="foot"><span>IFBOX 試作 利用マニュアル</span><span>02 始め方</span></div>
+</div>
+
+<!-- 03 -->
+<div class="pg">
+  <p class="no">03</p><h2>画面の案内</h2>
+  <h3>探す（一覧）</h3>
+  <ul><li><b>検索</b>：もし・領域・名前で絞れます。</li><li><b>チップ</b>：実案件／サンプル／すべて／席が空いている／先に買う募集中／資金募集中／成約済／領域。</li><li><b>投稿欄</b>：一行の「もし」、便益を受けるのは誰、動くもの（URL任意）。「似た型を探す」で精算済みの型を適用できます。</li><li><b>カード</b>：左下に金額（目標か価格）、左上に赤い角は成約済（買い手が決まった案件）。下に支援の進捗と6席の状態（●人 ●AI ○空）。右上の赤い数字は自分宛て未読。</li><li><b>並び替え</b>：新着／共感／支援／空席。</li></ul>
+  <h3>案件（詳細）</h3>
+  <div class="two"><div>
+    <p><b>左（本文）</b></p><ul><li>言い換えた「もし」、便益を受ける人、払う人の候補、動くもの、募集している席</li><li>着手前に引く線（法規制・表示・個人情報など。AIの提案で、断定ではない）</li><li>タブ：提案／メッセージ／先に買う／資金を出す／納品・検収／台帳／型・比較／記録</li><li>タブの上に「読む順番」の案内</li></ul>
+  </div><div>
+    <p><b>右（サイド）</b></p><ul><li>段階（0〜5）と、次に何をすれば上がるかの一文</li><li>6つの席（クリックで座る・降りる）</li><li>次の一手（席ごと・期限つき）。「✓」で完了、「募る」で提案を募集</li><li>共感ボタン</li><li>支援・資金の進捗（募集中のとき）</li></ul>
+  </div></div>
+  <p class="sm">案件の上部には「仲間内テスト・実決済なし」の帯と、テスト日時（全員共通で進められる）、自分宛て未読の数が出ます。</p>
+  <h3>手番</h3>
+  <p>自分の名札の席で期限を過ぎた行動、未採用の提案（発案者）、検収待ち（検収席）、支援が目標に届いた案件（発案者）、配分の未提示、未解決の異議、取り込みの未確認、未読が並びます。クリックで該当の場所へ移動します。</p>
+  <h3>配分</h3>
+  <p>案件を選び、受領額と三層の内訳を入れて計算し、提示します。異議、解決、模擬受領、模擬精算もここです。</p>
+  <h3>保管庫</h3>
+  <p>「保管へ移した案件（戻せます）」「反応がなく自動で保管中」「需要の地図（共感はあるのに乗る人がいない）」の3つ。</p>
+  <div class="foot"><span>IFBOX 試作 利用マニュアル</span><span>03 画面の案内</span></div>
+</div>
+
+<!-- 04 -->
+<div class="pg">
+  <p class="no">04</p><h2>席と段階</h2>
+  <h3>6つの席</h3>
+  <div class="seats">
+    <div class="seat hu"><div class="ic">人</div><div class="nm">発案</div><div class="wh">もしを置いた人</div></div>
+    <div class="seat ai"><div class="ic">AI</div><div class="nm">作る</div><div class="wh">試作を作る</div></div>
+    <div class="seat ai"><div class="ic">AI</div><div class="nm">売る</div><div class="wh">買い手候補と提案文</div></div>
+    <div class="seat em"><div class="ic">空</div><div class="nm">場所・設備</div><div class="wh">必要なときだけ</div></div>
+    <div class="seat em"><div class="ic">空</div><div class="nm">買い手</div><div class="wh">払う人</div></div>
+    <div class="seat em"><div class="ic">空</div><div class="nm">検収</div><div class="wh">できたと認める人</div></div>
+  </div>
+  <table style="margin-top:8px"><tr><th style="width:14%">席</th><th style="width:12%">AI着席</th><th>座るとき</th><th>その席の完了</th></tr>
+    <tr><td>発案</td><td>不可</td><td>投稿した人が自動で座る</td><td>目的・便益を受ける人・達成条件を決め、提案の採否を決める</td></tr>
+    <tr><td>作る</td><td>可</td><td>提案が採用される／AI席を引き継ぐ</td><td>検収基準を満たす版を納品する</td></tr>
+    <tr><td>売る</td><td>可</td><td>提案が採用される／AI席を引き継ぐ</td><td>買い手候補・提案文・価格案を用意し、買い手席への打診を起こす</td></tr>
+    <tr><td>場所・設備</td><td>探索のみ</td><td>自分で座る／提案が採用される</td><td>場所・設備・資格を確保する（予約と支払確約は人）</td></tr>
+    <tr><td>買い手</td><td>不可</td><td>自分で座る（発注）／先に買う支援が目標に届き発案者が確定</td><td>発注し、検収する</td></tr>
+    <tr><td>検収</td><td>不可</td><td>買い手側の人が座る</td><td>公開された基準で全項目を確認し、確定する</td></tr></table>
+  <h3>席の動き</h3>
+  <ul><li><b>空席のクリック</b>：「この席に座る」。買い手席なら「発注する」。</li><li><b>AI席のクリック</b>：AIが引き継ぎパケット（目的・完了・次の一手・未決・秘密の範囲）を作り、「この席に座る」で交代。AIは同じ席で並走しません。</li><li><b>人が座っている席のクリック</b>：誰がいつから座っているか。自分なら「席を降りる」。降りるとAIが戻る（作る・売る）か空席になる。</li><li><b>停滞</b>：席に割り当てられた次の一手の期限を過ぎると赤枠で「停滞」。猶予3日のあと「AIに戻す」が出ます。他の席の返答を待っている行動は停滞と数えません。</li></ul>
+  <h3>段階</h3>
+  <table><tr><th style="width:16%">段階</th><th>上がる条件（すべて人の確定）</th></tr>
+    <tr><td>0 投稿</td><td>発案者が案件を置いた</td></tr><tr><td>1 形あり</td><td>作る席に人が座った、または投稿時に「動くもの」がある</td></tr>
+    <tr><td class="own">2 買い手あり</td><td class="own">買い手席に人が座った。または先に買う支援が目標に届き、発案者が「支援者を買い手として確定」を押した</td></tr>
+    <tr><td>3 納品</td><td>作る席が版を登録し「納品を確定」</td></tr><tr><td>4 検収</td><td>検収席が全項目を合格にして「検収を確定」</td></tr><tr><td>5 精算</td><td>配分の提示から7日、未解決の異議なし、模擬受領ありで「模擬精算を確定」</td></tr></table>
+  <div class="foot"><span>IFBOX 試作 利用マニュアル</span><span>04 席と段階</span></div>
+</div>
+
+<!-- 05 -->
+<div class="pg">
+  <p class="no">05</p><h2>一周の手順（発案者）</h2>
+  <p class="lead">1件を投稿から精算まで回すとき、発案者がやることの順番です。</p>
+  <div class="steps">
+    <div class="step"><div class="t">STEP 1</div><h4>置く</h4><p>「探す」の投稿欄に、一行の「もし」と、便益を受けるのは誰かを入れて「置いてみる」。動くものがあればURLを。AIが最初の一手（便益を受けるのは誰で、払うのは誰か／言い換え／払う人の候補3つ／着手前の線／席ごとの次の一手）を返し、作る席と売る席にAIが座ります。</p></div>
+    <div class="step"><div class="t">STEP 2</div><h4>検収基準を公開する</h4><p>案件の「納品・検収」タブで、1行に1つ、検収基準を書いて「基準を確定して公開」。<b>基準が1件以上ないと提案を採用できません。</b>最初の採用のあとは編集できません。</p></div>
+    <div class="step"><div class="t">STEP 3</div><h4>提案を募る・採用する</h4><p>右の「次の一手」で「募る」を押すと、AIが最低ラインの結果を先に置き、人が提案できます。「提案」タブで内容を見て「採用して席に座ってもらう」。採用した人がその席に座ります。提案者には未読で通知されます。</p></div>
+    <div class="step"><div class="t">STEP 4</div><h4>買い手を決める</h4><p>一人の買い手なら、その人に買い手席に座ってもらう（発注）。複数人で先に買うなら「先に買う」タブで目標額・1口・期限・リターンを置く。目標に届いたら「支援者を買い手として確定」を押すと段階2。</p></div>
+    <div class="step"><div class="t">STEP 5</div><h4>検収席を決める</h4><p>買い手側の人に検収席に座ってもらいます。納品されると検収席に未読が届きます。</p></div>
+    <div class="step"><div class="t">STEP 6</div><h4>納品と検収（07章）</h4><p>作る席が版を登録して納品（段階3）。検収席がチェックして確定（段階4）か差し戻し。</p></div>
+    <div class="step"><div class="t">STEP 7</div><h4>配分を提示する（08章）</h4><p>「配分」で受領額と三層の内訳を入れて計算し、「この案件に保存（提示）」。7日間の異議期間に入ります。</p></div>
+    <div class="step"><div class="t">STEP 8</div><h4>模擬受領・模擬精算</h4><p>「受領額で模擬受領を記録」。7日が過ぎ（テスト日時を進めてもよい）、未解決の異議がなければ「模擬精算を確定」で段階5。</p></div>
+    <div class="step"><div class="t">STEP 9</div><h4>型にする（10章）</h4><p>「型・比較」タブで「型を作る」。次の投稿で最初から席が埋まります。</p></div>
+  </div>
+  <div class="box ok"><h4>最初の1件の目安</h4><p>買い手が決まっていて、作る人が一人いる案件から。検収基準は3件以内。テスト日時を進めれば、7日の異議期間を待たずに一周できます。</p></div>
+  <div class="foot"><span>IFBOX 試作 利用マニュアル</span><span>05 一周の手順</span></div>
+</div>
+
+<!-- 06 -->
+<div class="pg">
+  <p class="no">06</p><h2>提案する・席に座る（参加者）</h2>
+  <h3>提案する</h3>
+  <p>案件の「提案」タブの下にある「提案する」で、席・金額（円）・納期（日）・提案文を入れて「この案件に提案する」。提案は案件の全員に見えます。<b>提案を送っただけでは契約も課金も成立しません。</b>発案者が採用を決め、条件はメッセージで詰めます。金額は例として扱われます。</p>
+  <div class="box info"><h4>AIの最低ラインとの関係</h4><p>発案者が「募る」を押した席には、AIが先に最低ラインの結果を置いています（提案一覧の先頭、薄い色）。人の提案がそれを上回れば採用されます。AIは競争者なので審判はしません。選ぶのは発案者です。</p></div>
+  <h3>席に直接座る</h3>
+  <p>右の席をクリックして「この席に座る」。AIが座っている席なら、AIが作った引き継ぎパケットを読んでから座ります。座ると、次の一手があなたに割り当てられます。</p>
+  <h3>次の一手を進める</h3>
+  <ul><li>右の「次の一手」に、席ごとの行動と期限が並びます。終えたら「✓」。</li><li>自分の席の行動を足すには、席・行動・期限（日）を入れて「追加」。</li><li>期限を過ぎると席が停滞になります。延長するときは行動を完了して新しい行動を置いてください。</li></ul>
+  <h3>メッセージ</h3>
+  <p>「メッセージ」タブは案件ごとのスレッドで、全員に見えます。提案の相談や条件のすり合わせに使います。提案一覧の「返信」を押すと、相手の名前が入った状態で書き始められます。</p>
+  <h3>席を降りる</h3>
+  <p>自分が座っている席をクリックして「席を降りる」。記録は残り、作る・売るの席にはAIが戻ります。</p>
+  <h3>共感</h3>
+  <p>乗るほどではないが良いと思ったら、右下の「共感する」。共感はあるのに乗る人がいない案件は、保管庫の「需要の地図」に出ます。</p>
+  <div class="box warn"><h4>やらないこと</h4><ul><li>他の人の名札で操作しない。</li><li>提案文に機密や個人情報を書かない。</li><li>金額を実際の見積や支払合意と混同しない。</li></ul></div>
+  <div class="foot"><span>IFBOX 試作 利用マニュアル</span><span>06 提案する・席に座る</span></div>
+</div>
+
+<!-- 07 -->
+<div class="pg">
+  <p class="no">07</p><h2>納品と検収</h2>
+  <p class="lead">「納品・検収」タブ。完成の定義を着手前に揃え、納品後の差し戻しと検収の判断を迷わないための場所です。</p>
+  <h3>検収基準（発案者）</h3>
+  <p>1行に1つ。例：「飼い主30人が4週間記録できる」「提案フードの購入導線がある」「個別データを物販側に渡さない」。公開すると提案の採用ができるようになり、最初の採用のあとは編集できません。</p>
+  <h3>成果物の版（作る席）</h3>
+  <ul><li>対象は短い本文と手順書です。ファイル保管やGit操作はしません。</li><li>「v1 を登録して納品する」で、名称・本文・参考URL（任意）を入れて確定（段階3）。</li><li>差し戻し後の再納品は v2 になり、<b>前の版からの変更が必須</b>です。保存済みの版は上書きせず、新しい版として増えます。</li><li>取り込む権限は発案者。検収の確定は検収席。</li></ul>
+  <h3>検収チェック（検収席）</h3>
+  <p>納品された版に対して、基準ごとに「合格／不合格／未確認」とメモを入れます。</p>
+  <table><tr><th style="width:26%">操作</th><th>条件</th><th>結果</th></tr>
+    <tr><td class="own">検収を確定する</td><td class="own">全項目が合格</td><td class="own">段階4。版に「取り込み済み」が付き、着席者に未読で通知</td></tr>
+    <tr><td>差し戻す</td><td>不合格が1つ以上、理由が必須</td><td>段階3のまま。作る席に理由つきで通知。再納品を待つ</td></tr></table>
+  <div class="box warn"><h4>できないこと</h4><ul><li>AIは検収を確定しません。</li><li>不合格があるとき「検収を確定」は押せません。理由なしの差し戻しもできません。</li><li>買い手席が埋まる前（段階2未満）は納品できません。</li></ul></div>
+  <h3>他の人が同時に更新したとき</h3>
+  <p>納品フォームを開いたあとに他の人が案件を更新していると、「他の人がこの案件を更新しました。入力は保持しています」と出ます。入力は消えないので、もう一度「確定」を押してください。</p>
+  <div class="foot"><span>IFBOX 試作 利用マニュアル</span><span>07 納品と検収</span></div>
+</div>
+
+<!-- 08 -->
+<div class="pg">
+  <p class="no">08</p><h2>配分・異議・模擬精算</h2>
+  <p class="lead">「配分」画面。三層で分け、IFBOXの取り分は先に公開した単価表で計算します。</p>
+  <h3>三層</h3>
+  <table><tr><th style="width:18%">層</th><th>中身</th><th style="width:22%">売れなくても払う？</th></tr>
+    <tr><td><b>確定対価</b></td><td>事前に決めた作業・仕入れ・場所の料金</td><td>払う</td></tr>
+    <tr><td><b>成果連動</b></td><td>売れた分、検収が通った分に応じて（残額の％）</td><td>払わない</td></tr>
+    <tr><td><b>残余配分</b></td><td>続けて売れる分を合意ルールで。<b>発案枠（初期値10%）はここ</b>。出資者の持分もここ</td><td>払わない</td></tr></table>
+  <h3>手順（発案者）</h3>
+  <ol><li>案件を選ぶ。型から作った案件なら、型の配分条件が初期値に入ります。</li><li>受領額（円）を入れる。先に買うで集まった額なら「支援総額を使う」。</li><li>確定対価（円）、成果連動（％）、発案枠（％）、IFBOXの支援単位（価格・配分案 3,000／契約生成 1,500／検収・精算支援 2,500）を選ぶ。IFBOXの取り分は上限15%。</li><li>「計算する」→ 表を確認 →「この案件に保存（提示）」。着席者と支援者に未読で通知され、7日間の異議期間に入ります。</li></ol>
+  <h3>異議（誰でも）</h3>
+  <p>「異議を出す」で、記録の漏れ・取り違え・ルール適用の誤りを書きます。争点部分だけ精算を止めます。発案者が「解決にする」を押すまで、精算できません。</p>
+  <h3>模擬受領と模擬精算（発案者）</h3>
+  <ol><li>「受領額で模擬受領を記録」。実決済ではありません。</li><li>「模擬精算を確定する（段階5）」は、次の4つが揃うと押せます。<b>検収済み／模擬受領あり／提示から7日経過／未解決の異議なし</b>。押せない理由はボタンの横に出ます。</li><li>7日を待たずに確かめるには、案件上部の「+7日」でテスト日時を進めます（全員に反映。「戻す」で戻ります）。</li></ol>
+  <div class="box info"><h4>台帳との関係</h4><p>「台帳」タブは、採用済み提案の対価と補足行を一つの表で見せます。配分の計算は台帳を入力元にしません。金額の二重計上を防ぐためです。</p></div>
+  <div class="foot"><span>IFBOX 試作 利用マニュアル</span><span>08 配分・異議・模擬精算</span></div>
+</div>
+
+<!-- 09 -->
+<div class="pg">
+  <p class="no">09</p><h2>先に買う・資金を出す</h2>
+  <div class="two">
+    <div>
+      <h3>先に買う（購入型）</h3>
+      <p>買い手席を複数人で先に埋める形です。発案者が「先に買う」タブで目標額・1口・期限・リターンを置くと募集が始まります。</p>
+      <ul><li>支援者は右の「先に買う（模擬）」で金額を入れます。「先に買う約束」の記録で、決済は外部です。</li><li>目標に届いても段階は自動で上がりません。発案者が「支援者を買い手として確定」を押すと、買い手席が「支援者N人」で埋まり段階2。</li><li>目標達成は完成や提供の保証ではありません。提供時期・キャンセル条件は発案者が示します。</li><li>支援者名は案件の参加者に表示されます。</li><li>発案者は「募集を締める」で止められます。</li></ul>
+    </div>
+    <div>
+      <h3>資金を出す（出資型）</h3>
+      <p>作る前に資金を集める形です。発案者が「資金を出す」タブで目標額・1口・期限・使途・出資者に渡す残余配分の持分（％）を置きます。</p>
+      <ul><li>出資者は「出資の意向を出す」で金額を記録します。<b>IFBOXは募集も払込の受領もしません。</b>実際の募集・契約・払込は登録事業者を通し、その結果をここに反映します。</li><li>配当ではなく、残余配分の持分として扱います。配分画面では出資者の行が自動で出ます。</li><li>目標到達は「払込は外部で確定」と表示され、段階は動きません。</li></ul>
+      <div class="box warn"><h4>注意</h4><p>この機能は意向の記録です。実際に資金を募るときは、金融商品取引法の観点で専門家の確認が要ります。</p></div>
+    </div>
+  </div>
+  <h3>一覧での見え方</h3>
+  <p>先に買う募集中の案件は金の進捗バー、資金募集中は青の進捗バーがカードの下に出ます。チップ「先に買う募集中」「資金募集中」で絞れます。</p>
+  <div class="foot"><span>IFBOX 試作 利用マニュアル</span><span>09 先に買う・資金を出す</span></div>
+</div>
+
+<!-- 10 -->
+<div class="pg">
+  <p class="no">10</p><h2>型にする・二度目を回す</h2>
+  <p class="lead">「型・比較」タブ。ここがこの試作で確かめたいことの中心です。</p>
+  <h3>型を作る（精算済みの案件・発案者）</h3>
+  <ol><li>段階5、検収基準あり、未解決の異議なしの案件で「型を作る」。</li><li>AIが席ごとの標準的な行動と、採用提案の匿名要約を下書きします。検収基準と配分条件は原文のまま入ります。検収済みの成果物の本文も固定コピーされます。</li><li>内容を確認して「公開する」。氏名・メッセージ・受領・採用者・検収結果は入りません。</li></ol>
+  <h3>型を適用する（新しい投稿）</h3>
+  <ol><li>「探す」の投稿欄に「もし」を入れ、「似た型を探す」。AIが候補を最大3件出します（外れていれば手で選べます）。</li><li>「中身を見て適用」で項目にチェック。この案件で足す検収基準があれば書きます。</li><li>「空欄に適用」→「置いてみる」。新しい案件は段階0・未採用・未検収から始まり、検収と配分の合意はやり直します。初期再利用率（適用した数÷対象項目の数）は投稿時に固定されます。</li></ol>
+  <h3>元成果物の取り込み（型から作った案件）</h3>
+  <p>「納品・検収」タブの先頭に元案件の成果物（型で固定された本文）が出ます。取り込み担当を参加名から選び、使用区分を記録します。</p>
+  <table><tr><th style="width:24%">使用区分</th><th>必要なもの</th></tr><tr><td>未確認</td><td>初期値。手番に「使用区分が未確認」として出ます</td></tr><tr><td>そのまま使用</td><td>―</td></tr><tr><td>修正して使用</td><td>適用先の版を指定</td></tr><tr><td>不使用</td><td>理由が必須。再利用の成功とはせず、そのまま結果に残ります</td></tr></table>
+  <h3>比較条件を固定する（二度目の開始前）</h3>
+  <p>成果物の範囲、数量、終了点（検収か精算か）、共通の換算時給を人が確定します。検収基準はそのときの内容で固定。確定後に基準や範囲を変えると、その組は「条件不一致」になり結果を確定表示しません。</p>
+  <h3>計測を申告する（両方の案件）</h3>
+  <p>実作業分数（実測か推計か）、AI利用費（円）、材料費等（円）を入れて保存。未入力はゼロ扱いになりません。型から作った案件では「同じ便益・同等以上の検収条件か」を理由つきで「はい」にします。</p>
+  <h3>結果の見方</h3>
+  <ul><li>比較用原価 ＝ 実作業分数÷60×換算時給 ＋ AI利用費 ＋ 材料費等。配分額・模擬受領額は足しません。</li><li>両方が終了点に人の確定で到達し、条件が一致し、原価に不足がないときだけ結果が出ます。推計を含めば「推計比較」。</li><li>経過時間は実時計で記録します。テスト日時送りを使った案件の経過時間は検証対象外。</li><li>速く安くならなかった結果もそのまま表示します。型化が原因だとは断定しません。</li><li>「二度目の確認」の9項目がすべて済になるまで、結論は出しません。</li></ul>
+  <div class="foot"><span>IFBOX 試作 利用マニュアル</span><span>10 型にする・二度目を回す</span></div>
+</div>
+
+<!-- 11 -->
+<div class="pg">
+  <p class="no">11</p><h2>手番・台帳・記録・保管</h2>
+  <h3>手番</h3>
+  <p>上の「手番」で、自分の名札に関わる次の動きだけが出ます。実案件で保管されていないものだけ。別の完了状態は持たず、席の状態と取り込み状態から都度計算します。</p>
+  <table><tr><th style="width:30%">出るもの</th><th>誰に</th></tr>
+    <tr><td>期限超過の行動（停滞）／次の一手</td><td>その席に座っている人</td></tr><tr><td>検収待ち</td><td>検収席</td></tr><tr><td>未採用の提案／支援が目標に届いた／配分未提示／未解決の異議</td><td>発案者</td></tr><tr><td>元成果物の使用区分が未確認</td><td>取り込み担当</td></tr><tr><td>未読の通知</td><td>宛先の人</td></tr></table>
+  <h3>未読（通知）</h3>
+  <p>提案は発案者へ、採用は提案者へ、納品は検収席へ、差し戻しは作る席へ、配分提示と異議は着席者と支援者へ。案件上部の「自分宛て未読」から開き、クリックで該当タブへ移動して既読になります。既読はこの端末・この名札での記録です。</p>
+  <h3>台帳</h3>
+  <p>案件の「台帳」タブ。採用済み提案から貢献者・席・貢献・対価が自動で並び、補足の行（席・貢献・対価・根拠・権利メモ）を足せます。補足行は当事者が「確認する」を押して合意にし、編集すると確認が解除されます。権利メモは権利の移転を成立させません。</p>
+  <h3>記録</h3>
+  <p>「記録」タブに、誰が何をいつ確定したかが時系列で残ります。型に切り出すときの元になります。</p>
+  <h3>保管へ移す・戻す</h3>
+  <ul><li>案件上部の「保管へ移す」（理由必須）。削除ではなく、固定版・台帳・取り込み記録・比較の参照は残ります。保管中は編集できません。一覧と手番からは消えます。</li><li>「保管庫」の「保管へ移した案件」から「戻す」。戻せば編集できます。</li><li>投稿から7日、人の反応（着席・共感・提案・支援）がない案件は、自動で「反応がなく保管中」に並びます。「呼び戻す」で開けます。</li></ul>
+  <h3>テスト日時</h3>
+  <p>案件上部の「+1日」「+7日」で、全員共通のテスト日時を進められます。異議期間や停滞の判定に使います。「戻す」で実時刻に戻ります。実時計の到達時刻は別に記録され、比較の経過時間には「テスト日時送りを含む」印が付きます。</p>
+  <div class="foot"><span>IFBOX 試作 利用マニュアル</span><span>11 手番・台帳・記録・保管</span></div>
+</div>
+
+<!-- 12 -->
+<div class="pg">
+  <p class="no">12</p><h2>困ったとき・注意</h2>
+  <h3>よくある詰まり</h3>
+  <table><tr><th style="width:36%">症状</th><th>原因と対処</th></tr>
+    <tr><td>右上が「共有DBに接続できません」</td><td>claude.ai にログインしていない、または公開デモを開いている。本番URLをログイン状態で開く。</td></tr>
+    <tr><td>投稿してもAIの一手が返らない</td><td>初回の「AIを使ってよいか」で承認していない。承認しても返らないときは案件は作られているので、次の一手を手で足す。</td></tr>
+    <tr><td>提案を採用できない</td><td>検収基準が公開されていない。「納品・検収」タブで1件以上公開する。</td></tr>
+    <tr><td>納品できない</td><td>段階2未満。買い手席に人が座るか、支援を確定する。再納品は「前の版からの変更」が必須。</td></tr>
+    <tr><td>「検収を確定」が押せない</td><td>不合格か未確認の項目がある。全項目を合格にする。差し戻すなら理由を書く。</td></tr>
+    <tr><td>「模擬精算」が押せない</td><td>横の理由を読む。検収未了／模擬受領なし／異議期間中／未解決の異議。日時を進める、または異議を解決にする。</td></tr>
+    <tr><td>比較の結果が出ない</td><td>「結果は確定表示しません」の理由を読む。条件未確定、条件不一致、終了点未到達、同じ便益が未確認、原価の不足、サンプル案件。</td></tr>
+    <tr><td>入力が消えた</td><td>他の人が同時に更新した。納品フォームでは入力は保持されるので「確定」を押し直す。他の欄は再入力。</td></tr>
+    <tr><td>一覧に自分の案件が出ない</td><td>チップが「サンプル」になっている、または保管中。「実案件」か「すべて」にする。保管庫から戻す。</td></tr>
+    <tr><td>同名の人がいる</td><td>「#番号」で区別される。手番と取り込み担当は名札のIDで判定される。</td></tr></table>
+  <h3>やってはいけないこと</h3>
+  <div class="box warn"><ul><li>機密情報・個人情報・実際の送金情報を入れない。</li><li>他の人の名札で操作しない。</li><li>模擬の受領・精算・支援・出資を、実際の契約や送金の証拠として扱わない。</li><li>案件の中身や画面を、仲間の外（SNS・ブログ）に出さない（特許出願前）。</li></ul></div>
+  <h3>この試作にないもの</h3>
+  <p>認証、決済、外部連携、メール通知、ファイル保管、評価（レビュー）、活動履歴のプロフィール、全案件の指標ダッシュボード。二度目が一組完走してから足す予定です。</p>
+  <h3>問い合わせ</h3>
+  <p>仲間内のグループへ。案件の記録タブの内容と、右上の名札を添えると早いです。</p>
+  <p class="sm" style="margin-top:12px">IFBOX（もしも箱）試作 第8版 ｜ 利用マニュアル ｜ 2026年9月11日 ｜ 本書の金額・名前はすべて例です。</p>
+  <div class="foot"><span>IFBOX 試作 利用マニュアル</span><span>12 困ったとき・注意</span></div>
+</div>
+
+</body>
+</html>
