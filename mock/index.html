@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>IFBOX モック ― 全貌</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Poppins:wght@600;700&display=swap">
+<style>
+  :root{--navy:#0E2A5B;--deep:#07152F;--gold:#F6A623;--gold-deep:#8F5A08;--gold-soft:#FDF1DC;--ink:#16203A;--ink2:#3A465F;--ink3:#6B7690;
+        --line:#DCE3EC;--soft:#EEF2F8;--bg:#F4F6FA;--red:#B3382B;--red-soft:#FBEAE7;--green:#1E7A5A;--green-soft:#E6F3EE;--blue:#2E5A9E;--blue-soft:#EAF1FB;
+        --body:'Noto Sans JP',system-ui,sans-serif;--latin:'Poppins',sans-serif}
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:14px;line-height:1.75;-webkit-font-smoothing:antialiased}
+  h1,h2,h3,h4,p{margin:0}
+  button{font-family:inherit;cursor:pointer}
+  a{color:inherit}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+
+  /* top */
+  .top{position:sticky;top:0;z-index:20;background:var(--deep);color:#fff}
+  .top .wrap{display:flex;align-items:center;gap:14px;height:56px}
+  .brand{display:flex;align-items:center;gap:9px;font-family:var(--latin);font-weight:700;font-size:18px;text-decoration:none}
+  .brand svg{width:26px;height:26px}
+  .brand small{font-family:var(--body);font-size:10px;color:#9FC0EE;font-weight:500;margin-left:6px;letter-spacing:.1em}
+  nav{display:flex;gap:2px;margin-left:16px;flex-wrap:wrap}
+  nav button{background:none;border:0;color:rgba(255,255,255,.75);padding:6px 12px;border-radius:8px;font-size:13px;font-weight:500}
+  nav button.on{background:rgba(246,166,35,.18);color:var(--gold);font-weight:700}
+  .who{margin-left:auto;display:flex;gap:6px;align-items:center;font-size:12px;color:rgba(255,255,255,.6)}
+  .who select{background:#132D5E;color:#fff;border:1px solid rgba(255,255,255,.2);border-radius:8px;padding:5px 8px;font-family:inherit;font-size:12px}
+  .mockbadge{position:fixed;right:14px;bottom:14px;z-index:30;background:var(--gold);color:var(--navy);font-weight:700;font-size:11px;padding:6px 10px;border-radius:999px;box-shadow:0 4px 14px rgba(0,0,0,.2)}
+
+  .screen{display:none;padding:26px 0 60px}
+  .screen.on{display:block}
+  .eb{font-family:var(--latin);font-size:11px;letter-spacing:.24em;color:var(--gold-deep);font-weight:700}
+  h2.t{font-size:24px;font-weight:900;color:var(--navy);margin-top:4px}
+  .lead{color:var(--ink2);margin-top:6px;max-width:760px}
+
+  .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px 20px;box-shadow:0 2px 10px rgba(14,42,91,.05)}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  @media(max-width:860px){.grid2,.grid3{grid-template-columns:1fr}}
+  h3{font-size:15px;font-weight:900;color:var(--navy);padding-left:10px;border-left:4px solid var(--gold);margin-bottom:8px}
+  .sm{font-size:12px;color:var(--ink3);line-height:1.7}
+  .btn{background:var(--gold);color:var(--navy);border:0;border-radius:9px;padding:9px 16px;font-weight:700;font-size:13px}
+  .btn.ghost{background:#fff;border:1px solid var(--line);color:var(--navy)}
+  .btn.sm{padding:5px 10px;font-size:12px;border-radius:7px}
+  .tag{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px;vertical-align:middle}
+  .tag.ai{background:var(--gold-soft);color:var(--gold-deep)}
+  .tag.hu{background:var(--navy);color:#fff}
+  .tag.em{background:#fff;border:1px dashed #B8C2D3;color:#8A96AC}
+  .tag.ok{background:var(--green-soft);color:var(--green)}
+  .tag.wn{background:var(--red-soft);color:var(--red)}
+  .tag.bl{background:var(--blue-soft);color:var(--blue)}
+  table{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px}
+  th,td{border-bottom:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+  th{color:var(--ink3);font-size:11.5px;font-weight:700;letter-spacing:.04em}
+  td.num{text-align:right;font-family:var(--latin);font-weight:600;white-space:nowrap}
+  .box{border-radius:10px;padding:12px 14px;margin-top:12px;font-size:13px}
+  .box.gold{background:var(--gold-soft);border-left:4px solid var(--gold)}
+  .box.navy{background:var(--deep);color:#fff}
+  .box.navy .k{font-family:var(--latin);font-size:10px;letter-spacing:.24em;color:var(--gold);font-weight:700}
+  .box.navy p{font-size:15px;font-weight:700;margin-top:2px}
+  .box.warn{background:var(--red-soft);border-left:4px solid var(--red)}
+  .box.info{background:var(--blue-soft);border-left:4px solid var(--blue)}
+
+  /* home */
+  .hero{background:var(--navy);color:#fff;border-radius:16px;padding:34px 36px;display:grid;grid-template-columns:1.1fr 1fr;gap:28px;align-items:center}
+  @media(max-width:860px){.hero{grid-template-columns:1fr}}
+  .hero h1{font-size:30px;font-weight:900;line-height:1.4}
+  .hero h1 em{font-style:normal;color:var(--gold)}
+  .hero .sub{color:rgba(255,255,255,.82);margin-top:12px;font-size:14px}
+  .post{background:#fff;border-radius:14px;padding:18px;color:var(--ink)}
+  .post label{display:block;font-size:11.5px;font-weight:700;color:var(--ink3);margin:8px 0 3px}
+  .post input,.post textarea{width:100%;border:1px solid var(--line);border-radius:9px;padding:10px 12px;font-family:inherit;font-size:14px}
+  .post textarea{resize:vertical;min-height:52px}
+  .post .row{display:flex;gap:8px;align-items:center;margin-top:12px}
+  .aimove{display:none;margin-top:14px;border:1px solid var(--line);border-radius:12px;padding:14px;background:var(--soft)}
+  .aimove.on{display:block;animation:in .4s ease}
+  @keyframes in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  .aimove .h{display:flex;align-items:center;gap:8px;font-weight:700;color:var(--navy);font-size:13px}
+  .aimove .h i{width:22px;height:22px;border-radius:50%;background:var(--gold);color:var(--navy);display:grid;place-items:center;font-size:10px;font-weight:700;font-style:normal}
+  .aimove p{margin-top:6px;font-size:13px;color:var(--ink2)}
+  .feed{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:16px}
+  @media(max-width:860px){.feed{grid-template-columns:1fr}}
+  .cc{cursor:pointer;transition:transform .12s}
+  .cc:hover{transform:translateY(-2px)}
+  .cc .who{margin:0;color:var(--ink3);font-size:12px}
+  .cc h4{font-size:16px;font-weight:900;color:var(--navy);margin-top:4px}
+  .cc .if{font-size:13px;color:var(--ink2);margin-top:4px}
+  .seatsmini{display:flex;gap:4px;margin-top:10px;flex-wrap:wrap}
+  .seatsmini span{font-size:10.5px;padding:2px 7px;border-radius:999px;border:1px solid var(--line)}
+  .seatsmini span.ai{background:var(--gold-soft);border-color:transparent;color:var(--gold-deep)}
+  .seatsmini span.hu{background:var(--navy);border-color:transparent;color:#fff}
+  .seatsmini span.em{border-style:dashed;color:#8A96AC}
+  .stagebar{display:flex;gap:3px;margin-top:10px}
+  .stagebar i{flex:1;height:6px;border-radius:3px;background:var(--line)}
+  .stagebar i.on{background:var(--gold)}
+  .stagebar i.now{background:var(--navy)}
+  .stlabel{font-size:11px;color:var(--ink3);margin-top:3px}
+
+  /* case */
+  .casehead{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}
+  .casehead button{background:#fff;border:1px solid var(--line);border-radius:999px;padding:6px 14px;font-size:12.5px;font-weight:700;color:var(--ink2)}
+  .casehead button.on{background:var(--navy);color:#fff;border-color:transparent}
+  .stages{display:flex;gap:5px;margin-top:10px}
+  .stg{flex:1;border-radius:8px;padding:6px 6px;background:var(--soft);text-align:center;font-size:11.5px;font-weight:700;color:var(--ink3)}
+  .stg b{display:block;font-family:var(--latin);font-size:10px;letter-spacing:.1em;color:var(--gold-deep)}
+  .stg.done{background:var(--gold-soft);color:var(--gold-deep)}
+  .stg.now{background:var(--navy);color:#fff}.stg.now b{color:var(--gold)}
+  .seats{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-top:10px}
+  @media(max-width:860px){.seats{grid-template-columns:repeat(3,1fr)}}
+  .seat{border:1.5px solid var(--line);border-radius:12px;padding:12px 8px;text-align:center;background:#fff;cursor:pointer;transition:box-shadow .12s}
+  .seat:hover{box-shadow:0 4px 14px rgba(14,42,91,.12)}
+  .seat .ic{width:40px;height:40px;border-radius:50%;margin:0 auto 6px;display:grid;place-items:center;font-size:12px;font-weight:700}
+  .seat.hu .ic{background:var(--navy);color:#fff}
+  .seat.ai .ic{background:var(--gold);color:var(--navy)}
+  .seat.em .ic{background:#fff;border:2px dashed #B8C2D3;color:#B8C2D3}
+  .seat .nm{font-size:13px;font-weight:900;color:var(--navy)}
+  .seat .wh{font-size:11px;color:var(--ink3);line-height:1.4;margin-top:2px;min-height:30px}
+  .seat .st{font-size:10.5px;font-weight:700;margin-top:4px}
+  .seat.hu .st{color:var(--navy)}.seat.ai .st{color:var(--gold-deep)}.seat.em .st{color:#8A96AC}
+  .acts li{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--line);list-style:none;font-size:13px}
+  .acts{margin:0;padding:0}
+  .acts .k{font-family:var(--latin);font-size:10.5px;font-weight:700;letter-spacing:.06em;color:var(--gold-deep);min-width:46px;padding-top:3px}
+  .acts .due{margin-left:auto;font-size:11.5px;color:var(--ink3);white-space:nowrap}
+  .bid{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-top:8px;font-size:13px;display:flex;gap:10px;align-items:flex-start}
+  .bid.ai{background:var(--gold-soft);border-color:transparent}
+  .bid .nm{font-weight:700;color:var(--navy);white-space:nowrap}
+  .bid .pr{margin-left:auto;font-family:var(--latin);font-weight:700;white-space:nowrap}
+  .bid.win{outline:2px solid var(--green)}
+  .flow{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:10px}
+  .flow .n{background:var(--soft);border-radius:8px;padding:8px 12px;font-size:12.5px;font-weight:700;color:var(--navy)}
+  .flow .n.g{background:var(--gold-soft);color:var(--gold-deep)}
+  .flow .a{color:var(--ink3);font-size:14px}
+
+  /* modal */
+  .ov{display:none;position:fixed;inset:0;background:rgba(7,21,47,.55);z-index:40;align-items:center;justify-content:center;padding:20px}
+  .ov.on{display:flex}
+  .md{background:#fff;border-radius:16px;max-width:640px;width:100%;padding:22px 24px;max-height:88vh;overflow:auto}
+  .md h3{margin-bottom:6px}
+  .md ul{padding-left:1.2em;margin:6px 0 0;font-size:13px;color:var(--ink2)}
+  .md .row{display:flex;gap:8px;margin-top:16px;justify-content:flex-end}
+
+  /* archive */
+  .arc li{list-style:none;display:flex;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line);font-size:13px}
+  .arc{margin:0;padding:0}
+  .arc .cnt{margin-left:auto;font-family:var(--latin);font-weight:700;color:var(--ink3);white-space:nowrap;font-size:12px}
+  .toast{position:fixed;left:50%;bottom:60px;transform:translateX(-50%);background:var(--navy);color:#fff;padding:10px 16px;border-radius:999px;font-size:13px;opacity:0;transition:opacity .3s;z-index:50;pointer-events:none}
+  .toast.on{opacity:1}
+</style>
+</head>
+<body>
+
+<div class="top"><div class="wrap">
+  <a class="brand" href="#" onclick="go('home');return false">
+    <svg viewBox="0 0 40 40"><rect x="2.5" y="2.5" width="35" height="35" rx="9.5" fill="#F6A623"/><circle cx="8.6" cy="8.6" r="2.1" fill="#0E2A5B"/><circle cx="31.4" cy="8.6" r="2.1" fill="#0E2A5B"/><circle cx="8.6" cy="31.4" r="2.1" fill="#0E2A5B"/><circle cx="31.4" cy="31.4" r="2.1" fill="#0E2A5B"/><rect x="12.1" y="11" width="5.3" height="18" rx="2.3" fill="#fff"/><rect x="20.5" y="11" width="5.3" height="18" rx="2.3" fill="#fff"/><rect x="20.5" y="11" width="8.8" height="5.3" rx="2.3" fill="#fff"/><rect x="20.5" y="18.7" width="6.7" height="4.9" rx="2.2" fill="#fff"/></svg>
+    IFbox<small>MOCK</small>
+  </a>
+  <nav>
+    <button data-s="home" class="on" onclick="go('home')">もし</button>
+    <button data-s="case" onclick="go('case')">案件と席</button>
+    <button data-s="market" onclick="go('market')">タスク市場</button>
+    <button data-s="money" onclick="go('money')">お金の流れ</button>
+    <button data-s="archive" onclick="go('archive')">保管庫</button>
+    <button data-s="zero" onclick="go('zero')">案件第0号</button>
+  </nav>
+  <div class="who">あなたは
+    <select id="who" onchange="setWho()">
+      <option value="own">発案する人</option>
+      <option value="buy">発注する人（企業・施設）</option>
+      <option value="work">働く・持っている人</option>
+      <option value="fund">出す人（資金）</option>
+    </select>
+  </div>
+</div></div>
+<div class="mockbadge">MOCK ― データは例</div>
+<div class="toast" id="toast"></div>
+
+<!-- ================= HOME ================= -->
+<section class="screen on" id="s-home"><div class="wrap">
+  <div class="hero">
+    <div>
+      <p class="eb" style="color:var(--gold)">IFBOX ― もしも箱</p>
+      <h1 id="tagline">つくれる。<br>その先は、<em>まだ</em>。</h1>
+      <p class="sub" id="sub">一行の「もし」を置く。空いている席にはAIが座って準備する。人が来たら交代する。買われて、検収されて、分けるまでを一つの場所で。</p>
+      <div class="box navy" style="margin-top:18px"><span class="k">THE FIRST QUESTION</span><p>便益を受けるのは誰で、払うのは誰ですか。</p></div>
+    </div>
+    <div class="post">
+      <label>もし、こんなのがあれば（一行）</label>
+      <input id="ifline" placeholder="もし、冷蔵庫を撮るだけで献立が決まったら" value="もし、冷蔵庫を撮るだけで献立が決まったら">
+      <label>便益を受けるのは誰？</label>
+      <input id="benefit" placeholder="夜に料理する一人暮らしの人" value="夜に料理する一人暮らしの人">
+      <label>動くものはある？（任意）</label>
+      <input id="demo" placeholder="URL や 一言">
+      <div class="row"><button class="btn" onclick="post()">置いてみる →</button><span class="sm">計画も企画書もいりません</span></div>
+      <div class="aimove" id="aimove">
+        <div class="h"><i>AI</i>AIの最初の一手（3秒で返ります）</div>
+        <p id="aimove-p"></p>
+        <div class="seatsmini" id="aimove-seats"></div>
+        <div style="margin-top:10px"><button class="btn sm" onclick="openNew()">案件を開く →</button></div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:26px;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap">
+    <div><p class="eb">CASES</p><h2 class="t">いま置かれている「もし」</h2></div>
+    <p class="sm" style="margin-left:auto">段階は、人の確定でだけ上がります。AIが試作を作っても上がりません。</p>
+  </div>
+  <div class="feed" id="feed"></div>
+
+  <div class="grid3" style="margin-top:22px">
+    <div class="card"><h3>席</h3><p class="sm">案件には最初から6つの席があります。発案、作る、売る、場所・設備、買い手、検収。空いている「作る」「売る」にはAIが座って準備します。「買い手」「検収」にはAIは座れません。払う人と認める人は、現実の人だからです。</p></div>
+    <div class="card"><h3>段階</h3><p class="sm">0投稿 → 1形あり → 2買い手あり → 3納品 → 4検収 → 5精算。すべて人の確定で上がります。いちばん大事なのは「2 買い手あり」に上がるかどうかです。</p></div>
+    <div class="card"><h3>分け方</h3><p class="sm">確定対価（作業・仕入れ・場所）、成果連動（売れた分）、残余配分（続けて売れる分。発案の取り分はここ）。IFBOXの取り分は事前公開の単価表。確定前に7日間の異議期間。</p></div>
+  </div>
+</div></section>
+
+<!-- ================= CASE ================= -->
+<section class="screen" id="s-case"><div class="wrap">
+  <p class="eb">CASE</p><h2 class="t">案件と席</h2>
+  <div class="casehead" id="casehead"></div>
+  <div class="card">
+    <div style="display:flex;gap:12px;align-items:baseline;flex-wrap:wrap">
+      <div><p class="sm" id="c-who"></p><h2 class="t" id="c-title" style="font-size:22px"></h2></div>
+      <span class="tag bl" id="c-domain" style="margin-left:auto"></span>
+    </div>
+    <div class="box navy"><span class="k">言い換えたもし</span><p id="c-reframed"></p><p class="sm" id="c-orig" style="color:rgba(255,255,255,.6);font-weight:400;font-size:12px;margin-top:4px"></p></div>
+    <div class="stages" id="c-stages"></div>
+    <p class="sm" style="margin-top:6px" id="c-stagenote"></p>
+  </div>
+
+  <div class="grid2" style="margin-top:16px">
+    <div class="card">
+      <h3>席（クリックすると座れます）</h3>
+      <div class="seats" id="c-seats"></div>
+      <p class="sm" style="margin-top:10px">■ 人が座っている　■ AIが座って準備中（人が来たら交代）　□ AIは座れない。人が来るまで空席</p>
+    </div>
+    <div class="card">
+      <h3>次の一手（席ごと・期限つき）</h3>
+      <ul class="acts" id="c-acts"></ul>
+      <p class="sm" style="margin-top:8px">期限を過ぎた人の席は、猶予のあと AI に戻ります。記録は残り、いつでも再応募できます。</p>
+    </div>
+  </div>
+
+  <div class="grid2" style="margin-top:16px">
+    <div class="card">
+      <h3>AIの最初の一手</h3>
+      <p style="font-size:13.5px;color:var(--ink2)" id="c-first"></p>
+      <div class="box warn" id="c-line"></div>
+    </div>
+    <div class="card">
+      <h3>配分プレビュー（着手前に合意）</h3>
+      <div id="c-dist"></div>
+      <p class="sm" style="margin-top:8px" id="c-fee"></p>
+      <div style="display:flex;gap:8px;margin-top:10px;align-items:center"><button class="btn ghost sm" onclick="toast('異議を受け付けました。争点部分だけ精算を止め、別の検証処理で再計算します。')">異議を出す</button><span class="sm" id="objection"></span></div>
+    </div>
+  </div>
+</div></section>
+
+<!-- ================= MARKET ================= -->
+<section class="screen" id="s-market"><div class="wrap">
+  <p class="eb">TASK MARKET</p><h2 class="t">タスク市場 ― AIが最低ラインを置き、人（とそのAI）が上回れば採用</h2>
+  <p class="lead">席の「次の一手」は市場に投げられます。AIができる仕事はAIが先に結果を置くので、案件は止まりません。人が勝てるのは、品質、現場の知識、関係性で上回るときだけ。AIができない仕事（場所、商談、現場、検収）は人同士で取り合います。</p>
+  <div class="grid2" style="margin-top:16px" id="market"></div>
+  <div class="box info" style="margin-top:16px"><b>イーブンの条件。</b>参加者はそれぞれ自分のAIを連れてきます。持っていない人にはIFBOXが同じ最低ラインのAIを貸します。差がつくのはモデルの性能ではなく、本人の中身（知識、関係、現場、資格、履行の記録）だけです。AIの手挙げは本人の手挙げ。責任は連れてきた人が負います。</div>
+</div></section>
+
+<!-- ================= MONEY ================= -->
+<section class="screen" id="s-money"><div class="wrap">
+  <p class="eb">MONEY</p><h2 class="t">お金の流れ ― 三層で分け、IFBOXの取り分は先に公開する</h2>
+  <div class="grid2" style="margin-top:16px">
+    <div class="card">
+      <h3>一件の精算（例：退職の案件、受任1件）</h3>
+      <div id="m-dist"></div>
+      <p class="sm" style="margin-top:8px" id="m-fee"></p>
+    </div>
+    <div class="card">
+      <h3>三層の意味</h3>
+      <table>
+        <tr><th>層</th><th>中身</th><th>売れなくても払う？</th></tr>
+        <tr><td><b>確定対価</b></td><td>事前に決めた作業・仕入れ・場所の料金</td><td>払う</td></tr>
+        <tr><td><b>成果連動</b></td><td>売れた分、検収が通った分に応じて</td><td>払わない</td></tr>
+        <tr><td><b>残余配分</b></td><td>続けて売れる分を合意ルールで。<b>発案枠10%はここ</b></td><td>払わない</td></tr>
+      </table>
+      <div class="box gold" style="margin-top:12px"><b>IFBOXの取り分は、配分を出すAIが決めない。</b>案件開始時に公開した単価表（価格・配分案の作成、契約生成、検収・精算支援など）の完了数 × 単価、上限つき。配分AIに変更権限はありません。</div>
+      <div class="box warn"><b>7日間の異議期間。</b>AIの配分案は「提示条件」で、それだけでは契約は成立しません。記録漏れや取り違えを示せれば、別の検証処理で再計算します。争点部分だけ止め、確定済みの作業代や場所代は止めません。</div>
+    </div>
+  </div>
+  <div class="card" style="margin-top:16px">
+    <h3>お金の通り道</h3>
+    <div class="flow">
+      <span class="n">買い手が払う</span><span class="a">→</span><span class="n">外部の決済事業者（IFBOXは預からない）</span><span class="a">→</span><span class="n">確定対価を先に払う</span><span class="a">→</span><span class="n g">IFBOX報酬（単価表）</span><span class="a">→</span><span class="n">成果連動</span><span class="a">→</span><span class="n">残余配分（発案枠を含む）</span><span class="a">→</span><span class="n g">一部は案件第0号の貢献者へ戻る</span>
+    </div>
+    <p class="sm" style="margin-top:8px">資金の席（投資型）は設計だけしてあり、Phase 1 では閉じています。募集と預かりは登録事業者に置き、IFBOXは自分で募集しません。</p>
+  </div>
+</div></section>
+
+<!-- ================= ARCHIVE ================= -->
+<section class="screen" id="s-archive"><div class="wrap">
+  <p class="eb">ARCHIVE</p><h2 class="t">保管庫 ― 反応のない「もし」は、捨てない・目立たせない・束ねる</h2>
+  <p class="lead">投稿直後にAIが一手を返すので、反応ゼロはありません。一定期間、人の反応がなければ静かに保管庫へ。似た「もし」が来たら束ねて、乗る人が現れたら呼び戻します。「共感はあるのに乗る人がいない」一覧は、供給者と企業にとっての需要の地図です。</p>
+  <div class="grid2" style="margin-top:16px">
+    <div class="card"><h3>保管中（似たものは束ねています）</h3><ul class="arc" id="arc"></ul></div>
+    <div class="card"><h3>需要の地図 ― 共感はあるのに、乗る人がいない</h3><ul class="arc" id="demand"></ul>
+      <div class="box info" style="margin-top:12px">この一覧は、後で企業・供給者に売れるものです。「求められているのに誰も作っていないもの」のリスト。</div>
+    </div>
+  </div>
+  <div class="box gold" style="margin-top:16px"><b>期待値の管理。</b>いま濃くしている領域の外から来た「もし」には正直に言います。「この分野は、まだ乗る人が少ない」。領域の中では人の反応を7日以内に、外ではAIの反応だけを約束します。</div>
+</div></section>
+
+<!-- ================= ZERO ================= -->
+<section class="screen" id="s-zero"><div class="wrap">
+  <p class="eb">CASE #0</p><h2 class="t">案件第0号 ― IFBOX自身</h2>
+  <p class="lead">リナックス的に作り、協同組合的に分ける。IFBOXの席の仕組みは、IFBOXの上で作られています。誰が何を作ったかを貢献台帳に残し、利用者が払った額の一部を、作った人に戻します。</p>
+  <div class="grid3" style="margin-top:16px" id="phil"></div>
+  <div class="grid2" style="margin-top:16px">
+    <div class="card">
+      <h3>貢献台帳（今月）</h3>
+      <table id="zero-t"><tr><th>貢献者</th><th>席</th><th>貢献</th><th style="text-align:right">再分配</th></tr></table>
+      <p class="sm" style="margin-top:8px">再分配は「貢献への報酬」であって「持分への配当」ではありません。各人の所得として扱います。</p>
+    </div>
+    <div class="card">
+      <h3>開くもの・閉じるもの</h3>
+      <table>
+        <tr><th>開く（誰でも使える・作れる）</th><th>閉じる（IFBOXの堀）</th></tr>
+        <tr><td>席の型、タスクの構造、台帳のスキーマ</td><td>履行の記録（誰が、どの条件で、実際に引き受けたか）</td></tr>
+        <tr><td>参照実装（このモックの発展形）</td><td>評価の記録、異議と再計算の履歴</td></tr>
+        <tr><td>AI同士がやりとりする共通の型</td><td>運営そのもの（責任を負う主体）</td></tr>
+      </table>
+      <div class="box gold" style="margin-top:12px"><b>マージの権限は人が持つ。</b>貢献は誰でもできる。取り込むかどうかは、責任を持つ人が決める。ここを曖昧にすると、開いた瞬間に壊れます。</div>
+      <p class="sm" style="margin-top:8px">堀はコードにありません。コードを複製しても、履行の記録と席に座った人の履歴はついてきません。</p>
+    </div>
+  </div>
+  <div class="card" style="margin-top:16px">
+    <h3>なぜ安いのか（利用者への説明）</h3>
+    <div class="flow">
+      <span class="n">利用者が払う（出来高・入口は無料）</span><span class="a">→</span><span class="n g">IFBOX報酬</span><span class="a">→</span><span class="n">運営費</span><span class="a">→</span><span class="n g">残りを貢献者に再分配</span><span class="a">→</span><span class="n">貢献者がまた作る</span>
+    </div>
+    <p class="sm" style="margin-top:8px">作る費用を貢献者が持ち、見返りを再分配で受け取る。だから利用者は安く使える。この循環を隠さず見せます。</p>
+  </div>
+</div></section>
+
+<!-- modal -->
+<div class="ov" id="ov" onclick="if(event.target===this)closeMd()"><div class="md" id="md"></div></div>
+
+<script>
+/* ===== 文言（GPT-6の下書き） ===== */
+window.COPY={"tagline":"その「もし」に、仲間が座る。","sub":"一行の願いに、6つの席。AIが準備し、人が確定する。作って、届けて、貢献に応じて分ける。","market_task":{"title":"サンプルアプリA｜SELL席から：最初の商品が売れる案内と購入導線を作る","ai_baseline":"飼い主向けの商品案内文と購入導線を仮作成。散歩記録から商品を提案する３案を比較し、価格・仕入れ・発送条件は未確認として明記。Bさんの確認後に小さく販売を試す。","bids":["青木さん・仮名（販売ライター）|自分のAIと案内文を磨き、飼い主５人への聞き取りで３案を比較。購入を迷う理由と改善案まで添えて、採用判断の材料として返す。|提案価格15,000円","佐藤さん・仮名（ECデザイナー）|自分のAIとスマホ向け購入ページを試作。送料と発送日を先に示し、飼い主３人の操作テストで迷った箇所を直して改善記録も渡す。|提案価格25,000円"]},"handover_sample":"・Bさんへ。サンプルアプリAのSELL席をAIから引き継ぐための案です。\n・目的：手帳アプリを入口に、飼い主が必要な商品を買えるようにする。\n・用意済み：商品案内3案と購入導線の仮案。販売実績はまだありません。\n・未確定：商品、仕入れ、価格、送料、発送、返品条件。Bさんの確認が必要です。\n・次の一手：販売条件を確定し、市場提案をAI案と比較して採否を判断。段階は人の確定でのみ進みます。","case0_lines":["春さん（仮名）|OWN|6席と再分配ルールの設計|3000","海さん（仮名）|BUILD|席への参加と引き継ぎ画面の実装|12000","空さん（仮名）|SELL|利用案内と有料機能の説明づくり|6000","森さん（仮名）|SITE|検証用サーバーと設備の提供|5000","月さん（仮名）|ACC|段階確定と配分表示の検収|4000"],"empty_seat_copy":"{席}は人を募集中。できることから、手を挙げよう。","objection_copy":"配分案の公開から7日間は異議を受け付けます。貢献や金額に違いがあれば、根拠を添えてお知らせください。","philosophy":["リナックスのように、開いて、持ち寄って作る。","協同組合のように、貢献と合意で分ける。","IFBOXも案件第0号。利用料の一部を作り手へ戻す。"]};
+const COPY = window.COPY || {};
+/* ===== データ ===== */
+const SEATS = [
+  ["OWN","発案","もしを置いた人",false],
+  ["BUILD","作る","試作を作る",true],
+  ["SELL","売る","買い手候補と提案文",true],
+  ["SITE","場所・設備","必要なときだけ",false],
+  ["BUY","買い手","払う人",false],
+  ["ACC","検収","できたと認める人",false],
+];
+const STAGES = ["投稿","形あり","買い手あり","納品","検収","精算"];
+const CASES = {
+  wanlife:{who:"Aさん", title:"サンプルアプリA ― 愛犬の暮らし手帳", domain:"ペット・物販", stage:1,
+    orig:"パイが大きそうなところ狙って、ワンチャン飼い主用アプリ作ってみた。Bさんと組んで物販も。",
+    seats:{OWN:["hu","Aさん"],BUILD:["hu","Aさん（試作あり）"],SELL:["ai","AIが準備中 → Bさん候補"],SITE:["em","不要"],BUY:["em","飼い主30人から"],ACC:["em","空"]},
+    line:"健康・栄養に関わる提案なので、薬機法と景品表示法の線があります。「参考値、臨床評価ではない」の姿勢をフード提案にも通す。犬の健康記録は飼い主の個人情報と一緒に動くので、物販側に渡す範囲を先に決める。",
+    dist:{price:120000,lines:[["確定","Bさん（仕入れ・配送）","48,000","事前承認した仕入れと配送の実費"],["IFBOX","IFBOX（単価表）","9,000","価格・配分案、契約生成、検収支援の完了分"],["成果連動","Bさん（売る）","24,000","売れた分の20%"],["成果連動","Aさん（作る）","24,000","提案ロジックの改修と運用"],["残余","Aさん（発案枠10%）","1,500","2か月目以降の売上から"],["残余","作る・売る（合意比率）","13,500","2か月目以降の売上から"]]}},
+  taishoku:{who:"Aさん × Dさん", title:"退職給付の診断（サンプル）", domain:"手続き・受任", stage:1,
+    orig:"退職時にもらえるお金のシミュレーション。Dさんがマニュアル販売や受任。",
+    seats:{OWN:["hu","Aさん"],BUILD:["hu","Aさん（試作あり）"],SELL:["hu","Dさん（受任）"],SITE:["em","不要"],BUY:["em","退職を考えている本人"],ACC:["em","手続き完了"]},
+    line:"受任の範囲。社労士が受けられるのは離職票、雇用保険、社会保険などの手続きと、特定社労士ならあっせんの代理まで。会社との退職交渉そのものは弁護士しかできない。給付金の表示は概算に留め、「必ずもらえる」に読める表現を避ける。",
+    dist:{price:55000,lines:[["確定","Dさん（手続きの作業）","30,000","受任した手続きの作業。売れても売れなくても払う"],["IFBOX","IFBOX（単価表）","4,000","契約生成、検収・精算支援の完了分"],["成果連動","Aさん（作る）","9,000","診断サイト経由の受任1件につき"],["成果連動","Dさん（売る）","6,000","マニュアル売上の分"],["残余","Aさん（発案枠10%）","600","翌月以降の継続分から"],["残余","作る・売る（合意比率）","5,400","翌月以降の継続分から"]]}},
+  tabito:{who:"Cさん", title:"サンプルアプリC ― 家族の旅行プランナー", domain:"旅行", stage:0,
+    orig:"めっちゃdemoなんでUIとか全然なんですけど、旅行のプランニングと管理をするアプリ作ります。",
+    seats:{OWN:["hu","Cさん"],BUILD:["hu","Cさん（デモあり）"],SELL:["ai","AIが準備中"],SITE:["em","不要"],BUY:["em","家族？ 旅行会社？"],ACC:["em","空"]},
+    line:"プランの提案までなら自由ですが、予約の手配まで踏み込むと旅行業の登録が要ります。提案に留めてアフィリエイトで売るのか、登録事業者と組むのか。決めるまで作る席は動かさない方がいい。",
+    dist:{price:0,lines:[["―","買い手席が空いているため、配分はまだ作れません","―","「提案まで／予約まで」を決めてから"]]}},
+  ifbox:{who:"創業メンバー", title:"案件第0号 ― IFBOX自身", domain:"プラットフォーム", stage:1,
+    orig:"IFBOXの席の仕組みを、IFBOXの上で作る。貢献者に再分配する。",
+    seats:{OWN:["hu","創業メンバー"],BUILD:["hu","貢献者3名 ＋ AI"],SELL:["ai","AIが準備中"],SITE:["em","不要"],BUY:["em","最初の有償案件（退職）"],ACC:["em","空"]},
+    line:"貢献者への再分配は「貢献への報酬」であって「持分への配当」ではない。配当に見えた瞬間、出資の募集と同じ棚に入る。開くコードのライセンスに特許の利用許諾を含めるかは弁理士に確認。",
+    dist:{price:0,lines:[["―","精算は最初の有償案件が一周してから","―","IFBOX報酬の一部を貢献台帳に従って再分配"]]}},
+};
+const FALLBACK = {
+  first_move:{
+    wanlife:"便益を受けるのは飼い主。払うのも飼い主本人、ただしアプリにではなくフードに。国内のペット市場で大きいのはフード・サプリ・医療で、記録アプリではありません。本体は物販、アプリは入口です。だから言い換えます。「もし、散歩と食事の記録から、うちの子に合ったフードが提案されて、そのまま届いたら」。",
+    taishoku:"便益を受けるのは退職を考えている人。払うのも本人で、サービスは手続きの代行。売る席にDさんが最初から座れるので、3件でいちばん早く一周します。診断が入口、マニュアルが低額商品、受任が本体。言い換えると「もし、辞める前にいくらもらえて何をすればいいかが分かって、そのまま手続きを頼めたら」。",
+    tabito:"便益を受けるのは家族。払うのが家族なのか、旅行会社や宿なのかで、作るものが半分になります。提案までなら自由、予約までなら旅行業の登録が要ります。まず分かれ道を決めましょう。言い換えると「もし、家族の“したい”を入れるだけで、無理のない旅程が出て、そのまま予約できたら」。",
+    ifbox:"便益を受けるのはもしを置く人と乗る人。払うのは買い手席の人で、その一部が作った貢献者に戻ります。IFBOX自身を案件第0号にして、席と配分が本当に動くかを自分たちの分配で確かめます。言い換えると「もし、作った人に、使われた分だけ戻ってくる場所があったら」。",
+  },
+  reframed:{wanlife:"もし、記録からうちの子に合うフードが届いたら",taishoku:"もし、辞める前に手続きまで頼めたら",tabito:"もし、家族の“したい”がそのまま旅程になったら",ifbox:"もし、作った人に使われた分だけ戻ってきたら"},
+  next_actions:{
+    wanlife:["OWN|達成条件を一行で決める（30人中、何人が買ったか）|7","SELL|Bさんが「何を持っているか」を書いて座る|7","BUILD|提案ロジックにフードの一覧をつなぐ|14"],
+    taishoku:["SELL|受任の範囲を決めて、サイトの文言を直す|7","BUILD|診断結果から「あなたの手順」に落ちるマニュアルを1本|14","BUY|診断した人のうち、頼んだ人を数える（4週間）|28"],
+    tabito:["OWN|提案までか、予約までかを決める|7","SELL|決めた側に合わせて買い手候補を並べる（AI）|3","BUILD|沖縄1か所に絞って家族10組に使ってもらう|21"],
+    ifbox:["BUILD|席の状態遷移と引き継ぎを表計算で1周|14","OWN|貢献台帳の項目を確定|7","SELL|最初の有償案件（退職）で単価表を試す|28"],
+  },
+  market_task:{title:"サンプルアプリA ― 売る席：フードメーカーへの打診文と価格案",ai_baseline:"3社の候補と提案文の下書き、価格の比較根拠。一般的な卸条件を前提にした案。",bids:["Bさん（売る）|仕入れ先2社と直接の連絡がある。サンプル提供の約束を取れる|成果連動20%","佐藤さん（ペット店経営）|店頭で30人に配れる。既存顧客の反応を1週間で返せる|確定 20,000円"]},
+  handover_sample:"・席の目的：飼い主30人に、記録から選んだフードを買ってもらう\n・現在：買い手候補3社と提案文の下書き（版2）\n・次の一手：Bさんの仕入れ先で、サンプル提供が可能かを確認する（7日）\n・未決：価格帯（3,000円か5,000円か）。決めないと提案文が固まらない\n・秘密の範囲：飼い主の記録は集計値のみ。個別データは渡さない",
+  distribution_sample:null,
+  case0_lines:["Aさん|BUILD|席の画面の試作|12,000","Cさん|BUILD|タスク市場の型|8,000","Bさん|SELL|最初の物販の販路|6,000","AI（運営）|BUILD|定型部分の生成（再分配なし）|0","Dさん|OWN|配分ルールの初版|9,000"],
+  empty_seat_copy:"この案件は「{席}」の席が空いています。候補あり。",
+  objection_copy:"確定前に7日間。記録の漏れや取り違えを示せれば、別の手順で計算し直します。",
+  philosophy:["作るのは開く。誰でも席に座れる。","分けるのは記録で。誰が何をしたかを残す。","堀はコードではなく、履行の記録。"],
+};
+const C = k => (COPY[k] ?? FALLBACK[k]);
+
+/* ===== helpers ===== */
+let cur = "wanlife", who = "own";
+const $ = id => document.getElementById(id);
+function go(s){ document.querySelectorAll('.screen').forEach(x=>x.classList.toggle('on', x.id==='s-'+s)); document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on', b.dataset.s===s)); window.scrollTo(0,0); }
+function toast(t){ const e=$('toast'); e.textContent=t; e.classList.add('on'); setTimeout(()=>e.classList.remove('on'),3200); }
+function seatTag(k){ const s=CASES[cur].seats[k]; return s[0]; }
+function stagesHTML(st){ return STAGES.map((n,i)=>`<div class="stg ${i<st?'done':i===st?'now':''}"><b>${i}</b>${n}</div>`).join(''); }
+
+/* ===== home ===== */
+function renderFeed(){
+  $('feed').innerHTML = Object.entries(CASES).map(([k,c])=>`
+    <div class="card cc" onclick="openCase('${k}')">
+      <p class="who">${c.who}</p><h4>${c.title}</h4>
+      <p class="if">${C('reframed')[k]}</p>
+      <div class="seatsmini">${SEATS.map(s=>`<span class="${c.seats[s[0]][0]}">${s[1]}</span>`).join('')}</div>
+      <div class="stagebar">${STAGES.map((n,i)=>`<i class="${i<c.stage?'on':i===c.stage?'now':''}"></i>`).join('')}</div>
+      <p class="stlabel">段階 ${c.stage} ${STAGES[c.stage]}${c.stage<2?' ― 買い手席が空いています':''}</p>
+    </div>`).join('');
+}
+function post(){
+  const line=$('ifline').value.trim(); const b=$('benefit').value.trim();
+  if(!line){ toast('一行だけ書いてください'); return; }
+  const m=$('aimove'); m.classList.remove('on'); $('aimove-p').textContent='考えています…';
+  $('aimove-seats').innerHTML='';
+  setTimeout(()=>{
+    m.classList.add('on');
+    $('aimove-p').innerHTML=`便益を受けるのは<b>${b||'（誰か）'}</b>。では、払うのは誰ですか。候補は3つ出せます。本人、その人にサービスを届けている事業者、その記録を欲しがる会社。<br>言い換えると「${line.replace(/たら$/,'て、そのまま届いたら')}」。作る席と売る席には私が座って準備を始めました。買い手席は、人が来るまで空けておきます。`;
+    $('aimove-seats').innerHTML = SEATS.map(s=>`<span class="${s[0]==='OWN'?'hu':s[3]?'ai':'em'}">${s[1]}</span>`).join('');
+  },900);
+}
+function openNew(){ toast('モックでは、既存の案件で席の動きを見てください'); openCase('wanlife'); }
+
+/* ===== case ===== */
+function openCase(k){ cur=k; go('case'); renderCase(); }
+function renderCase(){
+  const c=CASES[cur];
+  $('casehead').innerHTML = Object.entries(CASES).map(([k,x])=>`<button class="${k===cur?'on':''}" onclick="cur='${k}';renderCase()">${x.title.split(' ― ')[0]}</button>`).join('');
+  $('c-who').textContent=c.who; $('c-title').textContent=c.title; $('c-domain').textContent=c.domain;
+  $('c-reframed').textContent=C('reframed')[cur]; $('c-orig').textContent='元：'+c.orig;
+  $('c-stages').innerHTML=stagesHTML(c.stage);
+  $('c-stagenote').textContent = c.stage<2 ? '段階2「買い手あり」に上がっていません。AI席の成果物は「準備」で、段階は動きません。' : '';
+  $('c-seats').innerHTML = SEATS.map(s=>{ const st=c.seats[s[0]]; const cls=st[0];
+    return `<div class="seat ${cls}" onclick="seatClick('${s[0]}')"><div class="ic">${cls==='hu'?'人':cls==='ai'?'AI':'空'}</div><div class="nm">${s[1]}</div><div class="wh">${s[2]}</div><div class="st">${st[1]}</div></div>`; }).join('');
+  $('c-acts').innerHTML = C('next_actions')[cur].map(a=>{ const [k,t,d]=a.split('|'); return `<li><span class="k">${k}</span><span>${t}</span><span class="due">期限 ${d}日</span></li>`; }).join('');
+  $('c-first').textContent = C('first_move')[cur];
+  $('c-line').innerHTML = '<b>AIが着手前に引く線。</b>'+c.line;
+  $('c-dist').innerHTML = distTable(c.dist);
+  $('c-fee').textContent = c.dist.price ? 'IFBOXの取り分は事前公開の単価表による完了分のみ。配分を出すAIに変更権限はありません。' : '';
+  $('objection').textContent = C('objection_copy');
+}
+function distTable(d){
+  if(!d.price) return `<table><tr><th>層</th><th>受け取る人</th><th style="text-align:right">金額</th><th>理由</th></tr>${d.lines.map(l=>`<tr><td>${l[0]}</td><td>${l[1]}</td><td class="num">${l[2]}</td><td class="sm">${l[3]}</td></tr>`).join('')}</table>`;
+  return `<p class="sm">受領額 <b style="font-family:var(--latin)">¥${d.price.toLocaleString()}</b>（消費税相当と事前承認の実費を除いた額を分配原資に）</p>
+  <table><tr><th>層</th><th>受け取る人</th><th style="text-align:right">金額</th><th>理由</th></tr>${d.lines.map(l=>`<tr><td><span class="tag ${l[0]==='IFBOX'?'ai':l[0]==='確定'?'bl':l[0]==='残余'?'ok':'hu'}">${l[0]}</span></td><td>${l[1]}</td><td class="num">¥${l[2]}</td><td class="sm">${l[3]}</td></tr>`).join('')}</table>`;
+}
+function seatClick(k){
+  const c=CASES[cur]; const st=c.seats[k]; const name=SEATS.find(s=>s[0]===k)[1];
+  if(st[0]==='hu'){ md(`<h3>${name}の席</h3><p>${st[1]} が座っています。</p><p class="sm" style="margin-top:8px">次の行動の期限を過ぎ、猶予のあとも応答がなければ、席はAIに戻ります。記録は残り、いつでも再応募できます。</p><div class="row"><button class="btn ghost" onclick="closeMd()">閉じる</button></div>`); return; }
+  if(st[0]==='ai'){
+    const pk=C('handover_sample').split('\n').map(x=>`<li>${x.replace(/^・/,'')}</li>`).join('');
+    md(`<h3>${name}の席に座る（AIから引き継ぐ）</h3><p class="sm">AIが残した引き継ぎパケットです。これを読めば、続きから始められます。</p><ul>${pk}</ul>
+        <div class="box gold" style="margin-top:12px;font-size:12.5px">座った瞬間、AIはこの席から外れます。同じ席で並走はしません。AIに作業を頼むときは、あなたの席の道具として呼びます。</div>
+        <div class="row"><button class="btn ghost" onclick="closeMd()">やめる</button><button class="btn" onclick="sit('${k}')">この席に座る</button></div>`); return; }
+  const empty=C('empty_seat_copy').replace('{席}',name);
+  const isBuy = k==='BUY';
+  md(`<h3>${name}の席は空いています</h3><p>${empty}</p><p class="sm" style="margin-top:8px">${isBuy?'この席にAIは座れません。払う人が来て初めて、案件は段階2「買い手あり」に上がります。AIは買い手候補への打診文を用意しています。':'この席にAIは座れません。候補と条件はAIが並べますが、確定（予約・発注・承認）は人が行います。'}</p>
+      <div class="row"><button class="btn ghost" onclick="closeMd()">閉じる</button><button class="btn" onclick="sit('${k}')">${isBuy?'発注する（買い手席に座る）':'この席に座る'}</button></div>`);
+}
+function sit(k){
+  const c=CASES[cur]; c.seats[k]=['hu','あなた']; closeMd();
+  if(k==='BUY'&&c.stage<2){ c.stage=2; toast('買い手席が埋まりました。段階2「買い手あり」に上がりました。'); }
+  else toast('席に座りました。AIは外れ、記録を引き継ぎました。');
+  renderCase(); renderFeed();
+}
+function md(html){ $('md').innerHTML=html; $('ov').classList.add('on'); }
+function closeMd(){ $('ov').classList.remove('on'); }
+
+/* ===== market ===== */
+function renderMarket(){
+  const t=C('market_task');
+  const bids=t.bids.map(b=>{const [n,s,p]=b.split('|');return `<div class="bid"><span class="nm">${n}</span><span>${s}</span><span class="pr">${p}</span></div>`;}).join('');
+  const human=[
+    ["SITE|退職 ― 相談の場所","面談できる会議室（大阪市内・平日夜）を2週間で4回","確定 4,000円/回","場所・設備の席。AIは候補を探すだけ。予約と支払確約は人。"],
+    ["BUY|サンプルアプリA ― 買い手","飼い主30人に4週間の記録と、提案フードの購入","―","買い手席。AIは座れない。払う人が来て初めて段階2に。"],
+    ["ACC|退職 ― 検収","手続き完了の確認（買い手側の人）","―","検収席。AIは証拠を整理するだけ。承認は人。"],
+  ];
+  $('market').innerHTML = `
+    <div class="card"><h3>AIができる仕事 ― AIが最低ラインを置き、人が上回れば採用</h3>
+      <p style="font-weight:700;color:var(--navy)">${t.title}</p>
+      <div class="bid ai"><span class="nm">AI（最低ライン）</span><span>${t.ai_baseline}</span><span class="pr">単価表</span></div>
+      ${bids}
+      <div style="margin-top:10px;display:flex;gap:8px;align-items:center"><button class="btn sm" onclick="toast('発案者が選びます。AIは審判をしません。')">発案者が選ぶ →</button><span class="sm">AIは競争者なので審判はしない。選ぶのは発案者。</span></div>
+    </div>
+    <div class="card"><h3>AIができない仕事 ― 人同士で取り合う</h3>
+      ${human.map(h=>{const [k,ttl]=h[0].split('|');return `<div class="bid"><span class="tag em" style="white-space:nowrap">${k}</span><span><b>${ttl}</b><br>${h[1]}<br><span class="sm">${h[3]}</span></span><span class="pr">${h[2]}</span></div>`;}).join('')}
+      <p class="sm" style="margin-top:10px">誰も取らなければ、発案者が置いた上限まで価格が上がります。上限まで上がっても取り手がなければ、席は空いたままにして理由を見せます。「この価格ではこの街に引き受け手がいない」も正直な結果です。</p>
+    </div>`;
+}
+
+/* ===== money ===== */
+function renderMoney(){ const d=CASES.taishoku.dist; $('m-dist').innerHTML=distTable(d); $('m-fee').textContent='IFBOX報酬：契約生成 1,500円、検収・精算支援 2,500円（完了分のみ・上限つき・案件開始時に公開）。'; }
+
+/* ===== archive ===== */
+function renderArchive(){
+  const arc=[["もし、洗濯物をたたむだけの人が近所にいたら","束：家事の一部だけ頼む ×7","保管中"],["もし、町内会の回覧板がスマホで済んだら","束：自治会のDX ×4","保管中"],["もし、介護施設の夜勤の申し送りが声で済んだら","束：介護の記録 ×3","再浮上（供給者あり）"],["もし、子どもの絵をそのまま絵本にできたら","単独","保管中"]];
+  $('arc').innerHTML=arc.map(a=>`<li><span>${a[0]}</span><span class="cnt">${a[1]} ・ <span class="tag ${a[2].startsWith('再')?'ok':'em'}">${a[2]}</span></span></li>`).join('');
+  const dm=[["介護の記録を声で済ませたい","共感 41 ・ 乗る人 0","介護"],["自治会の連絡をスマホで","共感 27 ・ 乗る人 0","地域"],["家事の一部だけ頼みたい","共感 22 ・ 乗る人 1（場所なし）","家事"]];
+  $('demand').innerHTML=dm.map(a=>`<li><span>${a[0]}</span><span class="cnt">${a[1]} <span class="tag bl">${a[2]}</span></span></li>`).join('');
+}
+
+/* ===== zero ===== */
+function renderZero(){
+  $('phil').innerHTML = C('philosophy').map((p,i)=>`<div class="card"><p class="eb">0${i+1}</p><p style="font-weight:900;color:var(--navy);font-size:15px;margin-top:4px">${p}</p></div>`).join('');
+  const rows=C('case0_lines').map(l=>{const [n,s,d,y]=l.split('|');return `<tr><td>${n}</td><td><span class="tag ${n.startsWith('AI')?'ai':'hu'}">${s}</span></td><td>${d}</td><td class="num">¥${Number(y).toLocaleString()}</td></tr>`;}).join('');
+  $('zero-t').insertAdjacentHTML('beforeend', rows);
+}
+function setWho(){
+  who=$('who').value;
+  const m={own:['つくれる。<br>その先は、<em>まだ</em>。','一行の「もし」を置く。空いている席にはAIが座って準備する。人が来たら交代する。買われて、検収されて、分けるまでを一つの場所で。'],
+           buy:['課題を置けば、<br><em>チームごと</em>届く。','予算と達成条件を書けば、作る人・売る人・場所がそろった案件として返ってきます。払うのは検収できたときだけ。'],
+           work:['持っているもので、<br><em>席</em>に座る。','手、販路、場所、資格。空いている席を見て、あなたのAIと一緒に手を挙げる。確定対価は売れなくても払われます。'],
+           fund:['出す先は、<br><em>もう動いている</em>案件。','買い手がついた案件だけに出せます。募集と預かりは登録事業者。IFBOXは預かりません（Phase 1 では閉じています）。']};
+  $('tagline').innerHTML=m[who][0]; $('sub').textContent=m[who][1];
+}
+/* ===== init ===== */
+if(COPY.tagline){ $('tagline').textContent=COPY.tagline; } if(COPY.sub){ $('sub').textContent=COPY.sub; }
+renderFeed(); renderCase(); renderMarket(); renderMoney(); renderArchive(); renderZero();
+</script>
+</body>
+</html>

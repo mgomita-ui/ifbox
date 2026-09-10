@@ -1,0 +1,152 @@
+{
+ "title": "もし、保育園の連絡帳が写真1枚で済んだら",
+ "benefit": "保育士と親",
+ "demo": "",
+ "owner": "例：ゆき",
+ "createdAt": 1788212000013,
+ "stage": 2,
+ "domain": "子ども",
+ "reframed": "もし、連絡帳が写真と一言で済んだら",
+ "firstMove": "便益を受けるのは保育士と親。払うのは園。園が払う理由は保育士の残業。まず1園で連絡帳にかかる時間を測り、園長に発注意思を確認します。",
+ "payers": [
+  "保育園（運営法人）",
+  "自治体（ICT補助）",
+  "保育ICT事業者（連携）"
+ ],
+ "lines": [
+  "未成年が関わる場合は保護者同意の設計が先"
+ ],
+ "seats": {
+  "OWN": {
+   "t": "hu",
+   "n": "例：ゆき",
+   "since": 1788644000013
+  },
+  "BUILD": {
+   "t": "hu",
+   "n": "例：けん",
+   "since": 1788644000013
+  },
+  "SELL": {
+   "t": "ai",
+   "n": "AIが準備中",
+   "since": 1788644000013
+  },
+  "SITE": {
+   "t": "em",
+   "n": "",
+   "since": 1788644000013
+  },
+  "BUY": {
+   "t": "hu",
+   "n": "例：サンプル園（園長）",
+   "since": 1788644000013
+  },
+  "ACC": {
+   "t": "em",
+   "n": "",
+   "since": 1788644000013
+  }
+ },
+ "actions": [
+  {
+   "id": "a0",
+   "seat": "BUILD",
+   "text": "写真＋一言→連絡帳の形式に変換する最小の形",
+   "due": 1789940000013,
+   "state": "open",
+   "by": "AI"
+  },
+  {
+   "id": "a1",
+   "seat": "ACC",
+   "text": "園長に「読める連絡帳」の基準を出してもらう",
+   "due": 1789508000013,
+   "state": "open",
+   "by": "AI"
+  }
+ ],
+ "bids": [
+  {
+   "id": "b0",
+   "seat": "BUILD",
+   "by": "例：けん",
+   "text": "LINE公式とスプレッドシートで1週間で試作できる",
+   "price": 30000,
+   "days": 10,
+   "won": true,
+   "t": 1788298400013
+  }
+ ],
+ "messages": [
+  {
+   "by": "例：ゆき",
+   "text": "園長に確認しました。10月から1クラスで試したいそうです",
+   "t": 1788298400013
+  },
+  {
+   "by": "例：けん",
+   "text": "了解。今週中に試作を出します",
+   "t": 1788302000013
+  }
+ ],
+ "cf": null,
+ "fund": null,
+ "criteria": [
+  {
+   "id": "k0",
+   "text": "保育士が1人1日5分以内で書ける"
+  },
+  {
+   "id": "k1",
+   "text": "親が当日中に読める"
+  },
+  {
+   "id": "k2",
+   "text": "写真は園の端末にしか残らない"
+  }
+ ],
+ "criteriaLocked": true,
+ "deliveries": [],
+ "checks": [],
+ "ledger": [],
+ "notices": [],
+ "receipt": null,
+ "dist": null,
+ "objections": [],
+ "likes": [],
+ "archived": false,
+ "log": [
+  {
+   "t": 1788212000013,
+   "m": "例：ゆき が「もし」を置いた"
+  },
+  {
+   "t": 1788212060013,
+   "m": "AI席が最初の一手を返した。作る席と売る席で準備を開始"
+  }
+ ],
+ "measurement": {
+  "stage2At": 1788384800013,
+  "acceptedAt": null,
+  "settledAt": null,
+  "realCreatedAt": 1788212000013,
+  "realStage2At": 1788384800013,
+  "realAcceptedAt": null,
+  "realSettledAt": null,
+  "testClockUsed": false,
+  "activeMinutes": null,
+  "effortBasis": "estimated",
+  "sameBenefit": "unconfirmed",
+  "comparisonNote": "",
+  "aiCost": {
+   "amount": null,
+   "basis": "unknown"
+  },
+  "materialCost": {
+   "amount": null,
+   "basis": "unknown"
+  }
+ },
+ "sample": true
+}

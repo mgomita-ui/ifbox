@@ -1,0 +1,139 @@
+{
+ "title": "もし、社員の残業を「今月あと何時間」で見える化できたら",
+ "benefit": "中小企業の総務",
+ "demo": "",
+ "owner": "例：Dさん",
+ "createdAt": 1787866400013,
+ "stage": 2,
+ "domain": "労務",
+ "reframed": "もし、残業の残り時間が毎朝分かったら",
+ "firstMove": "便益を受けるのは総務と本人。払うのは企業。36協定の上限管理が本体。まず1社に月額の発注意思を確認します。",
+ "payers": [
+  "企業（総務）",
+  "社労士事務所（顧問先へ）",
+  "勤怠ソフト事業者（連携）"
+ ],
+ "lines": [
+  "勤怠データは個人情報。集計値のみ表示"
+ ],
+ "seats": {
+  "OWN": {
+   "t": "hu",
+   "n": "例：Dさん",
+   "since": 1788644000013
+  },
+  "BUILD": {
+   "t": "hu",
+   "n": "例：E",
+   "since": 1788644000013
+  },
+  "SELL": {
+   "t": "ai",
+   "n": "AIが準備中",
+   "since": 1788644000013
+  },
+  "SITE": {
+   "t": "em",
+   "n": "",
+   "since": 1788644000013
+  },
+  "BUY": {
+   "t": "hu",
+   "n": "例：サンプル商事（総務）",
+   "since": 1788644000013
+  },
+  "ACC": {
+   "t": "em",
+   "n": "",
+   "since": 1788644000013
+  }
+ },
+ "actions": [
+  {
+   "id": "a0",
+   "seat": "BUILD",
+   "text": "勤怠CSV→残り時間の一覧に変換",
+   "due": 1789680800013,
+   "state": "open",
+   "by": "AI"
+  },
+  {
+   "id": "a1",
+   "seat": "ACC",
+   "text": "総務に「合っている」と言える確認方法を出してもらう",
+   "due": 1789508000013,
+   "state": "open",
+   "by": "AI"
+  }
+ ],
+ "bids": [
+  {
+   "id": "b0",
+   "seat": "BUILD",
+   "by": "例：E",
+   "text": "CSV取り込みは既存の部品がある。3日で出せる",
+   "price": 20000,
+   "days": 5,
+   "won": true,
+   "t": 1787952800013
+  }
+ ],
+ "messages": [],
+ "cf": null,
+ "fund": null,
+ "criteria": [
+  {
+   "id": "k0",
+   "text": "前月のCSVで残り時間が総務の手計算と一致する"
+  },
+  {
+   "id": "k1",
+   "text": "個人別の画面は本人と総務だけが見られる"
+  }
+ ],
+ "criteriaLocked": true,
+ "deliveries": [],
+ "checks": [],
+ "ledger": [],
+ "notices": [],
+ "receipt": null,
+ "dist": null,
+ "objections": [],
+ "likes": [
+  "例：けん"
+ ],
+ "archived": false,
+ "log": [
+  {
+   "t": 1787866400013,
+   "m": "例：Dさん が「もし」を置いた"
+  },
+  {
+   "t": 1787866460013,
+   "m": "AI席が最初の一手を返した。作る席と売る席で準備を開始"
+  }
+ ],
+ "measurement": {
+  "stage2At": 1788039200013,
+  "acceptedAt": null,
+  "settledAt": null,
+  "realCreatedAt": 1787866400013,
+  "realStage2At": 1788039200013,
+  "realAcceptedAt": null,
+  "realSettledAt": null,
+  "testClockUsed": false,
+  "activeMinutes": null,
+  "effortBasis": "estimated",
+  "sameBenefit": "unconfirmed",
+  "comparisonNote": "",
+  "aiCost": {
+   "amount": null,
+   "basis": "unknown"
+  },
+  "materialCost": {
+   "amount": null,
+   "basis": "unknown"
+  }
+ },
+ "sample": true
+}

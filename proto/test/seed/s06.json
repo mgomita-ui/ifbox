@@ -1,0 +1,153 @@
+{
+ "title": "もし、散歩と食事の記録から、うちの子に合ったフードが提案されて、そのまま届いたら",
+ "benefit": "愛犬の食事と散歩に迷う飼い主",
+ "demo": "https://example.invalid/dog/",
+ "owner": "例：A",
+ "createdAt": 1788557600013,
+ "stage": 1,
+ "domain": "ペット・物販",
+ "reframed": "もし、記録からうちの子に合うフードが届いたら",
+ "firstMove": "便益を受けるのは飼い主。払うのも飼い主本人ですが、アプリにではなくフードに払います。本体は物販、アプリは入口。まず飼い主30人のうち何人が提案フードを買うかを確かめます。",
+ "payers": [
+  "飼い主本人（フード・サプリの物販）",
+  "動物病院・トリミング店",
+  "ペット保険・食品メーカー"
+ ],
+ "lines": [
+  "健康・栄養に関わる提案は薬機法と景品表示法の線がある。「参考値」の姿勢を通す（専門家に確認）",
+  "犬の健康記録は飼い主の個人情報と一緒に動く。物販側に渡す範囲を先に決める"
+ ],
+ "seats": {
+  "OWN": {
+   "t": "hu",
+   "n": "例：A",
+   "since": 1788644000013
+  },
+  "BUILD": {
+   "t": "hu",
+   "n": "例：A",
+   "since": 1788644000013
+  },
+  "SELL": {
+   "t": "ai",
+   "n": "AIが準備中",
+   "since": 1788644000013
+  },
+  "SITE": {
+   "t": "em",
+   "n": "",
+   "since": 1788644000013
+  },
+  "BUY": {
+   "t": "em",
+   "n": "",
+   "since": 1788644000013
+  },
+  "ACC": {
+   "t": "em",
+   "n": "",
+   "since": 1788644000013
+  }
+ },
+ "actions": [
+  {
+   "id": "a0",
+   "seat": "OWN",
+   "text": "達成条件を一行で決める（30人中、何人が買ったか）",
+   "due": 1789680800013,
+   "state": "open",
+   "by": "AI"
+  },
+  {
+   "id": "a1",
+   "seat": "SELL",
+   "text": "Bさんが「何を持っているか」を書いて座る",
+   "due": 1789680800013,
+   "state": "open",
+   "by": "AI"
+  },
+  {
+   "id": "a2",
+   "seat": "BUILD",
+   "text": "提案ロジックにフードの一覧をつなぐ",
+   "due": 1790285600013,
+   "state": "open",
+   "by": "AI"
+  }
+ ],
+ "bids": [
+  {
+   "id": "b0",
+   "seat": "SELL",
+   "by": "AI",
+   "text": "飼い主向けの案内文3案と購入導線の下書き。価格・仕入れ・発送条件は未確認。",
+   "price": 0,
+   "days": 7,
+   "won": false,
+   "t": 1788644000013
+  }
+ ],
+ "messages": [],
+ "cf": null,
+ "fund": null,
+ "criteria": [
+  {
+   "id": "k0",
+   "text": "飼い主30人が4週間記録できる"
+  },
+  {
+   "id": "k1",
+   "text": "提案フードの購入導線がある"
+  },
+  {
+   "id": "k2",
+   "text": "個別データを物販側に渡さない"
+  }
+ ],
+ "criteriaLocked": false,
+ "deliveries": [],
+ "checks": [],
+ "ledger": [],
+ "notices": [],
+ "receipt": null,
+ "dist": null,
+ "objections": [],
+ "likes": [
+  "例：B",
+  "例：ゆき"
+ ],
+ "archived": false,
+ "log": [
+  {
+   "t": 1788557600013,
+   "m": "例：A が「もし」を置いた"
+  },
+  {
+   "t": 1788557660013,
+   "m": "AI席が最初の一手を返した。作る席と売る席で準備を開始"
+  }
+ ],
+ "measurement": {
+  "stage2At": null,
+  "acceptedAt": null,
+  "settledAt": null,
+  "realCreatedAt": 1788557600013,
+  "realStage2At": null,
+  "realAcceptedAt": null,
+  "realSettledAt": null,
+  "testClockUsed": false,
+  "activeMinutes": null,
+  "effortBasis": "estimated",
+  "sameBenefit": "unconfirmed",
+  "comparisonNote": "",
+  "aiCost": {
+   "amount": null,
+   "basis": "unknown"
+  },
+  "materialCost": {
+   "amount": null,
+   "basis": "unknown"
+  }
+ },
+ "sample": true
+}

@@ -1,0 +1,141 @@
+{
+ "title": "もし、農家の出荷伝票が写真で済んだら",
+ "benefit": "高齢の農家",
+ "demo": "",
+ "owner": "例：りょう",
+ "createdAt": 1787693600013,
+ "stage": 3,
+ "domain": "農・手続き",
+ "reframed": "もし、出荷の伝票を書かずに済んだら",
+ "firstMove": "便益を受けるのは農家。払うのは農協か出荷組合。まず出荷組合1つで試します。",
+ "payers": [
+  "出荷組合",
+  "農協",
+  "青果卸"
+ ],
+ "lines": [
+  "伝票の様式は組合ごとに違う。1組合に限定"
+ ],
+ "seats": {
+  "OWN": {
+   "t": "hu",
+   "n": "例：りょう",
+   "since": 1788644000013
+  },
+  "BUILD": {
+   "t": "hu",
+   "n": "例：E",
+   "since": 1788644000013
+  },
+  "SELL": {
+   "t": "ai",
+   "n": "AIが準備中",
+   "since": 1788644000013
+  },
+  "SITE": {
+   "t": "em",
+   "n": "",
+   "since": 1788644000013
+  },
+  "BUY": {
+   "t": "hu",
+   "n": "例：サンプル出荷組合",
+   "since": 1788644000013
+  },
+  "ACC": {
+   "t": "hu",
+   "n": "例：組合 事務局",
+   "since": 1788644000013
+  }
+ },
+ "actions": [
+  {
+   "id": "a0",
+   "seat": "ACC",
+   "text": "1週間分の伝票で検収",
+   "due": 1789680800013,
+   "state": "open",
+   "by": "AI"
+  }
+ ],
+ "bids": [
+  {
+   "id": "b0",
+   "seat": "BUILD",
+   "by": "例：E",
+   "text": "写真→伝票の読み取りは既存部品。様式合わせが本体",
+   "price": 30000,
+   "days": 10,
+   "won": true,
+   "t": 1787780000013
+  }
+ ],
+ "messages": [],
+ "cf": null,
+ "fund": null,
+ "criteria": [
+  {
+   "id": "k0",
+   "text": "1週間分の伝票が事務局の手入力と一致する"
+  },
+  {
+   "id": "k1",
+   "text": "読めなかった伝票が一覧で分かる"
+  }
+ ],
+ "criteriaLocked": true,
+ "deliveries": [
+  {
+   "id": "d0",
+   "version": 1,
+   "note": "https://example.invalid/denpyo-v1",
+   "diff": "",
+   "by": "例：E",
+   "t": 1787952800013,
+   "rejected": false,
+   "reason": "",
+   "accepted": false
+  }
+ ],
+ "checks": [],
+ "ledger": [],
+ "notices": [],
+ "receipt": null,
+ "dist": null,
+ "objections": [],
+ "likes": [],
+ "archived": false,
+ "log": [
+  {
+   "t": 1787693600013,
+   "m": "例：りょう が「もし」を置いた"
+  },
+  {
+   "t": 1787693660013,
+   "m": "AI席が最初の一手を返した。作る席と売る席で準備を開始"
+  }
+ ],
+ "measurement": {
+  "stage2At": 1787866400013,
+  "acceptedAt": null,
+  "settledAt": null,
+  "realCreatedAt": 1787693600013,
+  "realStage2At": 1787866400013,
+  "realAcceptedAt": null,
+  "realSettledAt": null,
+  "testClockUsed": false,
+  "activeMinutes": null,
+  "effortBasis": "estimated",
+  "sameBenefit": "unconfirmed",
+  "comparisonNote": "",
+  "aiCost": {
+   "amount": null,
+   "basis": "unknown"
+  },
+  "materialCost": {
+   "amount": null,
+   "basis": "unknown"
+  }
+ },
+ "sample": true
+}

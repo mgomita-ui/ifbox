@@ -1,0 +1,23 @@
+/* ===================== 第7回：参加者ID・サンプル分離（K1）／保管と復元（K2） ===================== */
+let participantsAll={}; let myId=null;
+try{ myId=localStorage.getItem('ifbox.pid')||null; }catch(e){}
+function subscribeParticipants(){ if(!db) return; db.collection('participants').orderBy('createdAt','asc').limit(200).onSnapshot(s=>{ participantsAll={}; s.docs.forEach(d=>{ participantsAll[d.id]={id:d.id,...d.data()}; }); renderMe(); if(cur&&cases[cur]) renderCase(); }, ()=>{}); }
+function shortId(id){ return id?String(id).slice(-4):''; }
+function dispName(p){ if(!p) return '名無し'; const dup=Object.values(participantsAll).filter(x=>x.name===p.name).length>1; return dup?p.name+' #'+shortId(p.id):p.name; }
+function me(){ const p=participantsAll[myId]; return p?dispName(p):(($('me')?.value||'').trim()||'名無し'); }
+function meId(){ return myId; }
+function renderMe(){ const box=$('mebox'); if(!box) return; const list=Object.values(participantsAll);
+  box.innerHTML=`<span>あなた</span><select id="me-sel" onchange="pickMe(this.value)"><option value="">（選ぶ）</option>${list.map(p=>`<option value="${p.id}" ${p.id===myId?'selected':''}>${esc(dispName(p))}</option>`).join('')}<option value="__new">＋ 新しく登録</option></select><span class="status" id="status">${$('status')?.innerHTML||''}</span>`;
+  const hid=$('me'); if(hid) hid.value=participantsAll[myId]?.name||hid.value; }
+async function pickMe(v){ if(v==='__new'){ md(`<h3>参加者を登録</h3><p class="sm">名札です。認証ではありません。他の人があなたを選ぶことは防げません。機密情報・個人情報・実際の送金情報は入力しないでください。</p><input class="f" id="new-name" placeholder="表示名（例 A）" style="width:100%;margin-top:8px"><div class="row" style="justify-content:flex-end"><button class="btn ghost" onclick="closeMd();renderMe()">やめる</button><button class="btn" onclick="registerMe()">登録する</button></div>`); return; }
+  myId=v||null; try{ v?localStorage.setItem('ifbox.pid',v):localStorage.removeItem('ifbox.pid'); }catch(e){} renderMe(); if(cur&&cases[cur]) renderCase(); renderGrid(); }
+async function registerMe(){ const name=$('new-name').value.trim(); if(!name){ toast('表示名を入れてください'); return; } try{ const ref=await db.collection('participants').add({name,createdAt:Date.now()}); myId=ref.id; try{ localStorage.setItem('ifbox.pid',ref.id); }catch(e){} closeMd(); toast('登録しました。同名がいれば #番号 で区別されます。'); }catch(e){ toast('登録できません: '+(e.code||e.message)); } }
+/* サンプルと実案件の分離 */
+function isSample(c){ return !!c.sample; }
+function startFromSample(){ const c=cases[cur]; if(!c||!isSample(c)) return; go('home'); $('ifline').value=c.title.replace(/（例）$/,''); $('benefit').value=c.benefit||''; $('demo').value=c.demo||''; window._fromSample={id:c.id,criteria:(c.criteria||[]).map(x=>x.text)}; $('tplbox').innerHTML=`<div class="box gold"><b>サンプル「${esc(c.title)}」から実案件を始めます。</b> 投稿内容と検収基準（${window._fromSample.criteria.length}件）だけを引き継ぎ、納品・検収・台帳・計測・取り込みは引き継ぎません。<button class="btn ghost sm" style="margin-left:8px" onclick="window._fromSample=null;$('tplbox').innerHTML=''">やめる</button></div>`; toast('内容を確認して「置いてみる」を押してください。'); }
+/* 保管と復元 */
+function archiveCase(){ const c=cases[cur]; if(!c||c.archived) return; const rev=c.rev||0; md(`<h3>保管へ移す</h3><p class="sm">削除ではありません。固定版・台帳・取り込み記録・比較の参照は残ります。保管中は編集できません（戻せば編集できます）。共有URLからは閲覧できます。</p><input class="f" id="arc-reason" placeholder="理由（例 誤投稿、進める予定なし）" style="width:100%;margin-top:8px"><div class="row" style="justify-content:flex-end"><button class="btn ghost" onclick="closeMd()">やめる</button><button class="btn" onclick="doArchive(${rev})">保管へ移す</button></div>`); }
+async function doArchive(rev){ const c=cases[cur]; const reason=$('arc-reason').value.trim(); if(!reason){ toast('理由を書いてください'); return; } if((c.rev||0)!==rev){ toast('他の人がこの案件を更新しました。閉じて、もう一度開いてください'); return; } try{ await db.doc('cases/'+cur).update({archived:true,archivedAt:now(),archivedBy:me(),archiveReason:reason,rev:(c.rev||0)+1,log:(c.log||[]).concat([{t:now(),m:me()+' が保管へ移した：'+reason}])}); closeMd(); toast('保管へ移しました。'); go('archive'); }catch(e){ toast('保存できません: '+(e.code||e.message)); } }
+async function restoreCase(id){ const c=cases[id]; if(!c) return; const rev=c.rev||0; try{ await db.doc('cases/'+id).update({archived:false,restoredAt:now(),restoredBy:me(),rev:rev+1,log:(c.log||[]).concat([{t:now(),m:me()+' が保管から戻した'}])}); toast('戻しました。'); openCase(id); }catch(e){ toast('保存できません: '+(e.code||e.message)); } }
+/* 保管済みは編集不可（復元以外） */
+async function save(patch,logMsg){ const c=cases[cur]; if(!c) return; if(c.archived){ toast('保管済みの案件は編集できません。「戻す」で戻してから編集してください'); return; } const log=(c.log||[]).concat(logMsg?[{t:now(),m:logMsg}]:[]); try{ await db.doc('cases/'+cur).update({...patch,log,rev:(c.rev||0)+1}); }catch(e){ toast('保存できません: '+(e.code||e.message)); } }

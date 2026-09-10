@@ -1,0 +1,117 @@
+{
+ "title": "もし、子どもの絵をそのまま絵本にできたら",
+ "benefit": "幼児の親",
+ "demo": "",
+ "owner": "例：みほ",
+ "createdAt": 1788039200013,
+ "stage": 0,
+ "domain": "子ども",
+ "reframed": "もし、描いた絵がその日のうちに絵本になったら",
+ "firstMove": "便益を受けるのは親と祖父母。払うのは祖父母が多い。物としての絵本（印刷）が本体で、アプリは入口です。まず1冊いくらなら祖父母が買うかを確かめます。",
+ "payers": [
+  "祖父母（贈り物）",
+  "親",
+  "幼稚園・保育園（卒園記念）"
+ ],
+ "lines": [
+  "未成年が関わる場合は保護者同意の設計が先"
+ ],
+ "seats": {
+  "OWN": {
+   "t": "hu",
+   "n": "例：みほ",
+   "since": 1788644000013
+  },
+  "BUILD": {
+   "t": "ai",
+   "n": "AIが準備中",
+   "since": 1788644000013
+  },
+  "SELL": {
+   "t": "ai",
+   "n": "AIが準備中",
+   "since": 1788644000013
+  },
+  "SITE": {
+   "t": "em",
+   "n": "",
+   "since": 1788644000013
+  },
+  "BUY": {
+   "t": "em",
+   "n": "",
+   "since": 1788644000013
+  },
+  "ACC": {
+   "t": "em",
+   "n": "",
+   "since": 1788644000013
+  }
+ },
+ "actions": [
+  {
+   "id": "a0",
+   "seat": "SELL",
+   "text": "祖父母10人に1冊いくらなら買うか聞く",
+   "due": 1789680800013,
+   "state": "open",
+   "by": "AI"
+  },
+  {
+   "id": "a1",
+   "seat": "BUILD",
+   "text": "印刷所の最小ロットと単価を調べる",
+   "due": 1789508000013,
+   "state": "open",
+   "by": "AI"
+  }
+ ],
+ "bids": [],
+ "messages": [],
+ "cf": null,
+ "fund": null,
+ "criteria": [],
+ "criteriaLocked": false,
+ "deliveries": [],
+ "checks": [],
+ "ledger": [],
+ "notices": [],
+ "receipt": null,
+ "dist": null,
+ "objections": [],
+ "likes": [],
+ "archived": false,
+ "log": [
+  {
+   "t": 1788039200013,
+   "m": "例：みほ が「もし」を置いた"
+  },
+  {
+   "t": 1788039260013,
+   "m": "AI席が最初の一手を返した。作る席と売る席で準備を開始"
+  }
+ ],
+ "measurement": {
+  "stage2At": null,
+  "acceptedAt": null,
+  "settledAt": null,
+  "realCreatedAt": 1788039200013,
+  "realStage2At": null,
+  "realAcceptedAt": null,
+  "realSettledAt": null,
+  "testClockUsed": false,
+  "activeMinutes": null,
+  "effortBasis": "estimated",
+  "sameBenefit": "unconfirmed",
+  "comparisonNote": "",
+  "aiCost": {
+   "amount": null,
+   "basis": "unknown"
+  },
+  "materialCost": {
+   "amount": null,
+   "basis": "unknown"
+  }
+ },
+ "sample": true
+}

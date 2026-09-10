@@ -1,0 +1,166 @@
+{
+ "title": "もし、地域の空き店舗で週末だけ子ども食堂ができたら",
+ "benefit": "ひとり親の家庭",
+ "demo": "",
+ "owner": "例：あき",
+ "createdAt": 1787348000013,
+ "stage": 2,
+ "domain": "食・地域",
+ "reframed": "もし、週末だけの子ども食堂が空き店舗で回ったら",
+ "firstMove": "便益を受けるのは家庭。払うのは家庭ではなく、店舗のオーナーと地元企業。場所と食材の席が本体。まず空き店舗1つの週末利用の条件を確かめます。",
+ "payers": [
+  "地元企業（協賛）",
+  "店舗オーナー（空き活用）",
+  "社会福祉協議会"
+ ],
+ "lines": [
+  "食品を扱う場合は営業許可・表示の確認",
+  "アレルギー表示は必須"
+ ],
+ "seats": {
+  "OWN": {
+   "t": "hu",
+   "n": "例：あき",
+   "since": 1788644000013
+  },
+  "BUILD": {
+   "t": "hu",
+   "n": "例：あき",
+   "since": 1788644000013
+  },
+  "SELL": {
+   "t": "ai",
+   "n": "AIが準備中",
+   "since": 1788644000013
+  },
+  "SITE": {
+   "t": "hu",
+   "n": "例：田中（店舗オーナー）",
+   "since": 1788644000013
+  },
+  "BUY": {
+   "t": "hu",
+   "n": "例：地元商店会",
+   "since": 1788644000013
+  },
+  "ACC": {
+   "t": "em",
+   "n": "",
+   "since": 1788644000013
+  }
+ },
+ "actions": [
+  {
+   "id": "a0",
+   "seat": "SELL",
+   "text": "協賛企業3社に声をかける",
+   "due": 1790285600013,
+   "state": "open",
+   "by": "AI"
+  },
+  {
+   "id": "a1",
+   "seat": "SITE",
+   "text": "保健所の営業許可の要否を確認",
+   "due": 1789680800013,
+   "state": "open",
+   "by": "AI"
+  }
+ ],
+ "bids": [
+  {
+   "id": "b0",
+   "seat": "SITE",
+   "by": "例：田中",
+   "text": "土日は空いている。光熱費実費のみで貸せる",
+   "price": 8000,
+   "days": 7,
+   "won": true,
+   "t": 1787434400013
+  }
+ ],
+ "messages": [],
+ "cf": {
+  "goal": 60000,
+  "unit": 3000,
+  "deadline": 1790112800013,
+  "ret": "初回の食事券2枚と活動報告",
+  "pledges": [
+   {
+    "by": "例：さくら",
+    "amount": 3000,
+    "t": 1788816800013
+   },
+   {
+    "by": "例：りょう",
+    "amount": 6000,
+    "t": 1788903200013
+   },
+   {
+    "by": "例：ゆき",
+    "amount": 3000,
+    "t": 1788989600013
+   }
+  ],
+  "open": true,
+  "startedAt": 1788644000013
+ },
+ "fund": null,
+ "criteria": [
+  {
+   "id": "k0",
+   "text": "土日各1回、30食を提供できる"
+  },
+  {
+   "id": "k1",
+   "text": "保健所の確認が取れている"
+  },
+  {
+   "id": "k2",
+   "text": "食材の出所が記録されている"
+  }
+ ],
+ "criteriaLocked": true,
+ "deliveries": [],
+ "checks": [],
+ "ledger": [],
+ "notices": [],
+ "receipt": null,
+ "dist": null,
+ "objections": [],
+ "likes": [],
+ "archived": false,
+ "log": [
+  {
+   "t": 1787348000013,
+   "m": "例：あき が「もし」を置いた"
+  },
+  {
+   "t": 1787348060013,
+   "m": "AI席が最初の一手を返した。作る席と売る席で準備を開始"
+  }
+ ],
+ "measurement": {
+  "stage2At": 1787520800013,
+  "acceptedAt": null,
+  "settledAt": null,
+  "realCreatedAt": 1787348000013,
+  "realStage2At": 1787520800013,
+  "realAcceptedAt": null,
+  "realSettledAt": null,
+  "testClockUsed": false,
+  "activeMinutes": null,
+  "effortBasis": "estimated",
+  "sameBenefit": "unconfirmed",
+  "comparisonNote": "",
+  "aiCost": {
+   "amount": null,
+   "basis": "unknown"
+  },
+  "materialCost": {
+   "amount": null,
+   "basis": "unknown"
+  }
+ },
+ "sample": true
+}

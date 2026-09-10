@@ -1,0 +1,172 @@
+{
+ "title": "もし、社員食堂の残食が翌日の献立に反映されたら",
+ "benefit": "社員食堂の運営",
+ "demo": "",
+ "owner": "例：F",
+ "createdAt": 1785620000013,
+ "stage": 5,
+ "domain": "食・健康経営",
+ "reframed": "もし、残った量で明日の量が決まったら",
+ "firstMove": "便益を受けるのは食堂と会社。払うのは食堂の運営会社。廃棄の削減がそのまま原価。まず1食堂で試します。",
+ "payers": [
+  "食堂運営会社",
+  "企業（総務）",
+  "食材卸"
+ ],
+ "lines": [
+  "食品を扱う場合は営業許可・表示の確認",
+  "アレルギー表示は必須"
+ ],
+ "seats": {
+  "OWN": {
+   "t": "hu",
+   "n": "例：F",
+   "since": 1788644000013
+  },
+  "BUILD": {
+   "t": "hu",
+   "n": "例：E",
+   "since": 1788644000013
+  },
+  "SELL": {
+   "t": "hu",
+   "n": "例：F",
+   "since": 1788644000013
+  },
+  "SITE": {
+   "t": "em",
+   "n": "",
+   "since": 1788644000013
+  },
+  "BUY": {
+   "t": "hu",
+   "n": "例：サンプル食堂サービス",
+   "since": 1788644000013
+  },
+  "ACC": {
+   "t": "hu",
+   "n": "例：サンプル食堂 店長",
+   "since": 1788644000013
+  }
+ },
+ "actions": [],
+ "bids": [
+  {
+   "id": "b0",
+   "seat": "BUILD",
+   "by": "例：E",
+   "text": "残食の写真→量の推定→翌日の仕込み量。2週間",
+   "price": 50000,
+   "days": 14,
+   "won": true,
+   "t": 1785706400013
+  }
+ ],
+ "messages": [],
+ "cf": null,
+ "fund": null,
+ "criteria": [
+  {
+   "id": "k0",
+   "text": "2週間で廃棄量が前月比で減っている（数値は食堂が測る）"
+  },
+  {
+   "id": "k1",
+   "text": "仕込み量の提案が朝8時までに出る"
+  },
+  {
+   "id": "k2",
+   "text": "写真に人が写らない"
+  }
+ ],
+ "criteriaLocked": true,
+ "deliveries": [
+  {
+   "id": "d0",
+   "version": 1,
+   "note": "https://example.invalid/zanshoku-v1",
+   "diff": "",
+   "by": "例：E",
+   "t": 1785879200013,
+   "rejected": false,
+   "reason": "",
+   "accepted": true
+  }
+ ],
+ "checks": [],
+ "ledger": [],
+ "notices": [],
+ "receipt": {
+  "amount": 90000,
+  "by": "例：F",
+  "t": 1788989600013,
+  "mock": true
+ },
+ "dist": {
+  "price": 90000,
+  "fixed": 45000,
+  "perf": 30,
+  "idea": 10,
+  "fee": 4500,
+  "units": [
+   "u1",
+   "u2"
+  ],
+  "proposedAt": 1788039200013,
+  "rows": []
+ },
+ "objections": [],
+ "likes": [],
+ "archived": false,
+ "log": [
+  {
+   "t": 1785620000013,
+   "m": "例：F が「もし」を置いた"
+  },
+  {
+   "t": 1785620060013,
+   "m": "AI席が最初の一手を返した。作る席と売る席で準備を開始"
+  },
+  {
+   "t": 1785706400013,
+   "m": "サンプル食堂 店長 が検収を確定した（段階4）"
+  },
+  {
+   "t": 1785710000013,
+   "m": "F が配分案を提示した（7日間の異議期間）"
+  },
+  {
+   "t": 1785713600013,
+   "m": "F が模擬精算を確定した（段階5・実決済なし）"
+  }
+ ],
+ "measurement": {
+  "stage2At": 1785792800013,
+  "acceptedAt": 1785965600013,
+  "settledAt": 1788989600013,
+  "realCreatedAt": 1785620000013,
+  "realStage2At": 1785792800013,
+  "realAcceptedAt": 1785965600013,
+  "realSettledAt": 1788989600013,
+  "testClockUsed": false,
+  "activeMinutes": 600,
+  "effortBasis": "measured",
+  "sameBenefit": "unconfirmed",
+  "comparisonNote": "",
+  "aiCost": {
+   "amount": 2000,
+   "basis": "measured"
+  },
+  "materialCost": {
+   "amount": 0,
+   "basis": "measured"
+  }
+ },
+ "sample": true,
+ "settlement": {
+  "amount": 90000,
+  "by": "例：F",
+  "t": 1788989600013,
+  "mock": true
+ }
+}

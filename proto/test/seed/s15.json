@@ -1,0 +1,163 @@
+{
+ "title": "もし、学童の「今日あったこと」が親に一言で届いたら",
+ "benefit": "学童に預ける親",
+ "demo": "",
+ "owner": "例：ひろ",
+ "createdAt": 1787520800013,
+ "stage": 3,
+ "domain": "子ども",
+ "reframed": "もし、学童の一日が親に一言で届いたら",
+ "firstMove": "便益を受けるのは親と指導員。払うのは学童の運営。まず1施設で試します。",
+ "payers": [
+  "学童の運営法人",
+  "自治体",
+  "保護者会"
+ ],
+ "lines": [
+  "未成年が関わる場合は保護者同意の設計が先"
+ ],
+ "seats": {
+  "OWN": {
+   "t": "hu",
+   "n": "例：ひろ",
+   "since": 1788644000013
+  },
+  "BUILD": {
+   "t": "hu",
+   "n": "例：けん",
+   "since": 1788644000013
+  },
+  "SELL": {
+   "t": "ai",
+   "n": "AIが準備中",
+   "since": 1788644000013
+  },
+  "SITE": {
+   "t": "em",
+   "n": "",
+   "since": 1788644000013
+  },
+  "BUY": {
+   "t": "hu",
+   "n": "例：サンプル学童",
+   "since": 1788644000013
+  },
+  "ACC": {
+   "t": "hu",
+   "n": "例：指導員 木村",
+   "since": 1788644000013
+  }
+ },
+ "actions": [
+  {
+   "id": "a0",
+   "seat": "ACC",
+   "text": "1週間分で検収",
+   "due": 1789680800013,
+   "state": "open",
+   "by": "AI"
+  }
+ ],
+ "bids": [
+  {
+   "id": "b0",
+   "seat": "BUILD",
+   "by": "例：けん",
+   "text": "保育園の連絡帳の型をそのまま使える。1週間",
+   "price": 25000,
+   "days": 7,
+   "won": true,
+   "t": 1787607200013
+  }
+ ],
+ "messages": [
+  {
+   "by": "例：指導員 木村",
+   "text": "写真が横になります",
+   "t": 1787607200013
+  },
+  {
+   "by": "例：けん",
+   "text": "直しました。v2です",
+   "t": 1787610800013
+  }
+ ],
+ "cf": null,
+ "fund": null,
+ "criteria": [
+  {
+   "id": "k0",
+   "text": "指導員が1日5分以内で送れる"
+  },
+  {
+   "id": "k1",
+   "text": "親が当日中に読める"
+  }
+ ],
+ "criteriaLocked": true,
+ "deliveries": [
+  {
+   "id": "d0",
+   "version": 1,
+   "note": "https://example.invalid/gakudo-v1",
+   "diff": "",
+   "by": "例：けん",
+   "t": 1787780000013,
+   "rejected": true,
+   "reason": "写真の向きが直っていない",
+   "accepted": false
+  },
+  {
+   "id": "d1",
+   "version": 2,
+   "note": "https://example.invalid/gakudo-v2",
+   "diff": "写真の向きを自動で直した。送信の確認画面を足した",
+   "by": "例：けん",
+   "t": 1787866400013,
+   "rejected": false,
+   "reason": "",
+   "accepted": false
+  }
+ ],
+ "checks": [],
+ "ledger": [],
+ "notices": [],
+ "receipt": null,
+ "dist": null,
+ "objections": [],
+ "likes": [],
+ "archived": false,
+ "log": [
+  {
+   "t": 1787520800013,
+   "m": "例：ひろ が「もし」を置いた"
+  },
+  {
+   "t": 1787520860013,
+   "m": "AI席が最初の一手を返した。作る席と売る席で準備を開始"
+  }
+ ],
+ "measurement": {
+  "stage2At": 1787693600013,
+  "acceptedAt": null,
+  "settledAt": null,
+  "realCreatedAt": 1787520800013,
+  "realStage2At": 1787693600013,
+  "realAcceptedAt": null,
+  "realSettledAt": null,
+  "testClockUsed": false,
+  "activeMinutes": null,
+  "effortBasis": "estimated",
+  "sameBenefit": "unconfirmed",
+  "comparisonNote": "",
+  "aiCost": {
+   "amount": null,
+   "basis": "unknown"
+  },
+  "materialCost": {
+   "amount": null,
+   "basis": "unknown"
+  }
+ },
+ "sample": true
+}

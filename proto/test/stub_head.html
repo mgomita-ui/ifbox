@@ -1,0 +1,14 @@
+<!DOCTYPE html><html lang="ja"><head><meta charset="utf-8">
+<script>
+// ---- テスト用スタブ：claude.use を偽物に ----
+(function(){
+  const store={}; const subs=[];
+  const snapOf=()=>({docs:Object.entries(store).sort((a,b)=>b[1].createdAt-a[1].createdAt).map(([id,d])=>({id,data:()=>d,exists:true}))});
+  const fire=()=>subs.forEach(f=>f(snapOf()));
+  const coll={add:async d=>{const id='c'+Object.keys(store).length;store[id]={...d};setTimeout(fire,0);return {id};},orderBy(){return this},limit(){return this},onSnapshot(f){subs.push(f);setTimeout(()=>f(snapOf()),0);return()=>{}}};
+  const meta={}; const msubs=[]; const tstore={}; const tsubs=[]; const tsnap=()=>({docs:Object.entries(tstore).map(([id,d])=>({id,data:()=>d,exists:true}))}); const tcoll={add:async d=>{const id='t'+Object.keys(tstore).length;tstore[id]={...d};setTimeout(()=>tsubs.forEach(f=>f(tsnap())),0);return {id};},orderBy(){return this},limit(){return this},onSnapshot(f){tsubs.push(f);setTimeout(()=>f(tsnap()),0);return()=>{}}}; window.__tstore=tstore; const pstore={}; const psubs=[]; const psnap=()=>({docs:Object.entries(pstore).map(([id,d])=>({id,data:()=>d,exists:true}))}); const pcoll={add:async d=>{const id='p'+Object.keys(pstore).length+'x'+Math.random().toString(36).slice(2,6);pstore[id]={...d};setTimeout(()=>psubs.forEach(f=>f(psnap())),0);return {id};},orderBy(){return this},limit(){return this},onSnapshot(f){psubs.push(f);setTimeout(()=>f(psnap()),0);return()=>{}}}; window.__pstore=pstore; const db={collection:nm=>nm==='templates'?tcoll:nm==='participants'?pcoll:coll,doc:p=>p.startsWith('meta/')?({set:async d=>{meta[p]=d;msubs.forEach(f=>f({exists:true,data:()=>d}));},onSnapshot(f){msubs.push(f);f({exists:!!meta[p],data:()=>meta[p]});return()=>{}}}):({update:async d=>{const id=p.split('/')[1];store[id]={...store[id],...d};setTimeout(fire,0);}})};
+  const sample=async()=>({text:'x'}); sample.json=async(input)=>{ if(input.includes('引き継ぐ')) return {purpose:'目的',done:['a'],next:'次',open:['未決'],secrecy:'範囲'}; if(input.includes('最低ライン')) return {summary:'要約',deliverable:'成果物',unverified:['前提']}; return {reframed:'もし、テスト',first_move:'便益を受けるのはA、払うのはB',payers:['a','b','c'],lines:['線1'],next_actions:[{seat:'OWN',text:'決める',due_days:7},{seat:'SELL',text:'売る準備',due_days:3},{seat:'BUY',text:'発注',due_days:14}],domain:'テスト'}; };
+  window.claude={use:async n=>n==='db'?db:n==='sample'?sample:null};
+  window.__store=store;
+})();
+</script></head><body>

@@ -1,0 +1,146 @@
+{
+ "title": "もし、冷蔵庫を撮るだけで献立が決まって、栄養も分かったら",
+ "benefit": "夜に料理する一人暮らしの人",
+ "demo": "デモあり",
+ "owner": "例：E",
+ "createdAt": 1787780000013,
+ "stage": 1,
+ "domain": "食・健康",
+ "reframed": "もし、冷蔵庫の写真から今夜の献立と栄養が出たら",
+ "firstMove": "便益を受けるのは料理する本人。払うのは企業の福利厚生か、スーパー。個人はアプリに払いにくい。まず1社に4週間パッケージで発注意思を確認します。",
+ "payers": [
+  "企業の福利厚生（健康経営）",
+  "スーパー（チラシ連動）",
+  "栄養士（監修料の逆）"
+ ],
+ "lines": [
+  "食品を扱う場合は営業許可・表示の確認",
+  "アレルギー表示は必須"
+ ],
+ "seats": {
+  "OWN": {
+   "t": "hu",
+   "n": "例：E",
+   "since": 1788644000013
+  },
+  "BUILD": {
+   "t": "hu",
+   "n": "例：E",
+   "since": 1788644000013
+  },
+  "SELL": {
+   "t": "hu",
+   "n": "例：F",
+   "since": 1788644000013
+  },
+  "SITE": {
+   "t": "em",
+   "n": "",
+   "since": 1788644000013
+  },
+  "BUY": {
+   "t": "em",
+   "n": "",
+   "since": 1788644000013
+  },
+  "ACC": {
+   "t": "em",
+   "n": "",
+   "since": 1788644000013
+  }
+ },
+ "actions": [
+  {
+   "id": "a0",
+   "seat": "SELL",
+   "text": "企業1社に4週間パッケージ（仮 30万円）の発注意思を確認",
+   "due": 1790285600013,
+   "state": "open",
+   "by": "AI"
+  },
+  {
+   "id": "a1",
+   "seat": "BUILD",
+   "text": "栄養の表示を「参考値」にそろえる",
+   "due": 1789680800013,
+   "state": "open",
+   "by": "AI"
+  }
+ ],
+ "bids": [
+  {
+   "id": "b0",
+   "seat": "SELL",
+   "by": "例：F",
+   "text": "福利厚生担当の知人が2社いる。導入会の会場も出せる",
+   "price": 0,
+   "days": 14,
+   "won": true,
+   "t": 1787866400013
+  }
+ ],
+ "messages": [],
+ "cf": null,
+ "fund": null,
+ "criteria": [
+  {
+   "id": "k0",
+   "text": "社員20人が4週間使える"
+  },
+  {
+   "id": "k1",
+   "text": "栄養の表示が参考値と明記されている"
+  },
+  {
+   "id": "k2",
+   "text": "個別データを会社に渡さない"
+  }
+ ],
+ "criteriaLocked": true,
+ "deliveries": [],
+ "checks": [],
+ "ledger": [],
+ "notices": [],
+ "receipt": null,
+ "dist": null,
+ "objections": [],
+ "likes": [
+  "例：ゆき",
+  "例：けん",
+  "例：さくら"
+ ],
+ "archived": false,
+ "log": [
+  {
+   "t": 1787780000013,
+   "m": "例：E が「もし」を置いた"
+  },
+  {
+   "t": 1787780060013,
+   "m": "AI席が最初の一手を返した。作る席と売る席で準備を開始"
+  }
+ ],
+ "measurement": {
+  "stage2At": null,
+  "acceptedAt": null,
+  "settledAt": null,
+  "realCreatedAt": 1787780000013,
+  "realStage2At": null,
+  "realAcceptedAt": null,
+  "realSettledAt": null,
+  "testClockUsed": false,
+  "activeMinutes": null,
+  "effortBasis": "estimated",
+  "sameBenefit": "unconfirmed",
+  "comparisonNote": "",
+  "aiCost": {
+   "amount": null,
+   "basis": "unknown"
+  },
+  "materialCost": {
+   "amount": null,
+   "basis": "unknown"
+  }
+ },
+ "sample": true
+}

@@ -1,0 +1,131 @@
+{
+ "title": "もし、介護施設の夜勤の申し送りが声で済んだら",
+ "benefit": "夜勤の介護職",
+ "demo": "",
+ "owner": "例：のぞみ",
+ "createdAt": 1788816800013,
+ "stage": 0,
+ "domain": "介護",
+ "reframed": "もし、申し送りを声で残して朝に読めたら",
+ "firstMove": "便益を受けるのは夜勤の職員と朝勤の職員。払うのは施設。施設が払う理由は記録の質と残業の減少。まず1施設で夜勤1回分の申し送りにかかる時間を測ります。",
+ "payers": [
+  "介護施設（業務改善）",
+  "施設運営法人",
+  "介護ソフト事業者（連携）"
+ ],
+ "lines": [
+  "要介護者の情報は要配慮個人情報。施設との契約で扱いを決める",
+  "医療行為・診断に当たる表現をしない"
+ ],
+ "seats": {
+  "OWN": {
+   "t": "hu",
+   "n": "例：のぞみ",
+   "since": 1788644000013
+  },
+  "BUILD": {
+   "t": "ai",
+   "n": "AIが準備中",
+   "since": 1788644000013
+  },
+  "SELL": {
+   "t": "ai",
+   "n": "AIが準備中",
+   "since": 1788644000013
+  },
+  "SITE": {
+   "t": "em",
+   "n": "",
+   "since": 1788644000013
+  },
+  "BUY": {
+   "t": "em",
+   "n": "",
+   "since": 1788644000013
+  },
+  "ACC": {
+   "t": "em",
+   "n": "",
+   "since": 1788644000013
+  }
+ },
+ "actions": [
+  {
+   "id": "a0",
+   "seat": "OWN",
+   "text": "1施設で申し送りにかかる時間を測る",
+   "due": 1789680800013,
+   "state": "open",
+   "by": "AI"
+  },
+  {
+   "id": "a1",
+   "seat": "BUILD",
+   "text": "音声→要約の最小の形を試作",
+   "due": 1789940000013,
+   "state": "open",
+   "by": "AI"
+  },
+  {
+   "id": "a2",
+   "seat": "ACC",
+   "text": "施設長に「読める記録」の基準を出してもらう",
+   "due": 1789680800013,
+   "state": "open",
+   "by": "AI"
+  }
+ ],
+ "bids": [],
+ "messages": [],
+ "cf": null,
+ "fund": null,
+ "criteria": [],
+ "criteriaLocked": false,
+ "deliveries": [],
+ "checks": [],
+ "ledger": [],
+ "notices": [],
+ "receipt": null,
+ "dist": null,
+ "objections": [],
+ "likes": [
+  "例：けん",
+  "例：さくら",
+  "例：りょう",
+  "例：あき"
+ ],
+ "archived": false,
+ "log": [
+  {
+   "t": 1788816800013,
+   "m": "例：のぞみ が「もし」を置いた"
+  },
+  {
+   "t": 1788816860013,
+   "m": "AI席が最初の一手を返した。作る席と売る席で準備を開始"
+  }
+ ],
+ "measurement": {
+  "stage2At": null,
+  "acceptedAt": null,
+  "settledAt": null,
+  "realCreatedAt": 1788816800013,
+  "realStage2At": null,
+  "realAcceptedAt": null,
+  "realSettledAt": null,
+  "testClockUsed": false,
+  "activeMinutes": null,
+  "effortBasis": "estimated",
+  "sameBenefit": "unconfirmed",
+  "comparisonNote": "",
+  "aiCost": {
+   "amount": null,
+   "basis": "unknown"
+  },
+  "materialCost": {
+   "amount": null,
+   "basis": "unknown"
+  }
+ },
+ "sample": true
+}

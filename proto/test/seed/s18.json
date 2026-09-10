@@ -1,0 +1,180 @@
+{
+ "title": "もし、地域の高齢者の見守りが新聞配達のついでにできたら",
+ "benefit": "一人暮らしの高齢者と家族",
+ "demo": "",
+ "owner": "例：あき",
+ "createdAt": 1786656800013,
+ "stage": 4,
+ "domain": "地域・介護",
+ "reframed": "もし、配達のついでに見守りが記録されたら",
+ "firstMove": "便益を受けるのは家族。払うのは家族と自治体。配達員が本体。まず1販売店で試します。",
+ "payers": [
+  "家族（月額）",
+  "自治体（見守り事業）",
+  "新聞販売店"
+ ],
+ "lines": [
+  "要介護者の情報は要配慮個人情報。施設との契約で扱いを決める",
+  "医療行為・診断に当たる表現をしない"
+ ],
+ "seats": {
+  "OWN": {
+   "t": "hu",
+   "n": "例：あき",
+   "since": 1788644000013
+  },
+  "BUILD": {
+   "t": "hu",
+   "n": "例：けん",
+   "since": 1788644000013
+  },
+  "SELL": {
+   "t": "ai",
+   "n": "AIが準備中",
+   "since": 1788644000013
+  },
+  "SITE": {
+   "t": "hu",
+   "n": "例：サンプル販売店",
+   "since": 1788644000013
+  },
+  "BUY": {
+   "t": "hu",
+   "n": "例：家族10世帯",
+   "since": 1788644000013
+  },
+  "ACC": {
+   "t": "hu",
+   "n": "例：地域包括 田村",
+   "since": 1788644000013
+  }
+ },
+ "actions": [],
+ "bids": [
+  {
+   "id": "b0",
+   "seat": "BUILD",
+   "by": "例：けん",
+   "text": "配達員がボタン1つで「異常なし」を送る形",
+   "price": 20000,
+   "days": 7,
+   "won": true,
+   "t": 1786743200013
+  },
+  {
+   "id": "b1",
+   "seat": "SITE",
+   "by": "例：サンプル販売店",
+   "text": "配達員3人で朝の配達時に対応できる",
+   "price": 10000,
+   "days": 7,
+   "won": true,
+   "t": 1786743200013
+  }
+ ],
+ "messages": [],
+ "cf": null,
+ "fund": null,
+ "criteria": [
+  {
+   "id": "k0",
+   "text": "10世帯で2週間、毎朝の記録が残る"
+  },
+  {
+   "id": "k1",
+   "text": "異常時に家族へ30分以内に届く"
+  }
+ ],
+ "criteriaLocked": true,
+ "deliveries": [
+  {
+   "id": "d0",
+   "version": 1,
+   "note": "https://example.invalid/mimamori-v1",
+   "diff": "",
+   "by": "例：けん",
+   "t": 1786916000013,
+   "rejected": false,
+   "reason": "",
+   "accepted": true
+  }
+ ],
+ "checks": [],
+ "ledger": [],
+ "notices": [],
+ "receipt": {
+  "amount": 50000,
+  "by": "例：あき",
+  "t": 1788989600013,
+  "mock": true
+ },
+ "dist": {
+  "price": 50000,
+  "fixed": 25000,
+  "perf": 30,
+  "idea": 10,
+  "fee": 4500,
+  "units": [
+   "u1",
+   "u2"
+  ],
+  "proposedAt": 1788298400013,
+  "rows": []
+ },
+ "objections": [
+  {
+   "id": "o1",
+   "by": "例：サンプル販売店",
+   "text": "配達員の交通費5,000円が確定対価に入っていない",
+   "t": 1788730400013,
+   "resolved": false
+  }
+ ],
+ "likes": [],
+ "archived": false,
+ "log": [
+  {
+   "t": 1786656800013,
+   "m": "例：あき が「もし」を置いた"
+  },
+  {
+   "t": 1786656860013,
+   "m": "AI席が最初の一手を返した。作る席と売る席で準備を開始"
+  },
+  {
+   "t": 1786743200013,
+   "m": "地域包括 田村 が検収を確定した（段階4）"
+  },
+  {
+   "t": 1786746800013,
+   "m": "あき が配分案を提示した（7日間の異議期間）"
+  },
+  {
+   "t": 1786750400013,
+   "m": "サンプル販売店 が配分案に異議を出した"
+  }
+ ],
+ "measurement": {
+  "stage2At": 1786829600013,
+  "acceptedAt": 1787002400013,
+  "settledAt": null,
+  "realCreatedAt": 1786656800013,
+  "realStage2At": 1786829600013,
+  "realAcceptedAt": 1787002400013,
+  "realSettledAt": null,
+  "testClockUsed": false,
+  "activeMinutes": 360,
+  "effortBasis": "measured",
+  "sameBenefit": "unconfirmed",
+  "comparisonNote": "",
+  "aiCost": {
+   "amount": 800,
+   "basis": "measured"
+  },
+  "materialCost": {
+   "amount": 5000,
+   "basis": "measured"
+  }
+ },
+ "sample": true
+}

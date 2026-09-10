@@ -1,0 +1,157 @@
+{
+ "title": "もし、訪問看護の移動時間が自動で最短になったら",
+ "benefit": "訪問看護師",
+ "demo": "",
+ "owner": "例：のぞみ",
+ "createdAt": 1786916000013,
+ "stage": 3,
+ "domain": "介護・医療",
+ "reframed": "もし、訪問の順番が毎朝最短で組まれたら",
+ "firstMove": "便益を受けるのは看護師。払うのはステーション。移動時間の削減がそのまま訪問件数になる。まず1ステーションで1週間の移動時間を測ります。",
+ "payers": [
+  "訪問看護ステーション",
+  "医療法人",
+  "訪問系ソフト事業者"
+ ],
+ "lines": [
+  "要介護者の情報は要配慮個人情報。施設との契約で扱いを決める",
+  "医療行為・診断に当たる表現をしない"
+ ],
+ "seats": {
+  "OWN": {
+   "t": "hu",
+   "n": "例：のぞみ",
+   "since": 1788644000013
+  },
+  "BUILD": {
+   "t": "hu",
+   "n": "例：E",
+   "since": 1788644000013
+  },
+  "SELL": {
+   "t": "ai",
+   "n": "AIが準備中",
+   "since": 1788644000013
+  },
+  "SITE": {
+   "t": "em",
+   "n": "",
+   "since": 1788644000013
+  },
+  "BUY": {
+   "t": "hu",
+   "n": "例：サンプル訪問看護（管理者）",
+   "since": 1788644000013
+  },
+  "ACC": {
+   "t": "hu",
+   "n": "例：管理者 佐藤",
+   "since": 1788644000013
+  }
+ },
+ "actions": [
+  {
+   "id": "a0",
+   "seat": "ACC",
+   "text": "1週間分の訪問記録で検収",
+   "due": 1789680800013,
+   "state": "open",
+   "by": "AI"
+  }
+ ],
+ "bids": [
+  {
+   "id": "b0",
+   "seat": "BUILD",
+   "by": "例：E",
+   "text": "住所の一覧から順番を出す部分は動いている。地図の表示は後",
+   "price": 40000,
+   "days": 14,
+   "won": true,
+   "t": 1787002400013
+  }
+ ],
+ "messages": [
+  {
+   "by": "例：E",
+   "text": "v1を納品しました。順番の変更は画面右上です",
+   "t": 1787002400013
+  },
+  {
+   "by": "例：管理者 佐藤",
+   "text": "今週の記録で確認します",
+   "t": 1787006000013
+  }
+ ],
+ "cf": null,
+ "fund": null,
+ "criteria": [
+  {
+   "id": "k0",
+   "text": "1週間分の訪問で移動時間が手組みより短い"
+  },
+  {
+   "id": "k1",
+   "text": "順番の変更が当日でもできる"
+  },
+  {
+   "id": "k2",
+   "text": "患者の住所は端末の外に出ない"
+  }
+ ],
+ "criteriaLocked": true,
+ "deliveries": [
+  {
+   "id": "d0",
+   "version": 1,
+   "note": "https://example.invalid/route-v1",
+   "diff": "",
+   "by": "例：E",
+   "t": 1787175200013,
+   "rejected": false,
+   "reason": "",
+   "accepted": false
+  }
+ ],
+ "checks": [],
+ "ledger": [],
+ "notices": [],
+ "receipt": null,
+ "dist": null,
+ "objections": [],
+ "likes": [],
+ "archived": false,
+ "log": [
+  {
+   "t": 1786916000013,
+   "m": "例：のぞみ が「もし」を置いた"
+  },
+  {
+   "t": 1786916060013,
+   "m": "AI席が最初の一手を返した。作る席と売る席で準備を開始"
+  }
+ ],
+ "measurement": {
+  "stage2At": 1787088800013,
+  "acceptedAt": null,
+  "settledAt": null,
+  "realCreatedAt": 1786916000013,
+  "realStage2At": 1787088800013,
+  "realAcceptedAt": null,
+  "realSettledAt": null,
+  "testClockUsed": false,
+  "activeMinutes": null,
+  "effortBasis": "estimated",
+  "sameBenefit": "unconfirmed",
+  "comparisonNote": "",
+  "aiCost": {
+   "amount": null,
+   "basis": "unknown"
+  },
+  "materialCost": {
+   "amount": null,
+   "basis": "unknown"
+  }
+ },
+ "sample": true
+}

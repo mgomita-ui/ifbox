@@ -1,0 +1,167 @@
+{
+ "title": "もし、地域の空き家の「貸せるかどうか」が写真だけで分かったら",
+ "benefit": "空き家を持つ人と借りたい人",
+ "demo": "",
+ "owner": "例：たかし",
+ "createdAt": 1785188000013,
+ "stage": 5,
+ "domain": "地域・不動産",
+ "reframed": "もし、空き家の写真から貸せるかが分かったら",
+ "firstMove": "便益を受けるのは所有者と自治体。払うのは自治体と不動産会社。判定より、その後の紹介が本体。まず1自治体で試します。",
+ "payers": [
+  "自治体（空き家対策）",
+  "不動産会社（紹介料）",
+  "所有者"
+ ],
+ "lines": [
+  "不動産の仲介は宅建業の免許が要る。紹介までに留める（確認）"
+ ],
+ "seats": {
+  "OWN": {
+   "t": "hu",
+   "n": "例：たかし",
+   "since": 1788644000013
+  },
+  "BUILD": {
+   "t": "hu",
+   "n": "例：けん",
+   "since": 1788644000013
+  },
+  "SELL": {
+   "t": "hu",
+   "n": "例：たかし",
+   "since": 1788644000013
+  },
+  "SITE": {
+   "t": "em",
+   "n": "",
+   "since": 1788644000013
+  },
+  "BUY": {
+   "t": "hu",
+   "n": "例：サンプル町役場",
+   "since": 1788644000013
+  },
+  "ACC": {
+   "t": "hu",
+   "n": "例：サンプル町 担当者",
+   "since": 1788644000013
+  }
+ },
+ "actions": [],
+ "bids": [
+  {
+   "id": "b0",
+   "seat": "BUILD",
+   "by": "例：けん",
+   "text": "写真→チェックリスト→3段階の判定。10日",
+   "price": 40000,
+   "days": 10,
+   "won": true,
+   "t": 1785274400013
+  }
+ ],
+ "messages": [],
+ "cf": null,
+ "fund": null,
+ "criteria": [
+  {
+   "id": "k0",
+   "text": "30軒の写真で判定が担当者の現地確認と8割一致"
+  },
+  {
+   "id": "k1",
+   "text": "判定の理由が表示される"
+  }
+ ],
+ "criteriaLocked": true,
+ "deliveries": [
+  {
+   "id": "d0",
+   "version": 1,
+   "note": "https://example.invalid/akiya-v1",
+   "diff": "",
+   "by": "例：けん",
+   "t": 1785447200013,
+   "rejected": false,
+   "reason": "",
+   "accepted": true
+  }
+ ],
+ "checks": [],
+ "ledger": [],
+ "notices": [],
+ "receipt": {
+  "amount": 80000,
+  "by": "例：たかし",
+  "t": 1788989600013,
+  "mock": true
+ },
+ "dist": {
+  "price": 80000,
+  "fixed": 40000,
+  "perf": 30,
+  "idea": 10,
+  "fee": 4500,
+  "units": [
+   "u1",
+   "u2"
+  ],
+  "proposedAt": 1787866400013,
+  "rows": []
+ },
+ "objections": [],
+ "likes": [],
+ "archived": false,
+ "log": [
+  {
+   "t": 1785188000013,
+   "m": "例：たかし が「もし」を置いた"
+  },
+  {
+   "t": 1785188060013,
+   "m": "AI席が最初の一手を返した。作る席と売る席で準備を開始"
+  },
+  {
+   "t": 1785274400013,
+   "m": "サンプル町 担当者 が検収を確定した（段階4）"
+  },
+  {
+   "t": 1785278000013,
+   "m": "たかし が配分案を提示した（7日間の異議期間）"
+  },
+  {
+   "t": 1785281600013,
+   "m": "たかし が模擬精算を確定した（段階5・実決済なし）"
+  }
+ ],
+ "measurement": {
+  "stage2At": 1785360800013,
+  "acceptedAt": 1785533600013,
+  "settledAt": 1788989600013,
+  "realCreatedAt": 1785188000013,
+  "realStage2At": 1785360800013,
+  "realAcceptedAt": 1785533600013,
+  "realSettledAt": 1788989600013,
+  "testClockUsed": false,
+  "activeMinutes": 540,
+  "effortBasis": "measured",
+  "sameBenefit": "unconfirmed",
+  "comparisonNote": "",
+  "aiCost": {
+   "amount": 1500,
+   "basis": "measured"
+  },
+  "materialCost": {
+   "amount": 0,
+   "basis": "measured"
+  }
+ },
+ "sample": true,
+ "settlement": {
+  "amount": 80000,
+  "by": "例：たかし",
+  "t": 1788989600013,
+  "mock": true
+ }
+}

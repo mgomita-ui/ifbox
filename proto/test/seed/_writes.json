@@ -1,0 +1,128 @@
+[
+ {
+  "op": "set",
+  "collection": "cases",
+  "doc_id": "s01",
+  "file_path": "C:\\Users\\mgomi\\dev\\ifbox-proto\\proto\\test\\seed\\s01.json"
+ },
+ {
+  "op": "set",
+  "collection": "cases",
+  "doc_id": "s02",
+  "file_path": "C:\\Users\\mgomi\\dev\\ifbox-proto\\proto\\test\\seed\\s02.json"
+ },
+ {
+  "op": "set",
+  "collection": "cases",
+  "doc_id": "s03",
+  "file_path": "C:\\Users\\mgomi\\dev\\ifbox-proto\\proto\\test\\seed\\s03.json"
+ },
+ {
+  "op": "set",
+  "collection": "cases",
+  "doc_id": "s04",
+  "file_path": "C:\\Users\\mgomi\\dev\\ifbox-proto\\proto\\test\\seed\\s04.json"
+ },
+ {
+  "op": "set",
+  "collection": "cases",
+  "doc_id": "s05",
+  "file_path": "C:\\Users\\mgomi\\dev\\ifbox-proto\\proto\\test\\seed\\s05.json"
+ },
+ {
+  "op": "set",
+  "collection": "cases",
+  "doc_id": "s06",
+  "file_path": "C:\\Users\\mgomi\\dev\\ifbox-proto\\proto\\test\\seed\\s06.json"
+ },
+ {
+  "op": "set",
+  "collection": "cases",
+  "doc_id": "s07",
+  "file_path": "C:\\Users\\mgomi\\dev\\ifbox-proto\\proto\\test\\seed\\s07.json"
+ },
+ {
+  "op": "set",
+  "collection": "cases",
+  "doc_id": "s08",
+  "file_path": "C:\\Users\\mgomi\\dev\\ifbox-proto\\proto\\test\\seed\\s08.json"
+ },
+ {
+  "op": "set",
+  "collection": "cases",
+  "doc_id": "s09",
+  "file_path": "C:\\Users\\mgomi\\dev\\ifbox-proto\\proto\\test\\seed\\s09.json"
+ },
+ {
+  "op": "set",
+  "collection": "cases",
+  "doc_id": "s10",
+  "file_path": "C:\\Users\\mgomi\\dev\\ifbox-proto\\proto\\test\\seed\\s10.json"
+ },
+ {
+  "op": "set",
+  "collection": "cases",
+  "doc_id": "s11",
+  "file_path": "C:\\Users\\mgomi\\dev\\ifbox-proto\\proto\\test\\seed\\s11.json"
+ },
+ {
+  "op": "set",
+  "collection": "cases",
+  "doc_id": "s12",
+  "file_path": "C:\\Users\\mgomi\\dev\\ifbox-proto\\proto\\test\\seed\\s12.json"
+ },
+ {
+  "op": "set",
+  "collection": "cases",
+  "doc_id": "s13",
+  "file_path": "C:\\Users\\mgomi\\dev\\ifbox-proto\\proto\\test\\seed\\s13.json"
+ },
+ {
+  "op": "set",
+  "collection": "cases",
+  "doc_id": "s14",
+  "file_path": "C:\\Users\\mgomi\\dev\\ifbox-proto\\proto\\test\\seed\\s14.json"
+ },
+ {
+  "op": "set",
+  "collection": "cases",
+  "doc_id": "s15",
+  "file_path": "C:\\Users\\mgomi\\dev\\ifbox-proto\\proto\\test\\seed\\s15.json"
+ },
+ {
+  "op": "set",
+  "collection": "cases",
+  "doc_id": "s16",
+  "file_path": "C:\\Users\\mgomi\\dev\\ifbox-proto\\proto\\test\\seed\\s16.json"
+ },
+ {
+  "op": "set",
+  "collection": "cases",
+  "doc_id": "s17",
+  "file_path": "C:\\Users\\mgomi\\dev\\ifbox-proto\\proto\\test\\seed\\s17.json"
+ },
+ {
+  "op": "set",
+  "collection": "cases",
+  "doc_id": "s18",
+  "file_path": "C:\\Users\\mgomi\\dev\\ifbox-proto\\proto\\test\\seed\\s18.json"
+ },
+ {
+  "op": "set",
+  "collection": "cases",
+  "doc_id": "s19",
+  "file_path": "C:\\Users\\mgomi\\dev\\ifbox-proto\\proto\\test\\seed\\s19.json"
+ },
+ {
+  "op": "set",
+  "collection": "cases",
+  "doc_id": "s20",
+  "file_path": "C:\\Users\\mgomi\\dev\\ifbox-proto\\proto\\test\\seed\\s20.json"
+ },
+ {
+  "op": "set",
+  "collection": "templates",
+  "doc_id": "tpl-s19",
+  "file_path": "C:\\Users\\mgomi\\dev\\ifbox-proto\\proto\\test\\seed\\tpl-s19.json"
+ }
+]
