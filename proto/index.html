@@ -124,6 +124,15 @@
   .prop .tx{margin-top:4px;color:var(--ink2)}
   .prop .ft{margin-top:6px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
   .msgs{display:flex;flex-direction:column;gap:8px;max-height:380px;overflow:auto;padding:4px 2px}
+  .thread{display:flex;flex-direction:column;gap:6px;max-height:480px;overflow:auto;padding:4px 2px}
+  .tp{display:flex;gap:9px;padding:8px 10px;border-radius:10px;background:#fff;border:1px solid var(--line);font-size:13px}
+  .tp.me{background:var(--soft)} .tp.can{border-color:var(--navy);border-width:1.5px} .tp.offer{border-color:var(--gold);border-width:1.5px} .tp.bid{background:#FBFCFF}
+  .tp .av{flex:0 0 28px;width:28px;height:28px;border-radius:50%;color:#fff;font-weight:700;font-size:12px;display:flex;align-items:center;justify-content:center}
+  .tp .av.ai{background:var(--gold-soft);color:var(--gold-deep)} .tp .av.gold{background:var(--gold);color:var(--navy)}
+  .tp .bd{flex:1;min-width:0} .tp .who{font-size:11.5px;color:var(--ink3);display:flex;gap:6px;align-items:center;flex-wrap:wrap} .tp .who b{color:var(--ink)} .tp .tm{margin-left:auto;font-size:10.5px;color:var(--ink3);white-space:nowrap}
+  .tp .tx{margin-top:3px;white-space:pre-wrap;word-break:break-word;color:var(--ink)} .tp .ft{margin-top:6px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  .tp.sys{background:transparent;border:none;padding:1px 10px;font-size:11.5px;color:var(--ink3);justify-content:space-between;gap:12px}
+  .mgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px;margin-top:12px} .mcard .kv{margin-top:8px}
   .msg{max-width:78%;padding:8px 12px;border-radius:12px;font-size:13px;background:var(--soft);color:var(--ink);align-self:flex-start}
   .msg.me{background:var(--navy);color:#fff;align-self:flex-end}
   .msg .who{font-size:10.5px;opacity:.7;margin-bottom:2px}
@@ -186,6 +195,7 @@
     <button data-s="home" class="on" onclick="go('home')">探す</button>
     <button data-s="case" onclick="go('case')">案件</button>
     <button data-s="turns" onclick="go('turns')">手番</button>
+    <button data-s="members" onclick="go('members')">会員</button>
     <button data-s="money" onclick="go('money')">配分</button>
     <button data-s="archive" onclick="go('archive')">保管庫</button>
   </nav>
@@ -230,8 +240,8 @@
         </div>
         <div class="card" style="margin-top:12px">
           <p class="guide">読む順番：<a href="#" onclick="tab('props');return false">① 誰が助かり、誰が払うか</a> → <a href="#" onclick="document.getElementById('c-seats').scrollIntoView({block:'center'});return false">② 席</a> → <a href="#" onclick="tab('accept');return false">③ 納品・検収</a> → <a href="#" onclick="tab('compare');return false">④ 型・比較</a>。段階は人の確定でだけ上がります。</p>
-          <div class="tabs"><button class="on" data-p="props" onclick="tab('props')">提案 <span id="n-props"></span></button><button data-p="msgs" onclick="tab('msgs')">メッセージ <span id="n-msgs"></span></button><button data-p="cf" onclick="tab('cf')">先に買う</button><button data-p="fund" onclick="tab('fund')">資金を出す</button><button data-p="accept" onclick="tab('accept')">納品・検収</button><button data-p="ledger" onclick="tab('ledger')">台帳</button><button data-p="compare" onclick="tab('compare')">型・比較</button><button data-p="log" onclick="tab('log')">記録</button></div>
-          <div class="pane on" id="p-props">
+          <div class="tabs"><button class="on" data-p="msgs" onclick="tab('msgs')">スレッド <span id="n-msgs"></span></button><button data-p="props" onclick="tab('props')">提案 <span id="n-props"></span></button><button data-p="cf" onclick="tab('cf')">先に買う</button><button data-p="fund" id="tab-fund" onclick="tab('fund')" hidden>資金を出す</button><button data-p="accept" onclick="tab('accept')">納品・検収</button><button data-p="ledger" onclick="tab('ledger')">台帳</button><button data-p="compare" onclick="tab('compare')">型・比較</button><button data-p="log" onclick="tab('log')">記録</button></div>
+          <div class="pane" id="p-props">
             <p class="sm">席に対して提案します。AIが最低ラインを先に置いている席では、それを上回れば採用されます。採用は発案者が決めます。</p>
             <div id="c-props"></div>
             <div class="box" style="background:var(--soft);margin-top:12px">
@@ -241,9 +251,14 @@
               <div class="row"><button class="btn" onclick="propose()">この案件に提案する</button><span class="sm">提案を送っただけでは契約も課金も成立しません。発案者が採用を決め、条件はメッセージで詰めます。金額は例として扱われます。</span></div>
             </div>
           </div>
-          <div class="pane" id="p-msgs">
-            <div class="msgs" id="c-msgs"></div>
-            <div class="row"><input class="f" id="msg-text" placeholder="提案内容や進め方について入力（案件の全員に見えます）" style="flex:1;min-width:200px" onkeydown="if(event.key==='Enter')sendMsg()"><button class="btn" onclick="sendMsg()">送る</button></div>
+          <div class="pane on" id="p-msgs">
+            <p class="sm">案件のスレッド。会員が「俺これできる」と席を名乗り、発案者が迎えると席に座ります。提案・オファー・着席・段階の変化も時系列でここに並びます。</p>
+            <div class="thread" id="c-msgs"></div>
+            <div class="box" style="background:var(--soft);margin-top:10px">
+              <div class="row"><select class="f" id="msg-kind" onchange="msgKindChange()"><option value="msg">ひとこと</option><option value="can">俺これできる（席を名乗る）</option></select><select class="f" id="msg-seat" style="display:none"></select></div>
+              <div class="row"><input class="f" id="msg-text" placeholder="提案内容や進め方について入力（案件の全員に見えます）" style="flex:1;min-width:200px" onkeydown="if(event.key==='Enter')sendMsg()"><button class="btn" onclick="sendMsg()">送る</button></div>
+              <div class="row" id="msg-tools"></div>
+            </div>
           </div>
           <div class="pane" id="p-cf"><div id="c-cf"></div></div>
           <div class="pane" id="p-fund"><div id="c-fund"></div></div>
@@ -276,6 +291,13 @@
 <section class="screen" id="s-turns"><div class="wrap">
   <p class="eb">MY TURN</p><h2 class="t">自分の手番 ― 次に自分が動くものだけ</h2>
   <div class="card" style="margin-top:12px" id="turns"></div>
+</div></section>
+
+<!-- ===================== 会員 ===================== -->
+<section class="screen" id="s-members"><div class="wrap">
+  <p class="eb">MEMBERS</p><h2 class="t">会員 ― 紹介制・承認制・オファー型</h2>
+  <p class="sm" style="margin-top:6px">紹介者がいる参加者を「会員」、いない参加者を「一般」と表示します。案件から会員へ「この席に座ってほしい」とオファーを送り、相手が受けるか辞退するかを決めます（承認制）。席に座るのを会員に限るかの線引きは未決のため、いまは表示だけで制限しません。</p>
+  <div class="mgrid" id="members"></div>
 </div></section>
 
 <!-- ===================== 配分 ===================== -->
@@ -386,7 +408,7 @@ const $=id=>document.getElementById(id);
 function saveMe(){ try{localStorage.setItem('ifbox.me',$('me').value)}catch(e){} }
 try{ $('me').value=localStorage.getItem('ifbox.me')||''; }catch(e){}
 function toast(t){ const e=$('toast'); e.textContent=t; e.classList.add('on'); setTimeout(()=>e.classList.remove('on'),3400); }
-function go(s){ document.querySelectorAll('.screen').forEach(x=>x.classList.toggle('on',x.id==='s-'+s)); document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.s===s)); window.scrollTo(0,0); if(s==='money') fillCaseSelect(); if(s==='archive') renderArchive(); if(s==='turns') renderTurns(); }
+function go(s){ document.querySelectorAll('.screen').forEach(x=>x.classList.toggle('on',x.id==='s-'+s)); document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.s===s)); window.scrollTo(0,0); if(s==='money') fillCaseSelect(); if(s==='archive') renderArchive(); if(s==='turns') renderTurns(); if(s==='members') renderMembers(); }
 function tab(p){ document.querySelectorAll('.tabs button').forEach(b=>b.classList.toggle('on',b.dataset.p===p)); document.querySelectorAll('.pane').forEach(x=>x.classList.toggle('on',x.id==='p-'+p)); }
 function md(h){ $('md').innerHTML=h; $('ov').classList.add('on'); }
 function closeMd(){ $('ov').classList.remove('on'); }
@@ -492,7 +514,7 @@ function renderCase(){
   const c=cases[cur]; if(!c){ $('c-body').style.display='none'; $('c-empty').style.display=''; return; }
   $('c-body').style.display=''; $('c-empty').style.display='none';
   $('c-domain').textContent=(isSample(c)?'サンプル ・ ':'')+(c.domain||'領域未定');
-  $('c-tools').innerHTML = (isSample(c)?`<button class="btn ghost sm" onclick="startFromSample()">サンプルから実案件を始める</button>`:'') + (c.archived?`<span class="tag wn">保管中（${esc(c.archiveReason||'')}）</span> <button class="btn ghost sm" onclick="restoreCase('${c.id}')">戻す</button>`:`<button class="btn ghost sm" onclick="archiveCase()">保管へ移す</button>`); $('c-status').innerHTML = c.stage>=2?'<span class="tag wn">買い手あり</span>':(c.cf?.open?'<span class="tag ai">先に買う募集中</span>':'<span class="tag ok">募集中</span>')+(c.fund?.open?' <span class="tag bl">資金募集中</span>':'');
+  $('c-tools').innerHTML = (isSample(c)?`<button class="btn ghost sm" onclick="startFromSample()">サンプルから実案件を始める</button>`:'') + (c.archived?`<span class="tag wn">保管中（${esc(c.archiveReason||'')}）</span> <button class="btn ghost sm" onclick="restoreCase('${c.id}')">戻す</button>`:`<button class="btn ghost sm" onclick="archiveCase()">保管へ移す</button>`); $('c-status').innerHTML = c.stage>=2?'<span class="tag wn">買い手あり</span>':(c.cf?.open?'<span class="tag ai">先に買う募集中</span>':'<span class="tag ok">募集中</span>')+(FUND_ENABLED&&c.fund?.open?' <span class="tag bl">資金募集中</span>':'');
   $('c-who').textContent='発案：'+c.owner; $('c-date').textContent=fmtDate(c.createdAt)+' 投稿'; $('c-title').textContent=c.title;
   $('c-reframed').textContent=c.reframed; $('c-benefit').textContent=c.benefit||'未記入';
   $('c-payers').innerHTML=(c.payers||[]).length?c.payers.map(p=>`<span class="tag bl">${esc(p)}</span>`).join(' '):'未定';
@@ -504,14 +526,12 @@ function renderCase(){
   const bids=(c.bids||[]).slice().sort((a,b)=>(a.by==='AI'?0:1)-(b.by==='AI'?0:1)||b.t-a.t);
   $('n-props').textContent=bids.filter(b=>b.by!=='AI').length||'';
   $('c-props').innerHTML = bids.length? bids.map(b=>`<div class="prop ${b.by==='AI'?'ai':''} ${b.won?'win':''}">
-      <div class="hd"><span class="tag ${b.by==='AI'?'ai':'hu'}">${SNAME[b.seat]||'席'}</span><span class="nm">${esc(b.by)}${b.by==='AI'?'（最低ライン）':''}</span>${b.days?`<span class="sm">納期 ${b.days}日</span>`:''}<span class="pr">${b.by==='AI'?'単価表':yen(b.price)}</span></div>
+      <div class="hd"><span class="tag ${b.by==='AI'?'ai':'hu'}">${SNAME[b.seat]||'席'}</span><span class="nm">${esc(b.by)}${b.by==='AI'?'（最低ライン）':''}</span>${b.by==='AI'?'':rankTagByName(b.by)}${b.days?`<span class="sm">納期 ${b.days}日</span>`:''}<span class="pr">${b.by==='AI'?'単価表':yen(b.price)}</span></div>
       <div class="tx">${esc(b.text)}${b.unverified?.length?`<br><span class="sm">未確認: ${esc(b.unverified.join('、'))}</span>`:''}</div>
       <div class="ft"><span class="sm">${fmtDT(b.t)}</span>${b.won?'<span class="tag ok">採用</span>':(c.owner===me()&&b.by!=='AI'?`<button class="btn sm" onclick="pick('${b.id}')">採用して席に座ってもらう</button>`:'')}${b.by!=='AI'&&b.by!==me()?`<button class="btn ghost sm" onclick="tab('msgs');$('msg-text').value='${esc(b.by)}さん、提案について：'">返信</button>`:''}</div>
     </div>`).join('') : '<p class="sm">まだ提案はありません。</p>';
   /* メッセージ */
-  const msgs=c.messages||[]; $('n-msgs').textContent=msgs.length||'';
-  $('c-msgs').innerHTML = msgs.length? msgs.map(m=>`<div class="msg ${m.by===me()?'me':''}"><div class="who">${esc(m.by)} ・ ${fmtDT(m.t)}</div>${esc(m.text)}</div>`).join('') : '<p class="sm">まだやり取りはありません。提案の相談、条件のすり合わせに使ってください。</p>';
-  const box=$('c-msgs'); box.scrollTop=box.scrollHeight;
+  renderThread(c);
   /* 支援 */
   renderCf(c); renderFund(c); renderAccept(c); renderLedger(c); renderTest(c); renderReuseHead(c); renderCompare(c);
   renderTplMake(c); renderSecondCheck(c);
@@ -624,7 +644,7 @@ async function pledge(){ const c=cases[cur]; const amount=+$('pl-amt').value||0;
   await save(patch,msg); toast('記録しました。決済は外部で行います。'); }
 async function closeCf(){ const c=cases[cur]; await save({cf:{...c.cf,open:false}}, me()+' が支援の募集を締めた'); }
 /* --- 資金を出す（出資型クラウドファンディング） --- */
-function renderFund(c){
+function renderFund_orig(c){
   const f=c.fund; const pane=$('c-fund'); const side=$('c-cfside');
   if(!f){ pane.innerHTML=`<p class="sm">この案件はまだ資金を募っていません。出資型は「作る前に資金を集める」形です。IFBOXは募集も預かりもしません。ここに残るのは出資の意向と、合意した残余配分の持分だけで、実際の募集と払込は登録事業者を通して行います。</p>${c.owner===me()?'<div class="row"><button class="btn" onclick="openFundForm()">資金を募る（目標額・使途・持分を置く）</button></div>':'<p class="sm">発案者だけが開けます。</p>'}`; return; }
   const total=fundTotal(c), pct=Math.min(100,Math.round(total/f.goal*100)), left=Math.ceil((f.deadline-now())/DAY), reached=total>=f.goal;
@@ -1018,9 +1038,9 @@ function dispName(p){ if(!p) return '名無し'; const dup=Object.values(partici
 function me(){ const p=participantsAll[myId]; return p?dispName(p):(($('me')?.value||'').trim()||'名無し'); }
 function meId(){ return myId; }
 function renderMe(){ const box=$('mebox'); if(!box) return; const list=Object.values(participantsAll);
-  box.innerHTML=`<span>あなた</span><select id="me-sel" onchange="pickMe(this.value)"><option value="">（選ぶ）</option>${list.map(p=>`<option value="${p.id}" ${p.id===myId?'selected':''}>${esc(dispName(p))}</option>`).join('')}<option value="__new">＋ 新しく登録</option></select><span class="status" id="status">${$('status')?.innerHTML||''}</span>`;
+  box.innerHTML=`<span>あなた</span><select id="me-sel" onchange="pickMe(this.value)"><option value="">（選ぶ）</option>${list.map(p=>`<option value="${p.id}" ${p.id===myId?'selected':''}>${esc(dispName(p))}</option>`).join('')}<option value="__edit">✎ 自分の情報・紹介</option><option value="__new">＋ 新しく登録</option></select><span class="status" id="status">${$('status')?.innerHTML||''}</span>`;
   const hid=$('me'); if(hid) hid.value=participantsAll[myId]?.name||hid.value; }
-async function pickMe(v){ if(v==='__new'){ md(`<h3>参加者を登録</h3><p class="sm">名札です。認証ではありません。他の人があなたを選ぶことは防げません。機密情報・個人情報・実際の送金情報は入力しないでください。</p><input class="f" id="new-name" placeholder="表示名（例 A）" style="width:100%;margin-top:8px"><div class="row" style="justify-content:flex-end"><button class="btn ghost" onclick="closeMd();renderMe()">やめる</button><button class="btn" onclick="registerMe()">登録する</button></div>`); return; }
+async function pickMe(v){ if(v==='__edit'){ renderMe(); editMe(); return; } if(v==='__new'){ md(`<h3>参加者を登録</h3><p class="sm">名札です。認証ではありません。他の人があなたを選ぶことは防げません。機密情報・個人情報・実際の送金情報は入力しないでください。</p><input class="f" id="new-name" placeholder="表示名（例 A）" style="width:100%;margin-top:8px"><div class="row"><span class="sm" style="width:90px">紹介者</span><select class="f" id="new-intro" style="flex:1">${introducerOptions('',null)}</select></div><div class="row"><span class="sm" style="width:90px">紹介動画URL</span><input class="f" id="new-video" placeholder="https://…（任意）" style="flex:1"></div><div class="row"><span class="sm" style="width:90px">一言</span><input class="f" id="new-note" placeholder="できること・持っているもの（任意）" style="flex:1"></div><p class="sm">紹介者がいると「会員」、いなければ「一般」と表示されます。</p><div class="row" style="justify-content:flex-end"><button class="btn ghost" onclick="closeMd();renderMe()">やめる</button><button class="btn" onclick="registerMe()">登録する</button></div>`); return; }
   myId=v||null; try{ v?localStorage.setItem('ifbox.pid',v):localStorage.removeItem('ifbox.pid'); }catch(e){} renderMe(); if(cur&&cases[cur]) renderCase(); renderGrid(); }
 async function registerMe(){ const name=$('new-name').value.trim(); if(!name){ toast('表示名を入れてください'); return; } try{ const ref=await db.collection('participants').add({name,createdAt:Date.now()}); myId=ref.id; try{ localStorage.setItem('ifbox.pid',ref.id); }catch(e){} closeMd(); toast('登録しました。同名がいれば #番号 で区別されます。'); }catch(e){ toast('登録できません: '+(e.code||e.message)); } }
 /* サンプルと実案件の分離 */
@@ -1042,6 +1062,8 @@ function myTurns(){
     if(c.sourceArtifact&&c.intake){ const mine=(c.intake.assigneeId&&id&&c.intake.assigneeId===id)||(!c.intake.assigneeId&&c.intake.assignee===name);
       if(c.intake.status==='未確認'){ if(mine) out.push({c,why:'元成果物の使用区分が未確認',anchor:'accept'}); else if(!c.intake.assignee) unassigned.push({c,why:'取り込み担当が未確定',anchor:'accept'}); } }
     /* 自分の席：期限超過の行動、次の一手が空 */
+    for(const o of (c.offers||[])){ if(o.state==='open'&&((o.toId&&o.toId===id)||o.to===name)) out.push({c,why:SNAME[o.seat]+'の席へのオファー（'+o.by+'）に返事する',anchor:'msgs'}); }
+    if(c.owner===name) for(const m of (c.messages||[])){ if(m.kind==='can'&&c.seats?.[m.seat]?.t!=='hu') out.push({c,why:m.by+' が'+SNAME[m.seat]+'の席を名乗っている（迎えるか決める）',anchor:'msgs'}); }
     for(const [k,n] of SEATS){ const s=c.seats?.[k]; if(!s||s.t!=='hu'||s.n!==name) continue;
       const open=(c.actions||[]).filter(a=>a.seat===k&&a.state==='open'); const over=open.filter(a=>a.due<now());
       if(over.length) out.push({c,why:n+'の席：期限超過の行動 '+over.length+'件（停滞）',anchor:'props'});
@@ -1084,5 +1106,108 @@ function renderSecondCheck(c){
     <table style="margin-top:8px"><tr><th>元成果物</th><th>使用区分</th><th>適用先の検収</th><th>時間・原価差</th></tr><tr><td>${c.sourceArtifact?esc(c.sourceArtifact.name)+' v'+c.sourceArtifact.version:'—'}</td><td>${it?esc(it.status)+(it.targetVersionId?'（→ v'+(artifactOf(c,it.targetVersionId)?.version||'?')+'）':''):'—'}</td><td>${accepted?'v'+accepted.version+' 検収済':'未'}</td><td class="sm">下の比較欄を参照（不足があれば理由が出ます）</td></tr></table>
     ${it&&it.status==='不使用'?'<div class="box warn">元成果物を使わなかった案件です。再利用の成功とはせず、そのまま結果に残します。</div>':''}`;
 }
+
+
+/* ===================== 第9回：スレッド（K5）／会員・オファー（K6）／購入型のみ（K7） ===================== */
+/* 打合せ（2026-09-13）で決まった3点。出資型は非表示（データは残す）。会員の線引きは未決なので表示のみ。 */
+const FUND_ENABLED = false;
+function renderFund(c){ if(FUND_ENABLED){ return renderFund_orig(c); } const el=$('c-fund'); if(el) el.innerHTML='<p class="sm">出資型（資金を出す）は行いません。免許が要るため、IFBOXはお金を預かりません。先に買う（購入型）だけを使います。</p>'; }
+
+/* 出資型の入口と保存処理を無効化（データは残す） */
+function openFundForm(){ if(!FUND_ENABLED){ toast('出資型は行いません。先に買う（購入型）を使ってください'); return; } }
+async function startFund(){ if(!FUND_ENABLED){ toast('出資型は行いません'); return; } }
+async function fundPledge(){ if(!FUND_ENABLED){ toast('出資型は行いません'); return; } }
+async function closeFund(){ if(!FUND_ENABLED){ toast('出資型は行いません'); return; } }
+
+/* --- 参加者の会員区分 --- */
+function pByName(name){ return Object.values(participantsAll).find(p=>dispName(p)===name)||null; }
+function rankOf(p){ if(!p) return null; return (p.introId&&participantsAll[p.introId]&&p.introId!==p.id)?'member':'guest'; }
+function rankTag(p){ if(!p) return ''; return rankOf(p)==='member'?'<span class="tag ok" title="紹介者あり">会員</span>':'<span class="tag em" title="紹介者なし">一般</span>'; }
+function rankTagByName(name){ return rankTagByNameCache(name); }
+function rankTagByNameCache(name){ return rankTag(pByName(name)); }
+function introducerOptions(sel,excludeId){ return '<option value="">（紹介者なし＝一般）</option>'+Object.values(participantsAll).filter(p=>p.id!==excludeId).map(p=>`<option value="${p.id}" ${p.id===sel?'selected':''}>${esc(dispName(p))}</option>`).join(''); }
+async function registerMe(){ const name=$('new-name').value.trim(); if(!name){ toast('表示名を入れてください'); return; }
+  const introId=$('new-intro')?.value||''; const introName=introId?dispName(participantsAll[introId]):''; const video=($('new-video')?.value||'').trim(); const note=($('new-note')?.value||'').trim();
+  if(video&&!/^https?:\/\//.test(video)){ toast('紹介動画は http から始まるURLを入れてください'); return; }
+  try{ const ref=await db.collection('participants').add({name,createdAt:Date.now(),introId:introId||null,introName:introName||null,video:video||null,note:note||null}); myId=ref.id; try{ localStorage.setItem('ifbox.pid',ref.id); }catch(e){} closeMd(); toast('登録しました。'+(introId?'紹介者ありなので「会員」と表示されます。':'紹介者なしなので「一般」と表示されます。')); }catch(e){ toast('登録できません: '+(e.code||e.message)); } }
+function editMe(){ const p=participantsAll[myId]; if(!p){ toast('先に参加者を選ぶか登録してください'); return; }
+  md(`<h3>自分の情報・紹介</h3><p class="sm">紹介者がいると「会員」、いなければ「一般」と表示されます。席に座るのを会員に限るかは未決なので、いまは表示だけです。</p>
+  <dl class="kv" style="margin-top:8px"><dt>表示名</dt><dd>${esc(dispName(p))}</dd></dl>
+  <div class="row"><span class="sm" style="width:90px">紹介者</span><select class="f" id="ed-intro" style="flex:1">${introducerOptions(p.introId,p.id)}</select></div>
+  <div class="row"><span class="sm" style="width:90px">紹介動画URL</span><input class="f" id="ed-video" value="${esc(p.video||'')}" placeholder="https://…（自己紹介・実績の動画）" style="flex:1"></div>
+  <div class="row"><span class="sm" style="width:90px">一言</span><input class="f" id="ed-note" value="${esc(p.note||'')}" placeholder="できること・持っているもの（販路・場所・資格・実績）" style="flex:1"></div>
+  <div class="row" style="justify-content:flex-end"><button class="btn ghost" onclick="closeMd()">やめる</button><button class="btn" onclick="saveMeInfo()">保存する</button></div>`); }
+async function saveMeInfo(){ const introId=$('ed-intro').value||null; const introName=introId?dispName(participantsAll[introId]):null; const video=$('ed-video').value.trim()||null; const note=$('ed-note').value.trim()||null;
+  if(video&&!/^https?:\/\//.test(video)){ toast('紹介動画は http から始まるURLを入れてください'); return; }
+  try{ await db.doc('participants/'+myId).update({introId,introName,video,note,updatedAt:Date.now()}); closeMd(); toast('保存しました。'); }catch(e){ toast('保存できません: '+(e.code||e.message)); } }
+
+/* --- 会員一覧（オファー型） --- */
+function renderMembers(){ const el=$('members'); if(!el) return; const list=Object.values(participantsAll);
+  if(!list.length){ el.innerHTML='<p class="sm">まだ参加者がいません。右上の「あなた」から登録できます。</p>'; return; }
+  el.innerHTML=list.map(p=>`<div class="card mcard"><div class="row" style="margin-top:0"><b style="font-size:15px">${esc(dispName(p))}</b>${rankTag(p)}${p.id===myId?'<span class="tag bl">あなた</span>':''}</div>
+    <dl class="kv"><dt>紹介者</dt><dd>${esc(p.introName||'なし')}</dd><dt>紹介動画</dt><dd>${p.video?`<a href="${esc(p.video)}" target="_blank" rel="noopener">見る</a>`:'未登録'}</dd><dt>一言</dt><dd>${esc(p.note||'未記入')}</dd></dl>
+    <div class="row" style="justify-content:flex-end">${p.id===myId?`<button class="btn ghost sm" onclick="editMe()">自分の情報を直す</button>`:`<button class="btn sm" onclick="offerFromMembers('${p.id}')">オファーを送る</button>`}</div></div>`).join(''); }
+function offerFromMembers(pid){ const mine=Object.values(cases).filter(c=>!c.archived&&!isSample(c)&&(c.owner===me()||participants(c).includes(me())));
+  if(!mine.length){ toast('オファーを送れる案件がありません。先に「もし」を置くか、案件に参加してください。'); return; }
+  md(`<h3>どの案件にオファーしますか</h3><select class="f" id="of-case" style="width:100%;margin-top:8px">${mine.map(c=>`<option value="${c.id}">${esc(c.title)}</option>`).join('')}</select>
+  <div class="row" style="justify-content:flex-end"><button class="btn ghost" onclick="closeMd()">やめる</button><button class="btn" onclick="cur=$('of-case').value;openOffer('${pid}')">次へ</button></div>`); }
+function openOffer(pid){ const c=cases[cur]; if(!c) return; const list=Object.values(participantsAll).filter(p=>p.id!==myId); if(!list.length){ toast('オファーを送れる参加者がいません'); return; }
+  const seats=SEATS.filter(([k])=>k!=='OWN'&&c.seats?.[k]?.t!=='hu'); if(!seats.length){ toast('空いている席がありません'); return; }
+  md(`<h3>会員にオファーを送る</h3><p class="sm">紹介動画や一言を見て「この人に座ってほしい」と思ったら送ります。受けるか辞退するかは相手が決めます（承認制）。案件：${esc(c.title)}</p>
+  <div class="row"><select class="f" id="of-to" style="flex:1">${list.map(p=>`<option value="${p.id}" ${p.id===pid?'selected':''}>${esc(dispName(p))}${rankOf(p)==='member'?'（会員）':'（一般）'}</option>`).join('')}</select><select class="f" id="of-seat">${seats.map(([k,n])=>`<option value="${k}">${n}の席</option>`).join('')}</select></div>
+  <textarea id="of-text" placeholder="なぜこの人に。何をお願いしたいか。" style="width:100%;margin-top:8px"></textarea>
+  <div class="row" style="justify-content:flex-end"><button class="btn ghost" onclick="closeMd()">やめる</button><button class="btn" onclick="sendOffer()">オファーを送る</button></div>`); }
+async function sendOffer(){ const c=cases[cur]; if(!c) return; if(c.archived){ toast('保管中の案件にはオファーを送れません'); return; } if(!(c.owner===me()||participants(c).includes(me()))){ toast('オファーは発案者か、席に座っている人が送ります'); return; } const toId=$('of-to').value, seat=$('of-seat').value, text=$('of-text').value.trim(); const p=participantsAll[toId];
+  if(!p||!seat){ toast('相手と席を選んでください'); return; } if(!text){ toast('一言添えてください'); return; }
+  if((c.offers||[]).some(o=>o.state==='open'&&o.toId===toId&&o.seat===seat)){ toast('同じ人に同じ席のオファーが返事待ちです'); return; }
+  const o={id:'o'+now(),toId,to:dispName(p),seat,by:me(),byId:meId()||null,text,t:now(),state:'open'};
+  await save({offers:(c.offers||[]).concat([o]),notices:notice(c,[o.to],'offer',me()+' から'+SNAME[seat]+'の席へのオファーが届きました','msgs')}, me()+' が '+o.to+' に'+SNAME[seat]+'の席をオファーした');
+  closeMd(); toast('オファーを送りました。相手の返事を待ちます。'); if(cur&&cases[cur]) { openCase(cur); tab('msgs'); } }
+async function answerOffer(id,ok){ const c=cases[cur]; const o=(c.offers||[]).find(x=>x.id===id); if(!o||o.state!=='open') return;
+  if(!((o.toId&&o.toId===meId())||o.to===me())){ toast('このオファーはあなた宛てではありません'); return; }
+  const offers=c.offers.map(x=>x.id===id?{...x,state:ok?'accepted':'declined',answeredAt:now()}:x);
+  if(!ok){ await save({offers,notices:notice(c,[o.by],'offer',me()+' が'+SNAME[o.seat]+'の席のオファーを辞退しました','msgs')}, me()+' が'+SNAME[o.seat]+'の席のオファーを辞退した'); return; }
+  if(c.seats?.[o.seat]?.t==='hu'){ toast('その席にはもう人が座っています。オファーは流れました。'); await save({offers:c.offers.map(x=>x.id===id?{...x,state:'declined',reason:'席が埋まった',answeredAt:now()}:x)}); return; }
+  const seats={...c.seats,[o.seat]:{t:'hu',n:me(),since:now(),packet:null,offerId:id}};
+  const patch={offers,seats,notices:notice(c,[o.by],'offer',me()+' がオファーを受けて'+SNAME[o.seat]+'の席に座りました','msgs')}; let msg=me()+' がオファーを受けて'+SNAME[o.seat]+'の席に座った';
+  if(o.seat==='BUY'&&c.stage<2){ patch.stage=2; msg+='。段階2「買い手あり」に上がった'; stampStage(patch,c,2); }
+  if(o.seat==='BUILD'&&c.stage<1){ patch.stage=1; }
+  await save(patch,msg); toast('席に座りました。'); }
+
+/* --- スレッド（mixi的）：新しい台帳は作らず、messages・bids・offers・logを時刻順に合成 --- */
+const SYS_RE=/席に座った|席に迎えた|採用|段階|納品|検収|精算|先に買う|募った|保管|降りた|戻した|オファー|名乗った/;
+function threadItems(c){ const items=[];
+  (c.messages||[]).forEach((m,i)=>items.push({t:m.t,kind:m.kind==='can'?'can':'msg',m,i}));
+  (c.bids||[]).forEach(b=>items.push({t:b.t,kind:'bid',b}));
+  (c.offers||[]).forEach(o=>items.push({t:o.t,kind:'offer',o}));
+  (c.log||[]).filter(l=>SYS_RE.test(l.m)&&!/名乗った|オファーした/.test(l.m)).forEach(l=>items.push({t:l.t,kind:'sys',l}));
+  return items.sort((a,b)=>a.t-b.t); }
+function av(name){ return name==='AI'?'<div class="av ai">AI</div>':`<div class="av" style="background:hsl(${hue(name)} 55% 42%)">${esc(String(name).slice(0,1))}</div>`; }
+function renderThread(c){ const items=threadItems(c); $('n-msgs').textContent=(c.messages||[]).length||''; const el=$('c-msgs'); if(!el) return; const isOwner=c.owner===me();
+  el.innerHTML = items.length? items.map(it=>{
+    if(it.kind==='sys') return `<div class="tp sys"><span>${esc(it.l.m)}</span><span class="tm">${fmtDT(it.t)}</span></div>`;
+    if(it.kind==='bid'){ const b=it.b; const short=b.text.length>140?b.text.slice(0,140)+'…':b.text; return `<div class="tp bid">${av(b.by)}<div class="bd"><div class="who"><b>${esc(b.by)}</b>${rankTagByName(b.by)}<span class="tag ${b.by==='AI'?'ai':'bl'}">提案：${SNAME[b.seat]||'席'}</span>${b.won?'<span class="tag ok">採用</span>':''}<span class="tm">${fmtDT(b.t)}</span></div><div class="tx">${esc(short)}</div><div class="ft">${b.by==='AI'?'<span class="sm">単価表（最低ライン）</span>':`<b>${yen(b.price)}</b>${b.days?`<span class="sm">納期 ${b.days}日</span>`:''}`}<button class="btn ghost sm" onclick="tab('props')">提案タブで見る</button></div></div></div>`; }
+    if(it.kind==='offer'){ const o=it.o; const mine=(o.toId&&o.toId===meId())||o.to===me(); const st=o.state==='accepted'?'<span class="tag ok">受けた</span>':o.state==='declined'?`<span class="tag em">辞退${o.reason?'（'+esc(o.reason)+'）':''}</span>`:'<span class="tag bl">返事待ち</span>';
+      return `<div class="tp offer"><div class="av gold">オ</div><div class="bd"><div class="who"><b>${esc(o.by)}</b><span>→</span><b>${esc(o.to)}</b><span class="tag ai">オファー：${SNAME[o.seat]||'席'}</span>${st}<span class="tm">${fmtDT(o.t)}</span></div><div class="tx">${esc(o.text)}</div>${o.state==='open'&&mine?`<div class="ft"><button class="btn sm" onclick="answerOffer('${o.id}',true)">受けて席に座る</button><button class="btn ghost sm" onclick="answerOffer('${o.id}',false)">辞退する</button></div>`:''}</div></div>`; }
+    const m=it.m; const meP=m.by===me();
+    if(it.kind==='can'){ const s=c.seats?.[m.seat]; const seated=s?.t==='hu'&&s.n===m.by; const taken=s?.t==='hu'&&s.n!==m.by;
+      return `<div class="tp can">${av(m.by)}<div class="bd"><div class="who"><b>${esc(m.by)}</b>${rankTagByName(m.by)}<span class="tag hu">俺これできる：${SNAME[m.seat]||'席'}</span>${seated?'<span class="tag ok">着席</span>':taken?'<span class="tag em">席は埋まった</span>':''}<span class="tm">${fmtDT(m.t)}</span></div><div class="tx">${esc(m.text)}</div>${!seated&&!taken&&isOwner&&!meP?`<div class="ft"><button class="btn sm" onclick="sitFromCan(${it.i})">この人に${SNAME[m.seat]||''}の席に座ってもらう</button><button class="btn ghost sm" onclick="$('msg-text').value='${esc(m.by)}さん、';$('msg-text').focus()">返事</button></div>`:''}</div></div>`; }
+    return `<div class="tp ${meP?'me':''}">${av(m.by)}<div class="bd"><div class="who"><b>${esc(m.by)}</b>${rankTagByName(m.by)}<span class="tm">${fmtDT(m.t)}</span></div><div class="tx">${esc(m.text)}</div></div></div>`;
+  }).join('') : '<p class="sm">まだ書き込みはありません。「俺これできる」と席を名乗る、質問する、条件をすり合わせる。提案・着席・段階の変化もここに並びます。</p>';
+  el.scrollTop=el.scrollHeight;
+  const tools=$('msg-tools'); if(tools) tools.innerHTML=(isOwner||participants(c).includes(me()))&&!c.archived?`<button class="btn ghost sm" onclick="openOffer()">会員にオファーを送る</button><span class="sm">「席に座ってほしい人」がいるとき。相手が受けて初めて座ります。</span>`:'';
+  const ms=$('msg-seat'); if(ms&&!ms.dataset.filled){ ms.innerHTML=SEATS.filter(([k])=>k!=='OWN').map(([k,n])=>`<option value="${k}">${n}の席</option>`).join(''); ms.dataset.filled='1'; ms.style.display='none'; } }
+function msgKindChange(){ const k=$('msg-kind')?.value; const s=$('msg-seat'); if(s) s.style.display=k==='can'?'':'none'; const t=$('msg-text'); if(t) t.placeholder=k==='can'?'できること・持っているもの（販路・場所・資格・実績）を一言':'提案内容や進め方について入力（案件の全員に見えます）'; }
+async function sendMsg(){ const text=$('msg-text').value.trim(); const kind=$('msg-kind')?.value||'msg'; const c=cases[cur]; if(!c) return;
+  if(kind==='can'){ const seat=$('msg-seat').value; if(!text){ toast('できること・持っているものを一言添えてください'); return; } if(c.seats?.[seat]?.t==='hu'){ toast(SNAME[seat]+'の席にはもう人が座っています'); return; } if(c.owner===me()){ toast('発案者は自分の案件に名乗る必要はありません。席を直接クリックして座れます。'); return; }
+    await save({messages:(c.messages||[]).concat([{by:me(),byId:meId()||null,text,t:now(),kind:'can',seat}]),notices:notice(c,[c.owner],'can',me()+' が「俺これできる」と'+SNAME[seat]+'の席を名乗りました','msgs')}, me()+' が「俺これできる」と'+SNAME[seat]+'の席を名乗った');
+    $('msg-text').value=''; $('msg-kind').value='msg'; msgKindChange(); toast('名乗りました。発案者が席に座ってもらうかを決めます。'); return; }
+  if(!text) return; await save({messages:(c.messages||[]).concat([{by:me(),byId:meId()||null,text,t:now()}])}); $('msg-text').value=''; }
+async function sitFromCan(i){ const c=cases[cur]; const m=(c.messages||[])[i]; if(!m||m.kind!=='can') return;
+  if(c.owner!==me()){ toast('席に座ってもらうのは発案者が決めます'); return; } if(c.seats?.[m.seat]?.t==='hu'){ toast('その席にはもう人が座っています'); return; }
+  const seats={...c.seats,[m.seat]:{t:'hu',n:m.by,since:now(),packet:null,fromCan:true}}; const patch={seats,notices:notice(c,[m.by],'seated','発案者があなたを'+SNAME[m.seat]+'の席に迎えました','msgs')}; let msg=me()+'（発案者）が '+m.by+' を'+SNAME[m.seat]+'の席に迎えた（スレッドの名乗りから）';
+  if(m.seat==='BUY'&&c.stage<2){ patch.stage=2; msg+='。段階2「買い手あり」に上がった'; stampStage(patch,c,2); }
+  if(m.seat==='BUILD'&&c.stage<1){ patch.stage=1; }
+  await save(patch,msg); toast(m.by+' さんが席に座りました。'); }
 
 </script>
