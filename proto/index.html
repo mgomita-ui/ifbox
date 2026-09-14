@@ -1,4 +1,4 @@
-<title>IFbox 席の試作</title>
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>IFbox 席の試作</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Poppins:wght@600;700&display=swap">
 <style>
   :root{--navy:#0E2A5B;--deep:#07152F;--gold:#F6A623;--gold-deep:#8F5A08;--gold-soft:#FDF1DC;--ink:#16203A;--ink2:#3A465F;--ink3:#6B7690;
@@ -65,6 +65,58 @@
   input.f,select.f{border:1px solid var(--line);border-radius:9px;padding:8px 10px;background:var(--paper);color:var(--ink)}
   textarea{width:100%;border:1px solid var(--line);border-radius:9px;padding:9px 11px;background:var(--paper);color:var(--ink);min-height:64px;resize:vertical}
   .num{font-family:var(--latin);font-variant-numeric:tabular-nums}
+
+  /* ===== 探す：ホーム ===== */
+  :root{--coral:#E85B52}
+  .tagline{font-size:11px;color:rgba(255,255,255,.7);margin-left:10px;line-height:1.3;border-left:1px solid rgba(255,255,255,.2);padding-left:10px}
+  .hero{position:relative;overflow:hidden;background:linear-gradient(135deg,var(--deep) 0%,var(--navy) 62%,#1B3A75 100%);color:#fff;border-radius:18px;padding:30px 24px 26px;margin-top:6px}
+  .hero::before{content:"";position:absolute;right:-40px;top:-60px;width:340px;height:340px;background:linear-gradient(160deg,var(--gold),transparent 70%);opacity:.28;transform:rotate(18deg);border-radius:40px}
+  .hero::after{content:"";position:absolute;right:120px;bottom:-90px;width:220px;height:220px;background:var(--coral);opacity:.16;transform:rotate(30deg);border-radius:32px}
+  .hero .ht{position:relative;font-size:38px;line-height:1.18;font-weight:900;letter-spacing:.01em;text-wrap:balance}
+  .hero .ht .ac{color:var(--gold)} .hero .ht .ac2{color:var(--coral)}
+  .hero .hs{position:relative;margin-top:12px;font-size:13.5px;color:rgba(255,255,255,.85);max-width:520px;line-height:1.75}
+  .hero .hen{position:absolute;right:22px;bottom:16px;font-family:var(--latin);font-style:italic;font-weight:600;font-size:15px;color:var(--gold);opacity:.9}
+  @media(max-width:700px){.hero{padding:24px 18px 44px}.hero .ht{font-size:31px}.hero .hen{font-size:13px;bottom:12px}}
+  .cta2{display:grid;grid-template-columns:1.25fr 1fr;gap:10px;margin-top:12px}
+  @media(max-width:700px){.cta2{grid-template-columns:1fr 1fr;gap:8px}}
+  .cta{text-align:left;border:0;border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:4px;cursor:pointer;line-height:1.4}
+  .cta b{font-size:15px;font-weight:900} .cta span{font-size:12px;opacity:.85}
+  .cta.main{background:var(--gold);color:var(--deep)} .cta.main .plus{font-size:22px;font-weight:900;line-height:1;opacity:1}
+  .cta.sub{background:var(--paper);color:var(--ink);border:1px solid var(--line)} .cta.sub span{color:var(--ink3)}
+  .cta:hover{box-shadow:0 8px 22px rgba(14,42,91,.16)}
+  #postwrap{margin-top:4px}
+  h3.hh{margin-top:22px;display:flex;align-items:center;gap:8px;border:0;padding:0;font-size:16px}
+  h3.hh::before{content:"";width:6px;height:18px;border-radius:3px;background:var(--gold)}
+  h3.hh a{margin-left:auto;font-size:12px;color:var(--ink3);font-weight:500;cursor:pointer;text-decoration:none}
+  .feat{background:var(--paper);border:1px solid var(--line);border-radius:14px;overflow:hidden;cursor:pointer;display:grid;grid-template-columns:300px 1fr;margin-top:10px}
+  .feat:hover{box-shadow:0 8px 24px rgba(14,42,91,.16)}
+  @media(max-width:760px){.feat{grid-template-columns:1fr}}
+  .feat .fth{position:relative;color:#fff;padding:16px 18px;min-height:190px;display:flex;flex-direction:column;justify-content:flex-end}
+  .feat .fk{position:absolute;left:14px;top:12px;background:rgba(7,21,47,.7);font-size:11px;font-weight:700;padding:2px 9px;border-radius:999px}
+  .feat .ft2{font-size:20px;font-weight:900;line-height:1.35;text-wrap:balance;text-shadow:0 2px 10px rgba(0,0,0,.25)}
+  .feat .fen{position:absolute;right:14px;top:12px;font-family:var(--latin);font-size:11px;letter-spacing:.14em;color:var(--gold);font-weight:700}
+  .feat .fbd{padding:14px 18px 16px}
+  .feat .ftt{font-size:15px;font-weight:700;color:var(--ink);line-height:1.5}
+  .feat .fst{display:flex;gap:3px;margin-top:10px}
+  .feat .fst span{flex:1;text-align:center;font-size:10px;font-weight:700;padding:3px 0;border-radius:5px;background:var(--soft);color:var(--ink3)}
+  .feat .fst .done{background:var(--gold-soft);color:var(--gold-deep)} .feat .fst .now{background:var(--navy);color:#fff}
+  .feat .fmt{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:10px;font-size:12px;color:var(--ink3)} .feat .fmt .grow{flex:1}
+  .feat .seatdots{margin:0}
+  .cats{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:10px}
+  @media(max-width:900px){.cats{grid-template-columns:repeat(4,1fr)}} @media(max-width:600px){.cats{grid-template-columns:repeat(3,1fr)}}
+  .cat{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:12px 6px;text-align:center;display:flex;flex-direction:column;gap:2px;cursor:pointer;color:var(--ink)}
+  .cat b{font-size:13.5px} .cat small{font-size:11px;color:var(--ink3);font-family:var(--latin)}
+  .cat.on,.cat:hover{border-color:var(--gold);background:var(--gold-soft)} .cat.on b{color:var(--gold-deep)}
+  @media(max-width:700px){
+    .tagline{display:none}
+    nav{position:fixed;left:0;right:0;bottom:0;z-index:30;margin:0;padding:6px 4px calc(6px + env(safe-area-inset-bottom));background:var(--deep);border-top:1px solid rgba(255,255,255,.12);justify-content:space-around}
+    nav button{display:flex;flex-direction:column;align-items:center;gap:1px;font-size:10.5px;padding:3px 6px;color:rgba(255,255,255,.7)}
+    nav button::before{content:attr(data-ic);font-size:17px;line-height:1.1}
+    nav button.on{background:transparent;color:var(--gold)}
+    body{padding-bottom:64px}
+    .top .wrap{height:auto;padding:8px 14px}
+    .me{margin-left:auto}
+  }
 
   /* ===== 探す（一覧） ===== */
   .searchbar{display:flex;gap:8px;align-items:center;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:8px 10px}
@@ -190,7 +242,7 @@
 </style>
 
 <div class="top"><div class="wrap">
-  <span class="brand"><svg viewBox="0 0 40 40" aria-hidden="true"><rect x="2.5" y="2.5" width="35" height="35" rx="9.5" fill="#F6A623"/><circle cx="8.6" cy="8.6" r="2.1" fill="#0E2A5B"/><circle cx="31.4" cy="8.6" r="2.1" fill="#0E2A5B"/><circle cx="8.6" cy="31.4" r="2.1" fill="#0E2A5B"/><circle cx="31.4" cy="31.4" r="2.1" fill="#0E2A5B"/><rect x="12.1" y="11" width="5.3" height="18" rx="2.3" fill="#fff"/><rect x="20.5" y="11" width="5.3" height="18" rx="2.3" fill="#fff"/><rect x="20.5" y="11" width="8.8" height="5.3" rx="2.3" fill="#fff"/><rect x="20.5" y="18.7" width="6.7" height="4.9" rx="2.2" fill="#fff"/></svg>IFbox<small>試作</small></span>
+  <span class="brand"><svg viewBox="0 0 40 40" aria-hidden="true"><rect x="2.5" y="2.5" width="35" height="35" rx="9.5" fill="#F6A623"/><circle cx="8.6" cy="8.6" r="2.1" fill="#0E2A5B"/><circle cx="31.4" cy="8.6" r="2.1" fill="#0E2A5B"/><circle cx="8.6" cy="31.4" r="2.1" fill="#0E2A5B"/><circle cx="31.4" cy="31.4" r="2.1" fill="#0E2A5B"/><rect x="12.1" y="11" width="5.3" height="18" rx="2.3" fill="#fff"/><rect x="20.5" y="11" width="5.3" height="18" rx="2.3" fill="#fff"/><rect x="20.5" y="11" width="8.8" height="5.3" rx="2.3" fill="#fff"/><rect x="20.5" y="18.7" width="6.7" height="4.9" rx="2.2" fill="#fff"/></svg>IFbox<small>試作</small></span><span class="tagline">もしから、<br>社会を動かす。</span>
   <nav>
     <button data-s="home" class="on" onclick="go('home')">探す</button>
     <button data-s="case" onclick="go('case')">案件</button>
@@ -205,8 +257,18 @@
 
 <!-- ===================== 探す ===================== -->
 <section class="screen on" id="s-home"><div class="wrap">
-  <div class="searchbar"><span aria-hidden="true" style="color:var(--ink3)">⌕</span><input id="q" placeholder="キーワードで案件を探す（もし、領域、名前）" oninput="renderGrid()"></div>
+  <div class="hero">
+    <div class="ht"><span class="ac">もし、</span>が社会を<br><span class="ac2">動</span>かす。</div>
+    <p class="hs">まだないけど、きっとほしい。そんな一行の「もし」から、席が埋まり、先に買われ、かたちになる。AIが準備し、人が確定する共創の道具。</p>
+    <span class="hen">Small If, Big Change.</span>
+  </div>
+  <div class="searchbar" style="margin-top:12px"><span aria-hidden="true" style="color:var(--ink3)">⌕</span><input id="q" placeholder="キーワードで案件を探す（もし、領域、名前）" oninput="renderGrid()"></div>
   <div class="chips" id="chips"></div>
+  <div class="cta2">
+    <button class="cta main" onclick="showPost(true)"><span class="plus">＋</span><b>新しい「もし」を置いてみる</b><span>一行でいい。AI席が最初の一手を返し、席が立つ</span></button>
+    <button class="cta sub" onclick="go('members')"><b>紹介で参加する</b><span>会員・オファー型。席に座る人を探す側にも、座る側にも</span></button>
+  </div>
+  <div id="postwrap" hidden>
   <div class="postbox">
     <div><label for="ifline">もし、こんなのがあれば（一行）</label><input id="ifline" placeholder="もし、冷蔵庫を撮るだけで献立が決まったら"></div>
     <div><label for="benefit">便益を受けるのは誰？</label><input id="benefit" placeholder="夜に料理する一人暮らしの人"></div>
@@ -215,7 +277,13 @@
   </div>
   <div class="row" style="margin-top:8px"><button class="btn ghost sm" onclick="findTemplates()">似た型を探す（精算まで終わった案件の型を最初から埋める）</button></div>
   <div id="tplbox"></div>
+  </div>
   <div class="think" id="think"></div>
+  <h3 class="hh">注目の案件 <a onclick="scrollGrid()">すべて見る →</a></h3>
+  <div id="featured"></div>
+  <h3 class="hh">領域から探す</h3>
+  <div class="cats" id="cats"></div>
+  <h3 class="hh">すべての案件</h3>
   <div class="banner" id="listnote" hidden>ここに並ぶのは完成品ではなく、<b>実現途中の「もし」</b>です。開くと、誰が助かり、誰が払うか、どの席が空いているかが見えます。</div>
   <div class="toolbar"><span class="cnt" id="cnt"></span><span class="sm">段階は人の確定でだけ上がります。赤い角は成約済。参加者の選択は名札で、認証ではありません。機密情報・個人情報・実際の送金情報は入力しないでください。</span><select class="f" id="sort" onchange="renderGrid()"><option value="new">新しい順</option><option value="like">共感が多い順</option><option value="cf">支援が集まっている順</option><option value="open">席が空いている順</option></select></div>
   <div class="pgrid" id="grid"><p class="sm">読み込み中…</p></div>
@@ -436,7 +504,7 @@ document.addEventListener('DOMContentLoaded',()=>{ if(window.DEMO_MODE){ $('list
   db.collection('cases').orderBy('createdAt','desc').limit(80).onSnapshot(snap=>{
     cases={}; snap.docs.forEach(d=>{ cases[d.id]={id:d.id,...d.data()}; });
     if(chip==='real'&&!window._chipTouched&&!Object.values(cases).some(c=>!isSample(c)&&!c.archived)) chip='all';
-    renderChips(); renderGrid(); if(cur&&cases[cur]) renderCase(); fillCaseSelect();
+    renderChips(); renderGrid(); renderHome(); if(cur&&cases[cur]) renderCase(); fillCaseSelect();
   }, e=>{ toast('読み込みエラー: '+e.code); });
 })();
 function fillSeatSelects(){ const o=SEATS.map(([k,n])=>`<option value="${k}">${n}</option>`).join(''); $('pp-seat').innerHTML=o; $('pp-seat').value='SELL'; $('na-seat').innerHTML=o; }
@@ -474,7 +542,7 @@ async function post(){
 /* ===================== 探す ===================== */
 function renderChips(){
   const doms=[...new Set(Object.values(cases).map(c=>c.domain).filter(Boolean))];
-  const all=[['real','実案件'],['sample','サンプル'],['all','すべて'],['open','席が空いている'],['cf','先に買う募集中'],['fund','資金募集中'],['sold','成約済'],...doms.map(d=>['d:'+d,d])];
+  const all=[['real','実案件'],['sample','サンプル'],['all','すべて'],['open','席が空いている'],['cf','先に買う募集中'],['sold','成約済']];
   $('chips').innerHTML=all.map(([k,n])=>`<button class="chip ${chip===k?'on':''}" onclick="chip='${k}';window._chipTouched=true;renderChips();renderGrid()">${esc(n)}</button>`).join('');
 }
 function renderGrid(){
@@ -787,7 +855,7 @@ const P_PICK = window.AI_PICK || `あなたはIFBOXの「AI席」です。新し
 候補:
 {{templates}}
 出力はこのJSONだけ: {"candidates":[{"id":"候補のID","reason":"似ている理由 40字以内"}]}`;
-async function findTemplates(){
+async function findTemplates(){ showPost(true);
   const draft=($('ifline').value+' '+$('benefit').value).trim(); const list=Object.values(templates); const box=$('tplbox');
   if(!list.length){ box.innerHTML='<p class="sm">公開された型はまだありません。精算まで終わった案件から作れます。</p>'; return; }
   box.innerHTML='<p class="sm">似た型を探しています…</p>';
@@ -804,7 +872,7 @@ function previewTemplate(id){
     <div class="row" style="justify-content:flex-end"><button class="btn ghost" onclick="closeMd()">やめる</button><button class="btn" onclick="applyTemplate('${id}')">空欄に適用</button></div>`);
 }
 function templateItems(t){ const items=[]; (t.seats||[]).forEach(s=>items.push({kind:'seat',label:SNAME[s.role],text:s.action,role:s.role})); (t.criteria||[]).forEach(x=>items.push({kind:'criteria',label:'検収基準',text:x})); if(t.alloc){ items.push({kind:'alloc',label:'配分条件',text:`確定対価 ${yen(t.alloc.fixed)}`,key:'fixed'}); items.push({kind:'alloc',label:'配分条件',text:`成果連動 ${t.alloc.perf}%`,key:'perf'}); items.push({kind:'alloc',label:'配分条件',text:`発案枠 ${t.alloc.idea}%`,key:'idea'}); } if(t.proposalSummary) items.push({kind:'summary',label:'提案要約',text:t.proposalSummary}); if(t.acceptedArtifact) items.push({kind:'artifact',label:'成果物',text:'v'+t.acceptedArtifact.version+' '+t.acceptedArtifact.name+'（本文 '+(t.acceptedArtifact.body||'').length+'字）'}); return items; }
-function applyTemplate(id){
+function applyTemplate(id){ showPost(true);
   const t=templates[id]; const items=templateItems(t); const checks=[...document.querySelectorAll('#md input[type=checkbox]')].map(x=>x.checked);
   const added=$('tpl-add').value.split('\n').map(s=>s.trim()).filter(Boolean);
   window._tpl={id,version:t.version,sourceCaseId:t.sourceCaseId,items,checks,added,eligible:items.length+added.length,applied:checks.filter(Boolean).length};
@@ -1045,7 +1113,7 @@ async function pickMe(v){ if(v==='__edit'){ renderMe(); editMe(); return; } if(v
 async function registerMe(){ const name=$('new-name').value.trim(); if(!name){ toast('表示名を入れてください'); return; } try{ const ref=await db.collection('participants').add({name,createdAt:Date.now()}); myId=ref.id; try{ localStorage.setItem('ifbox.pid',ref.id); }catch(e){} closeMd(); toast('登録しました。同名がいれば #番号 で区別されます。'); }catch(e){ toast('登録できません: '+(e.code||e.message)); } }
 /* サンプルと実案件の分離 */
 function isSample(c){ return !!c.sample; }
-function startFromSample(){ const c=cases[cur]; if(!c||!isSample(c)) return; go('home'); $('ifline').value=c.title.replace(/（例）$/,''); $('benefit').value=c.benefit||''; $('demo').value=c.demo||''; window._fromSample={id:c.id,criteria:(c.criteria||[]).map(x=>x.text)}; $('tplbox').innerHTML=`<div class="box gold"><b>サンプル「${esc(c.title)}」から実案件を始めます。</b> 投稿内容と検収基準（${window._fromSample.criteria.length}件）だけを引き継ぎ、納品・検収・台帳・計測・取り込みは引き継ぎません。<button class="btn ghost sm" style="margin-left:8px" onclick="window._fromSample=null;$('tplbox').innerHTML=''">やめる</button></div>`; toast('内容を確認して「置いてみる」を押してください。'); }
+function startFromSample(){ const c=cases[cur]; if(!c||!isSample(c)) return; go('home'); showPost(true); $('ifline').value=c.title.replace(/（例）$/,''); $('benefit').value=c.benefit||''; $('demo').value=c.demo||''; window._fromSample={id:c.id,criteria:(c.criteria||[]).map(x=>x.text)}; $('tplbox').innerHTML=`<div class="box gold"><b>サンプル「${esc(c.title)}」から実案件を始めます。</b> 投稿内容と検収基準（${window._fromSample.criteria.length}件）だけを引き継ぎ、納品・検収・台帳・計測・取り込みは引き継ぎません。<button class="btn ghost sm" style="margin-left:8px" onclick="window._fromSample=null;$('tplbox').innerHTML=''">やめる</button></div>`; toast('内容を確認して「置いてみる」を押してください。'); }
 /* 保管と復元 */
 function archiveCase(){ const c=cases[cur]; if(!c||c.archived) return; const rev=c.rev||0; md(`<h3>保管へ移す</h3><p class="sm">削除ではありません。固定版・台帳・取り込み記録・比較の参照は残ります。保管中は編集できません（戻せば編集できます）。共有URLからは閲覧できます。</p><input class="f" id="arc-reason" placeholder="理由（例 誤投稿、進める予定なし）" style="width:100%;margin-top:8px"><div class="row" style="justify-content:flex-end"><button class="btn ghost" onclick="closeMd()">やめる</button><button class="btn" onclick="doArchive(${rev})">保管へ移す</button></div>`); }
 async function doArchive(rev){ const c=cases[cur]; const reason=$('arc-reason').value.trim(); if(!reason){ toast('理由を書いてください'); return; } if((c.rev||0)!==rev){ toast('他の人がこの案件を更新しました。閉じて、もう一度開いてください'); return; } try{ await db.doc('cases/'+cur).update({archived:true,archivedAt:now(),archivedBy:me(),archiveReason:reason,rev:(c.rev||0)+1,log:(c.log||[]).concat([{t:now(),m:me()+' が保管へ移した：'+reason}])}); closeMd(); toast('保管へ移しました。'); go('archive'); }catch(e){ toast('保存できません: '+(e.code||e.message)); } }
@@ -1209,5 +1277,33 @@ async function sitFromCan(i){ const c=cases[cur]; const m=(c.messages||[])[i]; i
   if(m.seat==='BUY'&&c.stage<2){ patch.stage=2; msg+='。段階2「買い手あり」に上がった'; stampStage(patch,c,2); }
   if(m.seat==='BUILD'&&c.stage<1){ patch.stage=1; }
   await save(patch,msg); toast(m.by+' さんが席に座りました。'); }
+
+
+/* ===================== 第10回：探す画面をアプリのホーム構成に（ヒーロー／主ボタン／注目／領域） ===================== */
+/* 写真は使わない（実物の画面と案件の色で見せる）。件数はすべて現在の案件数。色は紺×金、差し色にコーラル。 */
+const NAV_ICONS={home:'⌕',case:'▤',turns:'☑',members:'⚇',money:'¥',archive:'▣'};
+document.querySelectorAll('nav button').forEach(b=>{ if(NAV_ICONS[b.dataset.s]) b.dataset.ic=NAV_ICONS[b.dataset.s]; });
+function showPost(on){ const w=$('postwrap'); if(!w) return; w.hidden=!on; if(on){ w.scrollIntoView({block:'start',behavior:'smooth'}); setTimeout(()=>$('ifline')?.focus(),250); } }
+function scrollGrid(){ $('grid')?.scrollIntoView({block:'start',behavior:'smooth'}); }
+function pickFeatured(){ const list=Object.values(cases).filter(c=>!c.archived); if(!list.length) return null;
+  const real=list.filter(c=>!isSample(c)); const pool=(chip==='real'&&real.length)?real:list;
+  const s09=pool.find(c=>c.id==='s09'); if(s09&&!real.length) return s09;
+  return pool.slice().sort((a,b)=>((b.likes||[]).length+(b.bids||[]).filter(x=>x.by!=='AI').length*2+humanSeats(b)*3)-((a.likes||[]).length+(a.bids||[]).filter(x=>x.by!=='AI').length*2+humanSeats(a)*3)||b.createdAt-a.createdAt)[0]; }
+function renderHome(){ const f=$('featured'), k=$('cats'); if(!f||!k) return;
+  const c=pickFeatured();
+  if(!c){ f.innerHTML='<p class="sm">まだ案件がありません。上の「新しい「もし」を置いてみる」からどうぞ。</p>'; }
+  else { const h=hue(c.domain||c.title); const open=openSeats(c);
+    f.innerHTML=`<div class="feat" tabindex="0" onclick="openCase('${c.id}')" onkeydown="if(event.key==='Enter')openCase('${c.id}')">
+      <div class="fth" style="background:linear-gradient(150deg,hsl(${h} 45% 28%),hsl(${h} 55% 46%))"><div class="fk">${isSample(c)?'サンプル ・ ':''}${esc(c.domain||'領域未定')}</div><div class="ft2">${esc(c.reframed||c.title)}</div><div class="fen">Stage ${c.stage} / 5</div></div>
+      <div class="fbd">
+        <div class="ftt">${esc(c.title)}</div>
+        <p class="sm">${esc(c.benefit?'便益を受ける人：'+c.benefit:'')}${c.firstMove?'　'+esc(c.firstMove.slice(0,60))+'…':''}</p>
+        <div class="fst">${STAGES.map((n,i)=>`<span class="${i<c.stage?'done':i===c.stage?'now':''}">${n}</span>`).join('')}</div>
+        <div class="fmt"><span class="seatdots">${SEATS.map(([kk,n])=>`<i class="${c.seats?.[kk]?.t||'em'}" title="${n}">${n[0]}</i>`).join('')}</span><span>${open.length?'空席 '+open.join('・'):'席はすべて埋まっています'}</span><span class="grow"></span><span>♡ ${(c.likes||[]).length}</span><span>提案 ${(c.bids||[]).filter(b=>b.by!=='AI').length}</span><span>スレッド ${(c.messages||[]).length}</span></div>
+      </div></div>`; }
+  const all=Object.values(cases).filter(c=>!c.archived&&(chip!=='real'||!isSample(c)||!Object.values(cases).some(x=>!isSample(x)&&!x.archived)));
+  const cnt={}; all.forEach(c=>{ const d=c.domain||'領域未定'; cnt[d]=(cnt[d]||0)+1; });
+  const doms=Object.entries(cnt).sort((a,b)=>b[1]-a[1]).slice(0,10);
+  k.innerHTML = doms.length? doms.map(([d,n])=>`<button class="cat ${chip==='d:'+d?'on':''}" onclick="chip='d:${esc(d)}';window._chipTouched=true;renderChips();renderGrid();renderHome();scrollGrid()"><b>${esc(d)}</b><small>${n}件</small></button>`).join('')+`<button class="cat ${chip==='open'?'on':''}" onclick="chip='open';window._chipTouched=true;renderChips();renderGrid();renderHome();scrollGrid()"><b>席が空いている</b><small>${all.filter(c=>openSeats(c).length).length}件</small></button>` : '<p class="sm">領域はAI席が最初の一手で付けます。</p>'; }
 
 </script>
