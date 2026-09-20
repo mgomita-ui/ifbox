@@ -134,9 +134,8 @@ function renderProject(c){ const el=$('pj'); if(!el) return; const st=projStatus
       <p class="sm">${ext?'注文と決済は '+esc(ext.site)+' で行われます。金額は実行者が写した実績です。':''}${(cf.mode||'aon')==='aon'?'目標に届いたときだけ成立します。':'目標に届かなくても、申し込まれた分は成立します。'}</p>${buyBtn}
       ${ext&&owner?`<button class="btn ghost wide" style="margin-top:6px" onclick="openExtResult()">${esc(ext.site)}の実績を記録する</button>`:''}
       ${st==='funded'&&c.stage<2&&owner?`<button class="btn wide" style="margin-top:6px" onclick="confirmBuyers()">買い手として確定する（段階2へ）</button>`:''}`
-    :`<div class="pj-amt">${filled}<small> / ${need.length} 役割が揃った</small></div><div class="pj-bar team"><i style="width:${need.length?Math.round(filled/need.length*100):100}%"></i></div>
-      <p class="sm">${st==='recruiting'?'仲間を募集しています：'+esc(openR.join('、'))+'。揃うと、このページがそのまま先行販売の案内になります。':'役割が揃いました。先行販売の準備をしています。'}</p>
-      ${st==='recruiting'&&viewMode!=='back'?`<button class="btn wide" onclick="pjGo('pj-team')">役割を見る・手を挙げる</button>`:''}${viewMode==='back'?`<button class="btn wide" onclick="toggleFollow()">${following?'フォロー中 ✓':'フォローして、販売開始を知る'}</button>`:''}
+    :`<div class="pj-k">${st==='recruiting'?'仲間を募集しています':'仲間が揃いました'}</div>${roleChecklist(c)}<p class="sm">${st==='recruiting'?'3つの役割が揃うと、このページがそのまま先行販売の案内になります。':'先行販売の準備をしています。始まるとお知らせが届きます。'}</p>
+      ${st==='recruiting'&&viewMode!=='back'?`<button class="btn wide" onclick="pjGo('pj-team')">仲間になる（役割を見る）</button>`:''}${viewMode==='back'?`<button class="btn wide" onclick="toggleFollow()">${following?'フォロー中 ✓':'フォローして、販売開始を知る'}</button>`:''}
       ${owner?`<button class="btn wide ghost" style="margin-top:6px" onclick="openTeamSetup()">チームの形を決める</button><button class="btn wide ${st==='recruiting'?'ghost':''}" style="margin-top:6px" onclick="openSaleForm()">先行販売を始める</button>`:''}`;
   el.innerHTML=`<div class="pjx">
     <div class="pj-cover" style="${coverStyle(c)}">${coverImg(c)}<div class="pj-cv"><div>${stTag(c)}${isSample(c)?'<span class="pst st-pre">サンプル</span>':''}<span class="pst st-dom">${esc(c.domain||'領域未定')}</span>${ext&&cf&&!cf.draft?`<span class="pst st-dom">${esc(ext.site)}</span>`:''}</div><h1>${esc(c.reframed||c.title)}</h1><p>言い出した人 ${esc(c.owner)} ・ ${fmtDate(c.createdAt)} 公開</p></div></div>
@@ -157,10 +156,14 @@ function renderProject(c){ const el=$('pj'); if(!el) return; const st=projStatus
    </div>
    <aside class="pj-side"><div class="card">${sidePanel}
       <div class="row" style="margin-top:10px"><button class="btn ghost sm" onclick="toggleFollow()">${following?'フォロー中 ✓':'フォローする'}</button><span class="sm">${fol.length}人がフォロー</span><button class="btn ghost sm" onclick="like()">共感 ${(c.likes||[]).length}</button></div>
-      <div class="pj-stg">${STAGES.map((n,i)=>`<span class="${i<c.stage?'done':i===c.stage?'now':''}">${n}</span>`).join('')}</div>
-      <p class="sm" style="margin-top:6px">段階は人の確定でだけ上がります。できあがりは「確かめて良くする」役割が、約束どおりか確かめます。</p></div></aside>
+      ${stepBar(c)}</div></aside>
   </div>`; const w=$('workroom'); if(w) w.hidden=(viewMode==='back'&&!isTeam(c)); }
 function isTeam(c){ const t=teamOf(c); return c.owner===me()||ROLES.some(([r])=>t[r].members.some(m=>m.name===me()))||participants(c).includes(me()); }
 
 /* ---------- 一覧のカード（役割の行を3役割に） ---------- */
 const _renderGrid13=renderGrid; renderGrid=function(){ _renderGrid13(); document.querySelectorAll('#grid .pcx').forEach(el=>{ const m=(el.getAttribute('onclick')||'').match(/openCase\('([^']+)'\)/); const c=m&&cases[m[1]]; if(!c) return; const lb=el.querySelector('.bar.team'); if(!lb) return; const need=neededRoles(c), filled=teamFilled(c); lb.querySelector('i').style.width=(need.length?Math.round(filled/need.length*100):100)+'%'; const t=lb.parentNode.querySelector('.lb2'); if(t) t.innerHTML=`<b>役割 ${filled}/${need.length}</b><span>${esc(openRoleNames(c).join('・')||'揃いました')}</span>`; }); };
+
+/* 右の箱：役割のチェックリストと、3歩の「いまここ」 */
+function roleChecklist(c){ const t=teamOf(c); return '<div class="rlist">'+ROLES.map(([r,n])=>{ const x=t[r], full=x.members.length>=x.n; const who=x.members.map(m=>esc(m.name)).join('、'); return `<button class="rl ${full?'ok':'open'}" onclick="pjGo('pj-team')"><span class="ck">${full?'✓':x.members.length?x.members.length+'/'+x.n:''}</span><b>${n}</b><span class="w">${full?who:(who?who+' ・ ':'')+'あと'+(x.n-x.members.length)+'名 募集中'}</span></button>`; }).join('')+'</div>'; }
+function stepBar(c){ const st=projStatus(c); const now=(c.stage>=3||st==='settled')?3:(st==='selling'||st==='funded'||st==='unfunded'||c.stage>=2)?2:1; const S=[['仲間を集める','役割が揃うまで'],['先に買ってもらう','目標に届けば作る'],['届けて、確かめる','約束どおりか別の人が確認']];
+  return '<div class="steps">'+S.map(([a,b],i)=>`<div class="sp ${i+1<now?'done':i+1===now?'now':''}"><span class="no">${i+1<now?'✓':i+1}</span><div><b>${a}</b><small>${i+1===now?'いまここ ・ ':''}${b}</small></div></div>`).join('')+'</div>'; }
