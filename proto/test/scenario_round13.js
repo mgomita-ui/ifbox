@@ -37,7 +37,7 @@ openExtResult(); $('ex-amt').value='60000'; $('ex-n').value='20'; $('ex-proof').
 openExtResult(); $('ex-amt').value='120000'; $('ex-n').value='41'; await saveExtResult(); await sleep(30); r.extReplaced=cfTotal(cases[id])===120000&&backerCount(cases[id])===41&&cases[id].cf.pledges.filter(p=>p.ext).length===1; r.funded=projStatus(cases[id])==='funded';
 await confirmBuyers(); await sleep(30); r.stage2=cases[id].stage===2;
 /* 入口の切り替え */
-setView('back'); await sleep(20); r.backMode=document.body.classList.contains('v-back')&&document.querySelector('.hero .ht').textContent.includes('応'); r.backHidesNav=getComputedStyle(document.querySelector('nav button[data-s="turns"]')).display==='none';
+setView('back'); await sleep(20); r.backMode=document.body.classList.contains('v-back')&&document.querySelector('.hero .ht').textContent.includes('応'); r.backHidesNav=!document.querySelector('nav button[data-s="turns"]')&&!!document.querySelector('nav button[data-s="x-orders"]');
 pickMe(hanaId); openCase(id); r.backTeamTitle=$('pj-team').textContent.includes('誰が作り、誰が確かめるのか');
 const vId=await reg('とおりすがり'); openCase(id); r.backWorkroomHidden=$('workroom').hidden===true; setView('make'); await sleep(20); openCase(id); r.makeWorkroomShown=$('workroom').hidden===false;
 /* 旧データ（team なし）の互換 */
