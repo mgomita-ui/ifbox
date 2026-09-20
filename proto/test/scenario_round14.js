@@ -16,7 +16,7 @@ r.userTextKept=document.querySelector('.pj-title').textContent.includes('検収�
 openTierForm(); await sleep(40); $('ti-title').value='早割'; $('ti-price').value='2400'; $('ti-regular').value='3000'; $('ti-limit').value='30'; await saveTier(''); await sleep(60);
 openSaleForm(); await sleep(40); r.saleFormPlain=$('md').textContent.includes('販売を始める')&&!$('md').textContent.includes('先行販売'); $('sa-where').value='own'; $('sa-goal').value='120000'; await startSale(); await sleep(80);
 pickMe('__new'); await sleep(40); $('new-name').value='けん'; await registerMe(); await sleep(40); openCase(id); await sleep(80);
-const tid=cases[id].cf.tiers[0].id; openPledge(tid); await sleep(60); r.pledgeModalPlain=$('md').textContent.includes('申し込みを試す')&&$('md').textContent.includes('お試しです'); await pledgeTier(tid); await sleep(80);
+const tid=cases[id].cf.tiers[0].id; openPledge(tid); await sleep(60); r.pledgeModalPlain=$('md').textContent.includes('申し込みを試す')&&$('md').textContent.includes('お試しなので')&&$('md').textContent.includes('届かなければ返金'); await pledgeTier(tid); await sleep(80);
 const side=vis(document.querySelector('.pj-side')); r.sideNumbers=side.includes('目標額の2%')&&side.includes('2,400円／目標120,000円')&&side.includes('目標まであと117,600円')&&side.includes('終了まで30日'); r.sideWords=side.includes('気になる')&&side.includes('いいね');
 const page=vis($('pj')); r.badOnProject=BAD.filter(w=>page.includes(w));
 const tiers=vis($('pj-tiers')); r.tierPlain=tiers.includes('発売後の予定価格 3,000円')&&tiers.includes('残り29／限定30')&&tiers.includes('申し込み内容を確認');

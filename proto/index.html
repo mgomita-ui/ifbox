@@ -272,6 +272,8 @@
 
   .fen2{position:absolute;left:12px;top:12px;z-index:1}
 
+  .pj-pay{font-size:12.5px;font-weight:700;color:var(--navy);background:var(--gold-soft);border-radius:10px;padding:7px 10px;margin:0 0 8px}
+
   /* ===== 探す（一覧） ===== */
   .searchbar{display:flex;gap:8px;align-items:center;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:8px 10px}
   .searchbar input{flex:1;border:0;background:transparent;color:var(--ink);font-size:15px;padding:6px}
@@ -2021,5 +2023,14 @@ setTimeout(()=>{ try{ setView(viewMode,true); }catch(e){} },30);
 
 /* 注目の計画カード：内部用語を出さない */
 const _renderHome14=renderHome; renderHome=function(){ _renderHome14(); try{ const f=document.querySelector('#featured .feat'); if(!f) return; const m=(f.getAttribute('onclick')||'').match(/openCase.'([^']+)'/); const c=m&&cases[m[1]]; if(!c) return; f.querySelector('.fst')?.remove(); const en=f.querySelector('.fen'); if(en) en.outerHTML='<div class="fen2">'+stTag(c)+'</div>'; const sd=f.querySelector('.seatdots'); if(sd){ const need=neededRoles(c), filled=teamFilled(c); const s=document.createElement('span'); s.textContent='役割 '+filled+'/'+need.length+(openRoleNames(c).length?' ・ 募集中：'+openRoleNames(c).join('、'):' ・ そろいました'); sd.replaceWith(s); const nx=s.nextElementSibling; if(nx&&!nx.classList.contains('grow')&&!nx.classList.contains('ic')) nx.remove(); } }catch(e){} };
+
+
+/* ===================== 進み方は4歩。支払いは届いたあと ===================== */
+const PAY_RULE='支払いは、届いたあと。届かなければ返金します。';
+function stepBar(c){ const st=projStatus(c); const now=c.stage>=5?5:c.stage>=4?4:c.stage>=2?3:(st==='selling'||st==='funded'||st==='unfunded')?2:1;
+  const S=[['仲間を集める','3つの役割がそろうまで'],['申し込みを集める','目標額に届いたら、つくり始める'],['つくって、確かめて、良くする','つくる人とは別の人が、確かめながら仕上げる'],['届けて、支払い','支払いは届いたあと。届かなければ返金']];
+  return '<div class="steps">'+S.map(([a,b],i)=>'<div class="sp '+(i+1<now?'done':i+1===now?'now':'')+'"><span class="no">'+(i+1<now?'✓':(i+1))+'</span><div><b>'+a+'</b><small>'+(i+1===now?'いまここ ・ ':'')+b+'</small></div></div>').join('')+'</div>'; }
+const _renderProject15=renderProject; renderProject=function(c){ _renderProject15(c); try{ const cf=c.cf; if(!cf||cf.draft) return; const side=document.querySelector('.pj-side .card'); if(!side||side.querySelector('.pj-pay')) return; const p=document.createElement('p'); p.className='pj-pay'; p.textContent=PAY_RULE; const anchor=side.querySelector('.pj-rest')||side.querySelector('.pj-meta'); if(anchor) anchor.insertAdjacentElement('afterend',p); }catch(e){} };
+if(window.PLAIN){ window.PLAIN.forEach(p=>{ if(p[1]==='お試しです。支払いも、実際のお届けもありません。目標額に届いても、完成やお届けができない場合があります。') p[1]='お試しなので、支払いも実際のお届けもありません。本番では、'+PAY_RULE; if(p[1]==='お試しです。支払いも、実際のお届けもありません。') p[1]='お試しなので、支払いはありません。本番では、'+PAY_RULE; }); }
 
 </script>
